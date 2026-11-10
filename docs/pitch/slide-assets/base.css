@@ -1,0 +1,13 @@
+:root{--bg:#090513;--panel:#150E22;--panel2:#1d1230;--line:#5D387F;--pink:#FF72ED;--violet:#C97CFA;--text:#F8F3FF;--muted:#B9A8D0;--green:#5be3b0;--gold:#ffcf6b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1175px;height:440px;background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;overflow:hidden}
+.box{position:absolute;border:1.5px solid var(--line);background:var(--panel);border-radius:12px;padding:10px 12px}
+.t{font-size:13px;font-weight:700;letter-spacing:.3px}
+.s{font-size:10.5px;color:var(--muted);line-height:1.5;margin-top:3px}
+.tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--pink);margin-bottom:4px}
+.glow{border-color:var(--pink);box-shadow:0 0 18px rgba(255,114,237,.35),inset 0 0 18px rgba(255,114,237,.08)}
+.num{display:inline-flex;width:18px;height:18px;border-radius:50%;background:var(--pink);color:#1a0820;font-size:11px;font-weight:800;align-items:center;justify-content:center;margin-right:5px;flex:none}
+svg{position:absolute;left:0;top:0}
+.lbl{position:absolute;font-size:10.5px;color:var(--text);display:flex;align-items:center;white-space:nowrap}
+.zone{position:absolute;border:1.5px dashed #3b2756;border-radius:16px}
+.zl{position:absolute;font-size:10px;letter-spacing:1.5px;color:#8d76ad;font-weight:700}

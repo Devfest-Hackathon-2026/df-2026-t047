@@ -1,0 +1,233 @@
+.join,
+.leave,
+.icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.join {
+  border: 1px solid #3fc7a4;
+  background: #0f2f2a;
+  color: #b9f3e3;
+}
+
+.join:disabled {
+  opacity: 0.6;
+}
+
+.bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b9f3e3;
+  white-space: nowrap;
+}
+
+.icon {
+  padding: 0 8px;
+  border: 1px solid #3fc7a4;
+  background: #0f2f2a;
+  color: #b9f3e3;
+}
+
+.icon[aria-pressed='true'] {
+  border-color: #ff8a8a;
+  background: #3a1414;
+  color: #ffd0d0;
+}
+
+.leave {
+  padding: 0 8px;
+  border: 1px solid #ff6b6b;
+  background: #3a1414;
+  color: #ffd0d0;
+}
+
+/* 審査員の顔のワイプを横一列に並べる帯（テレビのワイプのように、すき間なく並べる） */
+.band {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  /* 高さはフッターの --wipe-h（自分のボタン2つの高さもこれに合わせる）。表彰の画面ではフッターが無いので既定の高さ */
+  height: var(--wipe-h, clamp(60px, 12.5vh, 120px));
+  background: #0a0614;
+  border-top: 2px solid #c97cfa;
+  box-shadow: 0 -4px 18px #b250ff55;
+}
+
+.band[data-floating] {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  z-index: 5;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+.bandItem {
+  height: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.bandItem[data-offline] {
+  opacity: 0.45;
+}
+
+.wipe {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--judge) 30%, #1a1028), #120a1e);
+}
+
+/* 話している人の枠を光らせる（札の🎧と同じ緑） */
+.wipe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  pointer-events: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.wipe[data-you]::after {
+  border-color: color-mix(in srgb, var(--judge) 80%, transparent);
+}
+
+.wipe[data-speaking]::after {
+  border-color: #3fc7a4;
+  box-shadow: inset 0 0 14px #3fc7a4aa;
+}
+
+.wipeLetter {
+  width: 36%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: clamp(12px, 2.2vh, 20px);
+  font-weight: 700;
+  color: #110a20;
+  background: var(--judge);
+}
+
+.wipe video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+  /* 背景が映りすぎないよう、顔のあたり（真ん中より少し上）を中心に拡大する */
+  transform-origin: 50% 40%;
+  transform: scale(var(--wipe-zoom, 1.4));
+}
+
+.wipe video[data-mirror] {
+  transform: scaleX(-1) scale(var(--wipe-zoom, 1.4));
+}
+
+.wipeCrown {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  color: #ffd76b;
+  filter: drop-shadow(0 0 3px #000);
+}
+
+.wipeMic {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 16px;
+  padding: 0 4px;
+  color: #ff8fa3;
+  background: #000a;
+}
+
+.wipeMic[data-on] {
+  color: #b9f3e3;
+}
+
+/* 声の波形（声の大きさで棒が伸びる） */
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+  width: 12px;
+}
+
+.wave i {
+  flex: 1;
+  border-radius: 1px;
+  background: #3fc7a4;
+  transition: height 0.18s ease-out;
+}
+
+.wipeName {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  max-width: 100%;
+  padding: 1px 6px;
+  font-size: 11px;
+  color: #fff;
+  background: color-mix(in srgb, var(--judge) 70%, #000);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cam {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #5b3c70;
+  background: #1a1028;
+  color: #967ba4;
+  cursor: pointer;
+}
+
+.cam[data-on] {
+  border-color: #3fc7a4;
+  color: #b9f3e3;
+  background: #0f2f2a;
+}
+
+.cam:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+@media (max-width: 760px) {
+  .live {
+    display: none;
+  }
+}

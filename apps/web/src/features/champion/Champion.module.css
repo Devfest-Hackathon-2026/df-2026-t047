@@ -1,0 +1,667 @@
+.champion {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  column-gap: 4vw;
+  padding: 2vh 6vw;
+  background: radial-gradient(ellipse at 50% 35%, #c37c2826, transparent 65%);
+}
+
+/* プレビューをしまっている時は元の2カラム（左：王冠とキャラ、右：案と操作）をそのまま使う */
+.leftPane {
+  display: contents;
+}
+
+.hero,
+.body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.body {
+  align-items: stretch;
+  text-align: left;
+  gap: 1.2vh;
+}
+
+.eyebrow {
+  color: #d9ae6b;
+  font-size: 11px;
+  letter-spacing: 2.3px;
+  font-weight: 700;
+}
+
+.crown {
+  width: clamp(40px, 6vh, 60px);
+  height: clamp(40px, 6vh, 60px);
+  color: #ffcd60;
+  filter: drop-shadow(0 0 17px #ffbd48);
+  margin: 12px auto 0;
+  display: block;
+  animation: crown 1s var(--ease-pop) both;
+}
+
+.hero h1 {
+  white-space: nowrap;
+  font-size: clamp(22px, min(3.4vw, 6.5vh), 60px);
+  letter-spacing: 5px;
+  background: linear-gradient(#fff2bb, #e4a444);
+  background-clip: text;
+  color: transparent;
+  margin: 4px 0 0;
+}
+
+.spot {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.spot::before {
+  content: '';
+  position: absolute;
+  inset: -20% -40% 0;
+  background: radial-gradient(ellipse at 50% 80%, #ffd06e44, transparent 65%);
+  z-index: -1;
+}
+
+.mascot {
+  width: clamp(120px, min(22vw, 36vh), 320px);
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.body h2 {
+  font-size: clamp(22px, min(2.4vw, 4.4vh), 40px);
+  color: #fff1c7;
+  margin: 0;
+}
+
+.summary {
+  font-size: clamp(13px, 1.9vh, 16px);
+  color: #d7c0ad;
+  white-space: pre-line;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.notes {
+  margin: 0;
+  background: #6e482322;
+  border: 1px solid #b2853c55;
+  padding: 6px 18px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.notes p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e9cf9e;
+  font-size: clamp(12px, 1.8vh, 14px);
+  margin: 6px 0;
+}
+
+.meta {
+  font-size: 11px;
+  color: #a68e7d;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  margin-top: 0;
+}
+
+.actions button {
+  white-space: nowrap;
+}
+
+.primary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(105deg, #9a45e8, #7736db);
+  border: 1px solid #c785ff;
+  border-radius: 7px;
+  font-weight: 700;
+  padding: 13px 18px;
+  font-size: 13px;
+}
+
+.secondary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #e5cba1;
+  border: 1px solid #977645;
+  padding: 12px 14px;
+  border-radius: 7px;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti i {
+  position: absolute;
+  top: -30px;
+  width: 5px;
+  height: 11px;
+  animation: fall 4s ease-in infinite;
+}
+
+.confetti i:nth-child(even) {
+  width: 8px;
+  height: 5px;
+}
+
+@keyframes fall {
+  to {
+    transform: translate(50px, 95svh) rotate(700deg);
+    opacity: 0;
+  }
+}
+
+@keyframes crown {
+  from {
+    transform: translateY(-30px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.proposal {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  color: #fde7bd;
+}
+
+.proposalRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.proposal[data-state='generating'] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: #e8d6b8;
+}
+
+.proposal[data-state='failed'] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.proposal[data-state='failed'] button {
+  font-size: 12px;
+  color: #ffd0de;
+  border: 1px solid #ff7aa088;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+.download {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #2a1606;
+  background: linear-gradient(105deg, #ffe08a, #f0a83c);
+  border: 1px solid #fff0c2;
+  border-radius: 10px;
+  padding: 14px 26px;
+  box-shadow:
+    0 0 26px #ffbd4688,
+    inset 0 1px 0 #fff6d8;
+  animation: glowPulse 1.8s ease-in-out infinite alternate;
+}
+
+.toggleViewerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #f3e8ff;
+  background: #2b1846cc;
+  border: 1px solid #a26ee5;
+  border-radius: 9px;
+  padding: 12px 16px;
+  white-space: nowrap;
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes glowPulse {
+  to {
+    box-shadow:
+      0 0 40px #ffbd46cc,
+      inset 0 1px 0 #fff6d8;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* ==================== 企画書プレビュー展開時の2ペインレイアウト ==================== */
+.champion[data-viewer-open='true'] {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: stretch;
+  column-gap: clamp(16px, 2.4vw, 36px);
+  padding: clamp(10px, 1.8vh, 22px) clamp(16px, 3vw, 44px);
+}
+
+.champion[data-viewer-open='true'] .leftPane {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(6px, 1.1vh, 12px);
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.champion[data-viewer-open='true'] .crown {
+  width: clamp(28px, 4vh, 42px);
+  height: clamp(28px, 4vh, 42px);
+  margin: 4px auto 0;
+}
+
+.champion[data-viewer-open='true'] .hero h1 {
+  font-size: clamp(20px, min(2.6vw, 4.8vh), 42px);
+  letter-spacing: 3px;
+}
+
+.champion[data-viewer-open='true'] .mascot {
+  width: clamp(80px, min(11vw, 15vh), 136px);
+}
+
+.champion[data-viewer-open='true'] .body h2 {
+  font-size: clamp(18px, min(2vw, 3.4vh), 28px);
+}
+
+.champion[data-viewer-open='true'] .summary {
+  font-size: clamp(12.5px, 1.7vh, 14.5px);
+  line-height: 1.65;
+}
+
+.champion[data-viewer-open='true'] .notes {
+  padding: 5px 14px;
+}
+
+.champion[data-viewer-open='true'] .notes p {
+  font-size: clamp(11.5px, 1.6vh, 13px);
+  margin: 4px 0;
+}
+
+.champion[data-viewer-open='true'] .download {
+  font-size: 13.5px;
+  padding: 11px 18px;
+}
+
+.champion[data-viewer-open='true'] .toggleViewerBtn {
+  font-size: 12.5px;
+  padding: 10px 14px;
+}
+
+.champion[data-viewer-open='true'] .primary {
+  padding: 10px 15px;
+  font-size: 12.5px;
+}
+
+.champion[data-viewer-open='true'] .secondary {
+  padding: 9px 13px;
+  font-size: 12px;
+}
+
+/* ==================== 企画書ページめくりビューア ==================== */
+.viewerPane {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: #140b24e6;
+  border: 1px solid #8a5bc288;
+  border-radius: 12px;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.viewerPlaceholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  color: #e4d4f4;
+}
+
+.viewerPlaceholder p {
+  margin: 0;
+  font-size: 12px;
+  color: #aa96bf;
+}
+
+.retryBtn {
+  font-size: 12px;
+  color: #ffd0de;
+  border: 1px solid #ff7aa088;
+  border-radius: 6px;
+  padding: 6px 14px;
+}
+
+.viewerHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #1f1135;
+  border-bottom: 1px solid #6e459e66;
+}
+
+.viewerTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.viewerBadge {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #ffdf9a;
+  background: #5b3b1288;
+  border: 1px solid #d49b3888;
+  border-radius: 999px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.viewerSectionTitle {
+  font-size: 12.5px;
+  color: #f4ebff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viewerNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #f3e8ff;
+  background: #362056;
+  border: 1px solid #9664d4;
+  border-radius: 6px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.pageCounter {
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffd778;
+  min-width: 44px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.expandBtn,
+.closeViewerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #dec9f6;
+  background: #27163f;
+  border: 1px solid #754da8;
+  border-radius: 6px;
+  padding: 5px 9px;
+  white-space: nowrap;
+}
+
+.closeViewerBtn {
+  color: #ffe2b8;
+  border-color: #a87b45;
+  background: #332018;
+}
+
+.pageTabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px 10px;
+  background: #180d29;
+  border-bottom: 1px solid #5c398655;
+}
+
+.pageTab {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #b79fd1;
+  background: #23143a;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 5px 8px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pageTab[data-active='true'] {
+  color: #261404;
+  font-weight: 800;
+  background: linear-gradient(105deg, #ffe294, #f0ac42);
+  border-color: #fff2c6;
+}
+
+.viewerViewport {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px;
+  background: #241838;
+}
+
+/* 拡大モーダル */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(6, 3, 15, 0.84);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(10px, 2.5vh, 28px);
+}
+
+.modalViewer {
+  position: relative;
+  width: min(900px, 96vw);
+  height: min(90svh, 880px);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: #160c28;
+  border: 1px solid #b47ef0;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+
+.modalCloseIcon {
+  display: none;
+}
+
+@media (max-width: 900px), (max-aspect-ratio: 1/1) {
+  .champion,
+  .champion[data-viewer-open='true'] {
+    grid-template-columns: 1fr;
+    align-content: start;
+    row-gap: 1.2vh;
+    padding: 1.5vh 20px 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .champion[data-viewer-open='true'] .leftPane {
+    overflow: visible;
+  }
+  .body {
+    text-align: center;
+    align-items: center;
+  }
+  .body .proposal {
+    justify-items: center;
+  }
+  .proposalRow {
+    justify-content: center;
+  }
+  .body .actions {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mascot {
+    width: clamp(90px, 16vh, 180px);
+  }
+  .hero h1,
+  .champion[data-viewer-open='true'] .hero h1 {
+    font-size: clamp(20px, 7vw, 40px);
+  }
+  .crown {
+    margin-top: 4px;
+  }
+  .viewerPane {
+    height: auto;
+    max-height: none;
+  }
+  .viewerViewport {
+    max-height: 62svh;
+    padding: 8px;
+  }
+}
+
+/* ===== 表彰（ChatGPT 版の ceremony.css を使う）の入れ物 ===== */
+.stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+.stage :global(.champion-ceremony) {
+  flex: 1;
+  min-height: 0;
+}
+.waitHost {
+  font-size: 11px;
+  color: #c9b3df;
+}
+
+/* ---- オフィシャル会議モード：企画書の窓は白と青に ---- */
+:global(:root[data-formality='official']) .modalBackdrop {
+  background: rgba(32, 33, 36, 0.5);
+  backdrop-filter: none;
+}
+
+:global(:root[data-formality='official']) .modalViewer {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 40px rgba(32, 33, 36, 0.25);
+}
+
+:global(:root[data-formality='official']) .viewerHeader,
+:global(:root[data-formality='official']) .pageTabs {
+  background: var(--bg-elev);
+  border-color: var(--line);
+}
+
+:global(:root[data-formality='official']) .viewerSectionTitle,
+:global(:root[data-formality='official']) .pageCounter {
+  color: var(--ink);
+}
+
+:global(:root[data-formality='official']) .viewerBadge {
+  color: var(--blue);
+  background: #e8f0fe;
+  border-color: transparent;
+}
+
+:global(:root[data-formality='official']) .pageBtn,
+:global(:root[data-formality='official']) .closeViewerBtn,
+:global(:root[data-formality='official']) .pageTab {
+  color: var(--blue);
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  box-shadow: none;
+}
+
+:global(:root[data-formality='official']) .pageTab[data-active] {
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+:global(:root[data-formality='official']) .pageBtn:disabled {
+  color: var(--ink-faint);
+}
+
+:global(:root[data-formality='official']) .viewerViewport {
+  background: #e8eaed;
+}

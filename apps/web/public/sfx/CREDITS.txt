@@ -1,0 +1,6 @@
+countdown-last3.mp3
+  元の素材：OtoLogic「タイマー02」Timer02-1(Timbre1-10_Seconds).mp3
+  https://otologic.jp/free/se/countdown01.html
+  ライセンス：CC BY 4.0（https://creativecommons.org/licenses/by/4.0/）
+  改変：最後の3.4秒を切り出し、終わりに0.2秒のフェードアウトを加えた
+  クレジット：OtoLogic

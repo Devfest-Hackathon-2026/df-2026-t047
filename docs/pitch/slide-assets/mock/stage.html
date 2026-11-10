@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="common.css"><script src="icons.js"></script><style>
+.slots{position:absolute;left:40px;top:84px;width:470px}
+.slot{height:96px;margin-top:10px;border-radius:14px;display:flex;align-items:center;gap:12px;padding:10px 14px}
+.slot.empty{border:1.5px dashed #5a3f80;color:#8f7aac;font-size:13px;justify-content:center}
+.slot .ch{width:70px;height:70px;flex:none}
+.mini{position:absolute;bottom:26px;display:flex;gap:10px;left:40px}
+.mini .ch{width:58px;height:58px;opacity:.45;filter:grayscale(.4)}
+.hero{position:absolute;left:600px;top:120px;width:400px;height:330px}
+.stage{position:absolute;left:560px;top:430px;width:480px;height:70px;border-radius:50%;border:2px solid #ff72ed88;box-shadow:0 0 40px #ff72ed66,inset 0 0 30px #ff72ed44}
+.idea{position:absolute;left:1060px;top:118px;width:500px;padding:22px 24px}
+.idea h2{font-size:30px;margin:8px 0 6px}
+.idea .sum{font-size:15px;color:#d7c8ea;line-height:1.6}
+.ln{display:flex;gap:10px;font-size:14px;margin-top:10px;color:#e8dcf7}.ln b{color:#ff9bf0;width:70px;flex:none}
+.chip{display:inline-block;font-size:12px;padding:4px 9px;border-radius:8px;margin-top:12px;background:#12301f;border:1px solid #2e6b55;color:#7ef0c0}
+.timer{position:absolute;left:560px;top:512px;width:480px}
+.bar{height:10px;border-radius:99px;background:#2a1a40;overflow:hidden}.bar i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#ff72ed,#c97cfa);box-shadow:0 0 14px #ff72ed}
+.tt{display:flex;justify-content:space-between;font-size:13px;color:#cdb8e8;margin-top:6px}.tt b{font-size:22px;color:#fff}
+.judges{position:absolute;left:470px;top:575px;width:660px;display:flex;gap:16px;justify-content:center}
+.jb{width:150px;text-align:center}
+.btn{width:110px;height:110px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;border:4px solid #5a3f80;background:radial-gradient(circle at 40% 35%,#3a2358,#1a0f2a);color:#a993c8}
+.btn.on{border-color:#ffcf6b;background:radial-gradient(circle at 40% 35%,#ffe7a0,#f0a020);color:#4a2a00;box-shadow:0 0 30px #ffcf6baa}
+.btn.me{outline:3px solid #ff72ed;outline-offset:6px}
+.jn{font-size:13px;margin-top:12px;font-weight:700}.js{font-size:11px;color:#9a8ba9;margin-top:2px}
+.count{position:absolute;left:560px;top:770px;width:480px;text-align:center;font-size:15px;color:#e8dcf7}.count b{color:#ffcf6b;font-size:22px}
+.radar{position:absolute;right:40px;top:560px;width:340px;padding:12px 16px}
+.cm{position:absolute;left:1060px;top:418px;width:500px;display:grid;gap:8px}
+.bub{font-size:13px;padding:9px 12px;border-radius:12px;background:#1d1230;border:1px solid #4b3570;display:flex;gap:8px;align-items:center}
+.av{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#160820;flex:none}
+.ai{font-size:11px;color:#9a8ba9;display:flex;gap:6px;align-items:center}
+</style></head><body>
+<div class="beam" style="left:590px"></div>
+<div class="hdr"><img src="icon-192.png"><div class="brand">IDEA <span>AUDITION</span></div><div class="tag">AIがプレゼン。あなたが審査員。</div><div class="sp"></div>
+<div class="pill">● AQW-YVUM-YWN</div><div class="pill">4人で参加中</div><div class="pill g">AI：Gemini</div><div class="pill">🎧 3人と通話中</div><div class="pill exit"><svg class="ic" viewBox="0 0 24 24" id="ex"></svg>退出</div></div>
+
+<div class="slots"><div class="lbl">👑 最終オーディション　1 / 3</div>
+<div class="slot card" style="border-color:#ffcf6b"><div class="ch" style="background-position:100% 100%"></div><div><div style="font-size:11px;color:#ffcf6b;font-weight:800">MIST・4人全員が合格</div><div style="font-size:18px;font-weight:800;margin-top:3px">学食ビンゴバトル</div><div style="font-size:12px;color:#bfaedb">小鉢を買ってビンゴに挑戦</div></div></div>
+<div class="slot empty">あと2枠　次の合格者を待っています</div>
+<div class="slot empty">　</div>
+<div style="font-size:12px;color:#9a8ba9;margin-top:12px;line-height:1.6">2人目の枠では、1人目を決めるまでの会話は使わない<br>（一人一人の好みは引き継ぐ）</div></div>
+
+<div class="hero ch" style="background-position:66.66% 100%"></div>
+<div class="stage"></div>
+<div class="timer"><div class="bar"><i></i></div><div class="tt"><span>LEO のプレゼン</span><span>残り <b>9</b> 秒</span></div></div>
+
+<div class="idea card"><div class="lbl" style="color:#ffc85c">● LEO がプレゼン中</div><h2>持ち込み専門の学食</h2><div class="sum">食材は各自で持ち込み！学食の厨房をレンタルしてセルフ調理する</div>
+<div class="ln"><b>誰の</b>自炊したいけど一人暮らしの台所が狭い学生</div><div class="ln"><b>困りごと</b>食費は浮かせたいが、作る場所と時間がない</div><div class="ln"><b>どう解く</b>昼の空き時間に厨房を30分単位で貸し出す</div>
+<div class="chip">💡 C1 コストは低く・C2 続けられる を反映</div></div>
+
+<div class="cm"><div class="ai"><svg class="ic" viewBox="0 0 24 24" id="sh"></svg>文字起こしは表示しません。審査の話題に合う発言だけを要点にして反映します</div>
+<div class="bub"><span class="av" style="background:#ff7ad9">B</span>たつき：材料費が自分持ちなら、続けやすそう</div>
+<div class="bub"><span class="av" style="background:#58c8ff">C</span>ゆうや：厨房の衛生管理がちょっと心配</div></div>
+
+<div class="judges">
+<div class="jb"><div class="btn on me">合格！</div><div class="jn">ゆうと（あなた）</div><div class="js">押した</div></div>
+<div class="jb"><div class="btn on">合格！</div><div class="jn">たつき</div><div class="js">押した</div></div>
+<div class="jb"><div class="btn">…</div><div class="jn">ゆうや</div><div class="js">迷い中（声の調子：慎重）</div></div>
+<div class="jb"><div class="btn on">合格！</div><div class="jn">みなみ</div><div class="js">押した</div></div></div>
+<div class="count"><b>3</b> / 4 人が合格ボタン　全員そろうと決勝へ</div>
+
+<div class="radar card"><div class="lbl">みんなの好み（常に表示）</div><svg width="308" height="230" viewBox="-150 -118 300 236" id="rd"></svg></div>
+<div class="mini"><div style="font-size:11px;color:#9a8ba9;align-self:center;margin-right:4px">次に登場</div><div class="ch" style="background-position:33.33% 100%"></div><div class="ch" style="background-position:66.66% 0%"></div><div class="ch" style="background-position:0% 0%"></div></div>
+<script>
+ex.innerHTML=ICONS['door-open'];sh.innerHTML=ICONS['eye'];
+const ax=['コスト','新規性','手軽さ','話題性','継続性','社会性','規模','広さ'];const R=92;let g='';
+for(let k=1;k<=3;k++){g+=`<polygon points="${ax.map((_,i)=>{const a=-Math.PI/2+i*Math.PI/4;return [Math.cos(a)*R*k/3,Math.sin(a)*R*k/3].join(',')}).join(' ')}" fill="none" stroke="#3a2a55"/>`}
+ax.forEach((n,i)=>{const a=-Math.PI/2+i*Math.PI/4;g+=`<text x="${Math.cos(a)*(R+22)}" y="${Math.sin(a)*(R+22)+4}" fill="#cdb8e8" font-size="11" text-anchor="middle">${n}</text>`});
+const J=[['#ff7ad9',[.3,.6,.9,.7,.5,.4,.3,.6]],['#58c8ff',[.4,.5,.6,.4,.9,.7,.4,.5]],['#ffc04d',[.2,.8,.7,.6,.6,.5,.6,.7]],['#7ef0c0',[.5,.4,.8,.5,.8,.8,.5,.6]]];
+J.forEach(([c,v])=>{g+=`<polygon points="${v.map((x,i)=>{const a=-Math.PI/2+i*Math.PI/4;return [Math.cos(a)*R*x,Math.sin(a)*R*x].join(',')}).join(' ')}" fill="${c}22" stroke="${c}" stroke-width="1.6"/>`});
+rd.innerHTML=g;
+</script></body></html>

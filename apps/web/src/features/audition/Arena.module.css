@@ -1,0 +1,110 @@
+.themeBar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 46px;
+  margin: 0 32px;
+  border-bottom: 1px solid #65427866;
+  flex-shrink: 0;
+}
+
+.live {
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  background: #db25573b;
+  border: 1px solid #f0587366;
+  padding: 4px 9px;
+  border-radius: 4px;
+  color: var(--warn);
+}
+
+.themeLabel {
+  font-size: 10px;
+  color: #aa8bc1;
+}
+
+.themeBar strong {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.arena {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 1640px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.between {
+  height: 26px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  z-index: 3;
+}
+
+.between > div {
+  height: 1px;
+  width: 65px;
+  background: linear-gradient(90deg, transparent, #8e5d9d55);
+}
+
+.between > div:last-child {
+  rotate: 180deg;
+}
+
+.between span {
+  color: #bca3c7;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  color: var(--cursor);
+  transition:
+    left 90ms linear,
+    top 90ms linear;
+}
+
+.cursor svg {
+  width: 19px;
+  height: 25px;
+  stroke: #fff;
+  stroke-width: 1.2;
+}
+
+.cursor span {
+  font-size: 9px;
+  background: var(--cursor);
+  color: #110a20;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin: 18px 0 0 -5px;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+/* オフィシャル会議モード（#36）：テーマの行は白地に直接のるので、文字を濃くする */
+:global(:root[data-formality='official']) .themeBar {
+  border-bottom-color: var(--line);
+}
+:global(:root[data-formality='official']) .themeLabel {
+  color: var(--ink-muted);
+}

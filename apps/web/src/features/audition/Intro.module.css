@@ -1,0 +1,609 @@
+.intro {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vh 24px 3vh;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 0%, #6d2bb855 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 85%, #a03cff33 0%, transparent 60%);
+}
+
+/* 上から差すスポットライト */
+.beams {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.beams i {
+  position: absolute;
+  top: -5%;
+  width: 34%;
+  height: 95%;
+  background: linear-gradient(180deg, #c27bff55, transparent 80%);
+  clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+  filter: blur(2px);
+}
+.beams i:nth-child(1) {
+  left: 0;
+  rotate: 24deg;
+  transform-origin: 50% 0;
+}
+.beams i:nth-child(2) {
+  left: 33%;
+  opacity: 0.8;
+}
+.beams i:nth-child(3) {
+  right: 0;
+  rotate: -24deg;
+  transform-origin: 50% 0;
+}
+
+.hero {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.logo {
+  width: min(560px, 70vw);
+  height: auto;
+  filter: drop-shadow(0 0 18px #b250ffaa) drop-shadow(0 0 44px #8a2be266);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 13px;
+  letter-spacing: 7px;
+  color: #d9b8ff;
+}
+.eyebrow span {
+  width: 90px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b884ff);
+}
+.eyebrow span:last-child {
+  background: linear-gradient(90deg, #b884ff, transparent);
+}
+.hero h1 {
+  margin: 4px 0 0;
+  font-size: clamp(26px, 3.4vw, 54px);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 1px;
+  line-height: 1.25;
+  text-wrap: balance;
+  text-shadow: 0 0 22px #b06bff88;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(90deg, #fff, #f2c6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.description {
+  margin: 0;
+  font-size: clamp(13px, 1.05vw, 17px);
+  line-height: 1.75;
+  color: #e3d3f5;
+}
+
+/* キャラが並ぶ光る舞台 */
+.stage {
+  position: relative;
+  width: min(760px, 90vw);
+  height: clamp(150px, 22vh, 250px);
+  margin-top: 1.5vh;
+}
+.mascots {
+  position: absolute;
+  inset: 0 0 14% 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2%;
+  z-index: 2;
+}
+.mascotWrap {
+  height: 100%;
+  aspect-ratio: 1;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent) 45%, transparent));
+}
+.mascotWrap:nth-child(2) {
+  height: 106%;
+}
+.mascot {
+  width: 100%;
+  height: 100%;
+  animation: introFloat 3.6s ease-in-out infinite;
+}
+.mascotWrap:nth-child(2) .mascot {
+  animation-delay: -1.2s;
+}
+.mascotWrap:nth-child(3) .mascot {
+  animation-delay: -2.4s;
+}
+@keyframes introFloat {
+  50% {
+    translate: 0 -8px;
+  }
+}
+.ring {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 0;
+  height: 32%;
+  border-radius: 50%;
+  border: 2px solid #df8dff;
+  background: radial-gradient(ellipse, #b14cff55, #5a1a9a22 60%, transparent 72%);
+  box-shadow:
+    0 0 10px #ef9cff,
+    0 0 34px #a835f4,
+    0 6px 0 #43136a,
+    0 12px 0 #210c36,
+    0 20px 40px #000c;
+}
+
+/* 作る・はじめる */
+.setup {
+  width: min(640px, 92vw);
+  margin-top: 2.2vh;
+  display: grid;
+  gap: 10px;
+}
+.primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 66px;
+  border-radius: 999px;
+  border: 2px solid #f0a8ff;
+  background: linear-gradient(105deg, #b04cf0, #7c2fe0);
+  color: #fff;
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  box-shadow:
+    0 0 26px #c04cff99,
+    0 0 60px #9b30ff55,
+    inset 0 1px 0 #ffffff55;
+  cursor: pointer;
+}
+.primary:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.themeInput {
+  display: flex;
+  align-items: center;
+  border: 1px solid #8b5cc0;
+  border-radius: 999px;
+  background: #120a26e6;
+  height: 52px;
+  padding: 0 8px 0 20px;
+  box-shadow: inset 0 1px 10px #6a299633;
+}
+.themeLabel {
+  font-size: 12px;
+  font-weight: 800;
+  color: #ff9bf0;
+  white-space: nowrap;
+}
+.themeInput input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  color: #f0e7f7;
+  padding: 0 14px;
+  font-size: 15px;
+  outline: none;
+}
+.themeInput input:read-only {
+  color: #d7c5e9;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.actions select {
+  background: #1d1130;
+  color: #e5d6f5;
+  border: 1px solid #694284;
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 8px 14px;
+}
+.setup small {
+  text-align: center;
+  font-size: 11px;
+  color: #a893bf;
+}
+
+/* 3つのステップ */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 2.6vh;
+  font-size: 14px;
+  color: #e3d3f5;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.steps span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.steps svg {
+  color: #d58cff;
+}
+.steps i {
+  width: 1px;
+  height: 18px;
+  background: #6f4a95;
+}
+
+.invite {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 8px 8px 8px 12px;
+  border: 1px dashed #8a5cb0;
+  border-radius: 9px;
+  background: #160d2b;
+  min-width: 0;
+}
+
+.inviteLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #d7c5e9;
+  white-space: nowrap;
+}
+
+.invite code {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #f0e7f7;
+}
+
+.invite button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #694284;
+  background: #251537;
+  color: #e5d6f5;
+}
+
+
+.invite .share {
+  border-color: #c785ff;
+  background: linear-gradient(105deg, #9a45e8, #7736db);
+  color: white;
+}
+
+
+
+.waiting {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 56px;
+  border: 1px dashed #8a5cb0;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #d7c5e9;
+}
+
+@media (max-width: 760px) {
+  .steps i {
+    display: none;
+  }
+  .inviteLabel {
+    display: none;
+  }
+  .eyebrow span {
+    width: 40px;
+  }
+}
+
+.intro > * {
+  flex-shrink: 0;
+}
+.eyebrow {
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .eyebrow {
+    letter-spacing: 4px;
+    font-size: 11px;
+  }
+}
+.mascotWrap {
+  width: min(31%, 230px);
+  height: auto;
+}
+.mascotWrap:nth-child(2) {
+  width: min(33%, 245px);
+  height: auto;
+}
+.mascot {
+  height: auto;
+  aspect-ratio: 1;
+}
+@media (max-width: 760px) {
+  .stage {
+    height: auto;
+    aspect-ratio: 3.2;
+  }
+}
+.stage {
+  height: clamp(170px, 27vh, 280px);
+  margin-top: 1vh;
+}
+.mascots {
+  inset: auto 0 14% 0;
+  height: 100%;
+}
+.mascotWrap {
+  width: auto;
+  height: 100%;
+  max-width: 31%;
+}
+.mascotWrap:nth-child(2) {
+  width: auto;
+  height: 104%;
+  max-width: 33%;
+}
+.mascot {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 760px) {
+  .stage {
+    height: auto;
+    aspect-ratio: 2.6;
+  }
+}
+.stage {
+  margin-top: 3vh;
+}
+.mascots {
+  inset: 0 0 14% 0;
+  height: auto;
+}
+
+/* 1画面に収める：高さに合わせて縮む（スクロールさせない） */
+.intro {
+  overflow: hidden;
+  justify-content: center;
+  padding: 1.2vh 24px 1.5vh;
+}
+.hero {
+  gap: 0.6vh;
+}
+.logo {
+  width: auto;
+  height: clamp(70px, 17vh, 200px);
+  max-width: 70vw;
+}
+.eyebrow {
+  font-size: clamp(10px, 1.4vh, 13px);
+}
+.hero h1 {
+  font-size: clamp(22px, min(3.4vw, 5.6vh), 54px);
+  margin: 0;
+}
+.description {
+  font-size: clamp(11px, min(1.05vw, 1.9vh), 17px);
+  line-height: 1.6;
+}
+.stage {
+  height: clamp(110px, 24vh, 280px);
+  margin-top: 1.5vh;
+}
+.setup {
+  margin-top: 1.6vh;
+  gap: 1vh;
+}
+.primary {
+  min-height: clamp(44px, 6.5vh, 66px);
+}
+.themeInput {
+  height: clamp(38px, 5.2vh, 52px);
+}
+.invite {
+  margin-bottom: 0;
+}
+.steps {
+  margin-top: 1.6vh;
+}
+
+/* 部屋を作ったあとは入力が増えるので、上を小さくする */
+.intro[data-lobby] .logo {
+  height: clamp(56px, 11vh, 140px);
+}
+.intro[data-lobby] .hero h1 {
+  font-size: clamp(20px, min(2.8vw, 4.2vh), 44px);
+}
+.intro[data-lobby] .stage {
+  height: clamp(90px, 16vh, 200px);
+  margin-top: 1vh;
+}
+.intro[data-lobby] .setup {
+  margin-top: 1vh;
+}
+.intro[data-lobby] .steps {
+  display: none;
+}
+
+/* 立体の舞台：上面の楕円の下に側面（厚み）と、床に落ちる影 */
+.ring::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: 50%;
+  height: 160%;
+  z-index: -1;
+  border-radius: 0 0 50% 50% / 0 0 46% 46%;
+  background:
+    linear-gradient(90deg, #000b, transparent 15%, transparent 85%, #000b),
+    linear-gradient(180deg, #5a2391, #2a0f4a 50%, #120620);
+  border: 2px solid #c27bff77;
+  border-top: 0;
+  box-shadow:
+    inset 0 -10px 22px #d48bff33,
+    0 22px 0 -8px #1a0a2b;
+}
+.ring::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 190%;
+  height: 70%;
+  z-index: -2;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #000d, transparent 70%);
+  filter: blur(8px);
+}
+.ring {
+  bottom: 22%;
+  box-shadow:
+    0 0 12px #ef9cff,
+    0 0 40px #a835f4,
+    inset 0 0 30px #e7a6ff55;
+}
+.mascots {
+  inset: 0 0 30% 0;
+}
+.stage {
+  margin-bottom: 1.5vh;
+}
+
+.note {
+  text-align: center;
+  font-size: 11px;
+  color: #a893bf;
+}
+
+/* ロビーの設定：持ち時間と合格者の人数 */
+.rules {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10px;
+}
+/* 狭い画面だけ2段にする */
+@media (max-width: 640px) {
+  .rules {
+    flex-wrap: wrap;
+  }
+}
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 5px 4px 12px;
+  border: 1px solid #6a4392;
+  border-radius: 999px;
+  background: #120a26cc;
+}
+.choice .themeLabel {
+  margin-right: 6px;
+}
+.choice button {
+  min-width: 40px;
+  min-height: 30px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: none;
+  color: #cdb8ea;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.choice button[data-on] {
+  color: #1a0b2b;
+  background: #ff9bf0;
+  box-shadow: 0 0 12px #ff72ed88;
+}
+.choice button:disabled {
+  cursor: default;
+}
+.choice button:disabled:not([data-on]) {
+  opacity: 0.55;
+}
+
+/* オフィシャル会議モード（#36）：部屋を作ったあとの入力欄も白地に合わせる */
+:global(:root[data-formality='official']) .themeInput,
+:global(:root[data-formality='official']) .choice,
+:global(:root[data-formality='official']) .invite {
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  box-shadow: none;
+}
+:global(:root[data-formality='official']) .themeLabel {
+  color: var(--purple);
+}
+:global(:root[data-formality='official']) .themeInput input,
+:global(:root[data-formality='official']) .invite code {
+  color: var(--ink);
+}
+:global(:root[data-formality='official']) .themeInput input:read-only,
+:global(:root[data-formality='official']) .inviteLabel,
+:global(:root[data-formality='official']) .waiting {
+  color: var(--ink-soft);
+}
+:global(:root[data-formality='official']) .note,
+:global(:root[data-formality='official']) .setup small {
+  color: var(--ink-muted);
+}
+:global(:root[data-formality='official']) .choice button {
+  color: var(--ink-soft);
+}
+:global(:root[data-formality='official']) .choice button[data-on] {
+  color: #fff;
+  background: var(--purple);
+  box-shadow: none;
+}
+:global(:root[data-formality='official']) .invite button {
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--ink);
+}
+:global(:root[data-formality='official']) .invite .share {
+  border-color: var(--purple);
+  background: var(--purple);
+  color: #fff;
+}
+:global(:root[data-formality='official']) .waiting {
+  border-color: var(--line-strong);
+}

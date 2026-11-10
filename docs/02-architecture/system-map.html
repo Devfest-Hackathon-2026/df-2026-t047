@@ -1,0 +1,945 @@
+<meta charset="utf-8">
+<title>IDEA AUDITION System Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: blueprint sheet — sticky index on the left, one figure per section, wide figures scroll inside their frame */
+:root{
+  --bg:#f3f4f7; --sheet:#ffffff; --ink:#18203a; --muted:#5b6380; --line:#cdd2e0; --grid:#e6e9f1;
+  --accent:#e8a400; --accent-ink:#5a3d00; --accent-soft:#fff3cf;
+  --t-client:#0f8a7e; --t-run:#2f56c8; --t-gcp:#58627d; --t-ai:#7a4fd0; --t-dev:#9a6a3a;
+  --tile-client:#e2f4f1; --tile-run:#e6ecfb; --tile-gcp:#eceef4; --tile-ai:#efe8fb; --tile-dev:#f5ece2;
+  --t-ext:#c2560f; --tile-ext:#fdeadb;
+  --f-display:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1222; --sheet:#151a2e; --ink:#e7eaf5; --muted:#99a1bd; --line:#2e3654; --grid:#1c2238;
+  --accent:#ffc23d; --accent-ink:#ffe2a0; --accent-soft:#3a2e10;
+  --t-client:#3cc8b8; --t-run:#7d9cff; --t-gcp:#a3abc4; --t-ai:#b48cff; --t-dev:#d9a873;
+  --tile-client:#12302d; --tile-run:#1a2650; --tile-gcp:#222842; --tile-ai:#2a1f48; --tile-dev:#33281c;
+  --t-ext:#f2a066; --tile-ext:#3a2414;
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0e1222; --sheet:#151a2e; --ink:#e7eaf5; --muted:#99a1bd; --line:#2e3654; --grid:#1c2238;
+  --accent:#ffc23d; --accent-ink:#ffe2a0; --accent-soft:#3a2e10;
+  --t-client:#3cc8b8; --t-run:#7d9cff; --t-gcp:#a3abc4; --t-ai:#b48cff; --t-dev:#d9a873;
+  --tile-client:#12302d; --tile-run:#1a2650; --tile-gcp:#222842; --tile-ai:#2a1f48; --tile-dev:#33281c;
+  --t-ext:#f2a066; --tile-ext:#3a2414;
+  color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;max-width:1440px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px}
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:13px}
+nav .brand{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin-bottom:12px}
+nav ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:n}
+nav a{display:flex;gap:10px;padding:5px 8px;border-radius:6px;color:var(--ink);text-decoration:none}
+nav a:hover,nav a:focus-visible{background:var(--sheet);outline:none}
+nav a span{font-family:var(--f-mono);font-size:11px;color:var(--muted);min-width:18px;padding-top:2px}
+main{min-width:0;display:grid;gap:56px}
+header h1{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 12px;text-wrap:balance;letter-spacing:-.01em}
+header h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--accent-soft) 62%)}
+header p{margin:0;max-width:68ch;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.badge{display:inline-block;font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:1px 6px;border-radius:4px;background:var(--accent);color:#2a1d00;vertical-align:2px}
+section{display:grid;gap:14px;scroll-margin-top:24px}
+section h2{font-family:var(--f-display);font-weight:700;font-size:22px;margin:0;display:flex;align-items:baseline;gap:12px;text-wrap:balance}
+section h2 small{font-family:var(--f-mono);font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.12em}
+section > p{margin:0;max-width:72ch;color:var(--muted)}
+.frame{background:var(--sheet);border:1px solid var(--line);border-radius:12px;overflow-x:auto;padding:20px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.frame.plain{background-image:none}
+.frame svg.map{display:block;min-width:1080px;width:100%;height:auto}
+pre.mermaid{margin:0;background:transparent;display:flex;justify-content:center}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.note{border-left:3px solid var(--line);padding:2px 0 2px 12px;font-size:13px;color:var(--muted)}
+.note b{color:var(--ink);display:block;font-size:14px}
+.note.new{border-color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:720px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+td code,.tree{font-family:var(--f-mono);font-size:12px}
+tr.new td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+.tree{white-space:pre;line-height:1.65;margin:0;color:var(--ink)}
+.tree .s{color:var(--accent-ink);background:var(--accent-soft);border-radius:3px;padding:0 3px}
+.tree .c{color:var(--muted)}
+/* svg */
+.map text{font-family:var(--f-body);fill:var(--ink)}
+.map .gl{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;font-weight:600}
+.map .nt{font-size:12.5px;font-weight:700}
+.map .ns{font-size:10px;fill:var(--muted)}
+.map .el{font-family:var(--f-mono);font-size:10px;fill:var(--muted);paint-order:stroke;stroke:var(--sheet);stroke-width:4px;stroke-linejoin:round}
+.map .edge{fill:none;stroke:var(--muted);stroke-width:1.4}
+.map .edge.dash{stroke-dasharray:4 4}
+.map .node rect.box{fill:var(--sheet);stroke:var(--line);stroke-width:1.2}
+.map .ico{fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)} nav{position:static} nav ol{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<nav aria-label="図の一覧">
+  <div class="brand">IDEA AUDITION / VICTORY</div>
+  <ol>
+    <li><a href="#services"><span>01</span>サービス構成図</a></li>
+    <li><a href="#layers"><span>02</span>サーバーの層</a></li>
+    <li><a href="#dataflow"><span>03</span>1ラウンドのデータの流れ</a></li>
+    <li><a href="#states"><span>04</span>状態の移り変わり</a></li>
+    <li><a href="#seq-join"><span>05</span>部屋・ロビー・通話</a></li>
+    <li><a href="#seq-select"><span>06</span>好みで次の案を選ぶ</a></li>
+    <li><a href="#seq-voice"><span>07</span>声・言及・迷い</a></li>
+    <li><a href="#seq-final"><span>08</span>決勝から企画書まで</a></li>
+    <li><a href="#er"><span>09</span>ER 図</a></li>
+    <li><a href="#camp"><span>10</span>CAMP メッセージ</a></li>
+    <li><a href="#deploy"><span>11</span>デプロイの流れ</a></li>
+    <li><a href="#trust"><span>12</span>権限と境界</a></li>
+    <li><a href="#cost"><span>13</span>Gemini とコスト</a></li>
+    <li><a href="#tree"><span>14</span>フォルダ構成</a></li>
+    <li><a href="#protocol"><span>15</span>CAMP とOSSへの道</a></li>
+  </ol>
+</nav>
+
+<main>
+<header>
+  <h1>IDEA AUDITION の<em>全体図</em></h1>
+  <p>完成形の姿です（2026-11-09 時点。本番は Cloud Run の revision 00026）。まだ作っている途中のものは「予定」と書いています。審査員はホストが作った部屋のリンク（<code>/a/kqd-rmzw-tbe</code> の形）から入り、画面とサーバーは自作のプロトコル CAMP（Collaborative Agent Mediation Protocol）で WebSocket の上を話します。予選では AI キャラが1人ずつ企画をプレゼンし、審査員全員がゴールデンブザーを押すと合格です。合格者で決勝を行い、投票で優勝を決めます。声は Gemini Live で文字にし、Gemini 3.5 Flash で審査の話だけを仕分けて使います。通話はブラウザどうしを WebRTC で直接つなぎ、つながらない回線では Cloudflare の TURN で中継します。</p>
+  <div class="legend">
+    <span><i style="background:var(--t-client)"></i>会場（審査員のPC）</span>
+    <span><i style="background:var(--t-run)"></i>Cloud Run のコンテナ</span>
+    <span><i style="background:var(--t-gcp)"></i>Google Cloud のサービス</span>
+    <span><i style="background:var(--t-ai)"></i>Vertex AI（Gemini）</span>
+    <span><i style="background:var(--t-dev)"></i>開発・チーム</span>
+    <span><i style="background:var(--t-ext)"></i>通話の経路（Google Cloud の外）</span>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="services">
+  <h2>サービス構成図 <small>01 / SERVICE MAP</small></h2>
+  <p>どのツールがどのツールと、何でつながっているか。実線は毎回のやり取り、点線は毎回ではないつながり（権限・請求・端末内の処理・完成時の公開）です。線の色と太さはすべて同じにし、意味は実線と点線だけで分けています。</p>
+  <div class="frame"><svg class="map" id="map" viewBox="0 0 1280 970" role="img" aria-label="サービス構成図"></svg></div>
+  <div class="notes">
+    <div class="note"><b>コンテナは1つ</b>画面の配信、部屋の発行、通話の鍵渡し（GET /api/ice）、/camp、/voice、SessionActor が同じ Cloud Run の1台に入っています。最大1台・セッションアフィニティ（同じ人を同じ台につなぐ設定）で、全員が同じメモリ上の部屋に入ります。</div>
+    <div class="note"><b>Gemini を呼ぶのはサーバーだけ</b>ブラウザは鍵もトークンも持ちません。サービスアカウント idea-audition-run の権限で Vertex AI と Firestore を呼びます。</div>
+    <div class="note"><b>合言葉は使わない</b>部屋の ID（26の10乗通り）を知っている人だけが入れます。部屋を作るのは送り手ごとに1時間10回、同時に20部屋までに絞り、Gemini のクレジットを守ります。</div>
+    <div class="note"><b>声はサーバーを通らない</b>通話の声はブラウザどうしで直接やり取りします。サーバーはつなぐための受け渡し（offer・answer・経路の候補）を CAMP の Ephemeral で中継するだけです。直接つながらない回線（テザリング・大学の Wi-Fi など）では Cloudflare の TURN が中継します。</div>
+    <div class="note"><b>Secret Manager には TURN のキーだけ</b>Cloudflare の TURN のキーは Secret Manager に置き、起動時にサーバーへ渡します。ブラウザには数時間（6時間）で切れる接続情報だけを GET /api/ice で渡します。キーが無いときは Google の STUN だけで動きます。</div>
+    <div class="note"><b>マイクは1つを使い回す</b>通話と文字起こしで同じマイクを使います。iPhone などで2回開くと通話の声が止まるためです。</div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="layers">
+  <h2>サーバーの層 <small>02 / LAYERS</small></h2>
+  <p>矢印は「呼び出す・依存する」向き。domain は純粋関数だけで、Gemini や Firestore を知りません。ゴールデンブザーの全員一致、持ち時間、一時停止、決勝の人数の判定も domain（session.ts）に置きます。好みの計算と選抜も domain に置くので、乱数を固定すればテストで再現できます。</p>
+  <div class="frame plain"><pre class="mermaid">
+flowchart TB
+  subgraph P["presentation（入口）"]
+    WS["ws-server.ts&lt;br/&gt;/camp · /api/rooms · /api/ice"]
+    VS["voice-server.ts&lt;br/&gt;/voice"]
+    SF["static-files.ts"]
+  end
+  subgraph A["application（進行役）"]
+    SA["session-actor.ts&lt;br/&gt;直列キュー・状態の正本"]
+    RD["room-directory.ts&lt;br/&gt;部屋の発行・回数の上限"]
+    TS["personas.ts&lt;br/&gt;発想の型"]
+    GP["generation-planner.ts"]
+    HS["hesitation.ts"]
+    CC["consensus-context.ts&lt;br/&gt;合格後の文脈の切り替え"]
+    SX["speech-lexicon.ts&lt;br/&gt;部屋の語彙"]
+    PJ["projection.ts&lt;br/&gt;snapshot を作る"]
+    PO["ports.ts&lt;br/&gt;IdeaGateway・EventStore・EmbeddingPort"]
+  end
+  subgraph D["domain（純粋関数）"]
+    SE["session.ts"]
+    AT["attention.ts&lt;br/&gt;退場の予告"]
+    CO["consensus.ts&lt;br/&gt;合意台帳"]
+    TR["transcript-repair.ts&lt;br/&gt;語彙で聞き間違いを直す"]
+    CA["character-allocation.ts"]
+    TA["taste.ts&lt;br/&gt;好み・減衰"]
+    SL["selection.ts&lt;br/&gt;スコア・MMR・抽選"]
+    SG["signals.ts"]
+    ME["metrics.ts"]
+  end
+  subgraph I["infrastructure（外の世界）"]
+    GG["gemini-gateway.ts&lt;br/&gt;生成・改良・仕分け・企画書"]
+    EG["embedding-gateway.ts"]
+    PS["local-taste.ts&lt;br/&gt;固定データの8軸・埋め込み"]
+    LT["live-transcriber.ts"]
+    RG["resilient-gateway.ts&lt;br/&gt;失敗時は固定データ"]
+    FX["fixture-gateway.ts"]
+    FS["firestore-store.ts / memory-store.ts"]
+    TU["turn.ts&lt;br/&gt;Cloudflare TURN の接続情報"]
+  end
+  WS --> SA
+  VS --> LT
+  VS --> SA
+  WS --> RD
+  WS --> TU
+  RD --> SA
+  SA --> SE & AT & CO & CA
+  SA --> TS & GP & HS & CC & PJ
+  SA --> TA & SG
+  SA --> SX --> TR
+  GP --> SL & TS
+  SA --> ME
+  SA --> PO
+  PO -.->|実装| RG
+  PO -.->|実装| EG
+  PO -.->|実装| FS
+  RG --> GG & FX
+  FX --> PS
+</pre></div>
+</section>
+
+<!-- 03 -->
+<section id="dataflow">
+  <h2>1ラウンドのデータの流れ <small>03 / DATA FLOW</small></h2>
+  <p>審査員の操作・発言・迷いが、好みのベクトルになり、次に登場する挑戦者の選び方を変え、全員の画面に返るまで。状態の正本はサーバーのメモリにあり、Event には毎回 snapshot 全体が入ります。</p>
+  <div class="frame plain"><pre class="mermaid">
+flowchart LR
+  subgraph IN["会場の入力"]
+    I1["ゴールデンブザー&lt;br/&gt;全員一致で合格"]
+    I2["質問・見送り・一時停止"]
+    I3["発言（声 / 文字）"]
+    I4["迷い：うーん・沈黙・声量"]
+    I5["見ているキャラ&lt;br/&gt;深掘りで交代を止める"]
+  end
+  subgraph SV["Cloud Run"]
+    Q["SessionActor&lt;br/&gt;1件ずつ処理"]
+    TRI["発言の仕分け・言い直し&lt;br/&gt;雑談・聞き間違いは捨てる"]
+    SIG["signals&lt;br/&gt;行動→重み"]
+    TM["好みモデル&lt;br/&gt;審査員ごと・チーム"]
+    HZ["迷いの判定&lt;br/&gt;宛先のカード"]
+    LG["合意台帳"]
+    PL["生成計画&lt;br/&gt;役割：fit / bridge / explore / wildcard"]
+    RR["選抜&lt;br/&gt;スコア→MMR→抽選"]
+    SN["snapshot + Event"]
+  end
+  subgraph AI["Vertex AI"]
+    G1["gemini-3.5-flash&lt;br/&gt;案を3案ずつ＋8軸・仕分け"]
+    EM["gemini-embedding-001&lt;br/&gt;256次元"]
+    G2["gemini-3.8-flash&lt;br/&gt;改良・相互批評・企画書"]
+    LV["gemini-3.5-transcribe-live&lt;br/&gt;音声→文字（予定：声の調子）"]
+  end
+  DB[("Firestore&lt;br/&gt;sessions / events")]
+  UI["全員の画面&lt;br/&gt;タグ・好みのグラフ・🤔"]
+
+  I1 & I2 -->|Command| Q
+  I3 -->|音声 16kHz| LV -->|文字| TRI -->|審査の話だけ| Q
+  I4 -->|SOFT_SIGNAL| HZ
+  I5 -->|FOCUS_CHANGED| HZ
+  Q --> SIG --> TM
+  Q --> LG
+  LG -->|賛否の強さ| TM
+  LG -->|合意が変わったら古い案を捨てる| PL
+  HZ -->|別案を頼む| G1
+  HZ --> TM
+  TM --> PL --> G1 --> EM --> RR
+  TM --> RR
+  RR -->|登場する案| SN
+  G2 -->|CANDIDATE_REVISED| SN
+  SN --> DB
+  SN -->|WebSocket で全員へ| UI
+</pre></div>
+  <div class="notes">
+    <div class="note"><b>好みの更新</b>taste ← taste·0.5^(Δt/90秒) ＋ 重み·案の8軸。ブザーでの合格は強く（+1.0）、見送りはマイナス（-0.8）、迷いは弱く効きます。審査員ごとの好みは8軸のグラフで出します（予定：押さなくても常に画面に置く #12）。</div>
+    <div class="note"><b>選抜</b>案を多めに作り置きし、好みとの近さ（fit）・2人の間（bridge = min(fitA, fitB)）・目新しさで点をつけ、MMR（すでに出た案に似た候補を減点する選び方）で似た案を外し、温度つきで抽選します。登場する5人のうち好みに寄せるのは2人まで。合格した案とほぼ同じ案は出しません。</div>
+    <div class="note"><b>合格後の文脈</b>合格した案についての会話は生成の文脈から外し、決まった条件と否定した方向だけを残します（#6）。同じ方向の案ばかり続かないようにするためです。</div>
+    <div class="note"><b>合意の反映</b>合意が大きく変わったら、古い合意で作った作り置きを捨てて作り直します。ただし、合意が変わったあとに届いた古い前提の案がまだ入ることがあります（実測計画 M2 で直す）。</div>
+    <div class="note"><b>落ちたとき</b>Gemini が失敗したら固定データで続行。埋め込みが失敗したら 8軸だけでスコアをつけます。仕分けが失敗したら、発言を落とさずそのまま使います。</div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="states">
+  <h2>状態の移り変わり <small>04 / STATE MACHINES</small></h2>
+  <p>セッション全体、キャラクター（案）の居場所、決勝の案の磨き込み、の3つです。予選も決勝も status は audition_active のままで、合格者が決勝の人数（ロビーで1〜4人、既定3人）にそろうと決勝になります。好みエンジンは状態を増やさず、挑戦中のキャラに「反応中」「別案」の演出を足すだけです。</p>
+  <div class="frame plain"><pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  state "セッション" as S {
+    state "lobby&lt;br/&gt;テーマ・持ち時間・合格者の人数" as lobby
+    state "予選 audition_active&lt;br/&gt;1人ずつオーディション" as prelim
+    state "決勝 audition_active&lt;br/&gt;相互批評・改良・質問" as final
+    state "champion_selection&lt;br/&gt;投票" as vote
+    state "completed&lt;br/&gt;優勝・企画書" as done
+    [*] --> lobby
+    lobby --> prelim: START_AUDITION
+    prelim --> final: 合格者がそろった / END_PRELIMINARY（ホスト）
+    final --> vote: START_CHAMPION_VOTE
+    final --> done: SELECT_CHAMPION（決勝が1人）
+    vote --> vote: TIE_DETECTED → RESOLVE_TIE
+    vote --> done: CHAMPION_SELECTED
+    done --> lobby: RESET_SESSION
+    prelim --> prelim: 誰もいない間は止まる
+  }
+</pre></div>
+  <div class="frame plain"><pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  state "挑戦中 lower&lt;br/&gt;あと N 秒" as lower
+  state "止まっている&lt;br/&gt;一時停止・深掘り" as paused
+  state "反応中 🤔" as react
+  state "合格者待機室 upper" as upper
+  state "退場 archived" as archived
+  [*] --> lower: CANDIDATE_SPAWNED（選抜で選ばれた1人）
+  lower --> paused: CHALLENGE_PAUSED（一時停止ボタン / カーソル・詳細・質問）
+  paused --> lower: CHALLENGE_RESUMED（止めたときの残りから）
+  lower --> upper: 全員がブザー → PROMOTION_CONFIRMED
+  lower --> archived: 時間切れ / 見送り / ホストが予選を終えた
+  lower --> react: 「うーん」を検出
+  react --> lower: CANDIDATE_REVISED（別案に差し替え）/ 反応なし
+  upper --> archived: 決勝で敗退
+</pre></div>
+  <div class="frame plain"><pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  state "refining 磨き込み" as refining
+  state "critiquing ダメ出し" as critiquing
+  state "ready 完成" as ready
+  [*] --> refining: 合格した（ほかの合格者と相互批評）
+  refining --> critiquing: FINALIST_REFINEMENT_STARTED
+  critiquing --> critiquing: FINALIST_CRITIQUE_POSTED（2〜3回）
+  critiquing --> ready: FINALIST_VERSION_PUBLISHED（新しい版）
+  ready --> refining: REQUEST_REFINEMENT / 新しい合格者が来た
+  ready --> ready: REVERT_IDEA_REVISION（前の版を新しい版として積む）
+</pre></div>
+</section>
+
+<!-- 05 -->
+<section id="seq-join">
+  <h2>部屋・ロビー・通話 <small>05 / ROOMS &amp; CALL</small></h2>
+  <p>Google Meet と同じく、ホストが部屋を作ると推測されにくいリンクができ、そのリンクを開いた人が同じ部屋に入ります。作られていない部屋や片付けられた部屋のリンクは「見つかりません」になり、再接続はしません。ロビーでホストがテーマを入れている間に最初の挑戦者を作っておくので、開始と同時に出せます（約1.6秒 → 約0.06秒）。通話はブラウザどうしを直接つなぎ、つながらない回線では Cloudflare の TURN が中継します。</p>
+  <div class="frame plain"><pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant H as ホストのブラウザ
+  participant B as 参加者のブラウザ
+  participant R as Cloud Run
+  participant A as SessionActor
+  participant F as Firestore
+  participant T as Cloudflare TURN
+  H->>R: POST /api/rooms
+  R->>R: 回数の上限を確認（送り手ごとに1時間10回・同時に20部屋）
+  R->>A: 部屋を作る（ID の例 kqd-rmzw-tbe）
+  A->>F: sessions/{id} をすぐ保存
+  R-->>H: 201 roomId（画面は /a/{id} に移る）
+  H->>B: 招待（リンクのコピー・共有シート）
+  B->>R: WebSocket /camp ＋ hello（部屋 ID）
+  alt 部屋がない
+    R-->>B: protocol_error ROOM_NOT_FOUND ＋ 終了コード 4404
+  else 部屋がある
+    opt メモリに部屋が無い（再起動のあと）
+      A->>F: sessions/{id} を読んで復元
+    end
+    A-->>B: welcome（参加者 ID・snapshot）
+    A-->>H: JUDGE_JOINED を全員へ（4人まで審査員、5人目からは観覧）
+  end
+  Note over H,A: 通話
+  B->>R: GET /api/ice
+  R->>T: 接続情報を作る（6時間で切れる。1時間は同じものを配る）
+  R-->>B: iceServers（Cloudflare TURN ＋ Google STUN）
+  B->>A: RTC_SIGNAL（offer / answer / 経路の候補）
+  A-->>H: 宛先の人へそのまま渡す（保存しない）
+  H-->>B: 声（WebRTC。直接か、つながらなければ TURN で中継）
+  Note over H,A: ロビー
+  H->>A: THEME_DRAFT（テーマ・持ち時間・合格者の人数）
+  A-->>B: ほかの人の画面にもホストの値を映す
+  A->>A: 入力が0.8秒止まったら、最初の挑戦者を作り置き
+  H->>A: START_AUDITION（持ち時間 15・30・60・90秒、合格者 1〜4人）
+  A-->>B: SESSION_STARTED → CANDIDATE_SPAWNED（作り置きをすぐ出す）
+  Note over B,A: 退出
+  B->>A: LEAVE_SESSION（退出ボタン）
+  A-->>H: JUDGE_LEFT（一覧から消す。ホストなら次の人へ。押していたブザーは取り消す）
+  Note over B,A: 通信が切れただけなら席を残し、同じ審査員として戻れる
+</pre></div>
+</section>
+
+<!-- 06 -->
+<section id="seq-select">
+  <h2>好みで次の案を選ぶ <small>06 / SELECTION</small></h2>
+  <p>挑戦者が交代するたびに走ります。予選は1人ずつで、持ち時間（ロビーで15・30・60・90秒から選ぶ。既定は60秒）が過ぎるか、見送られるか、合格すると次の人と交代します。好みを読んで多めに作り置きし（常に3案）、その中から選んで出します。</p>
+  <div class="frame plain"><pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant J as 審査員たち
+  participant A as SessionActor
+  participant T as 好みモデル
+  participant P as 生成計画
+  participant G as gemini-3.5-flash
+  participant E as gemini-embedding-001
+  participant S as 選抜
+  J->>A: PRESS_BUZZER（それぞれが自分のブザー）
+  A-->>J: BUZZER_PRESSED（押した人数）
+  Note over A: 全員そろったら合格 → PROMOTION_CONFIRMED（合格者待機室へ）
+  A->>T: シグナル（押した審査員ごと, 案Xの8軸, 重み +1.0）
+  T-->>A: TASTE_UPDATED（好みのグラフ用の要約）
+  Note over A: 合格・時間切れ・見送りで挑戦者の席が空く
+  A->>P: 空き1人分＋作り置き・今の好み・割れている軸
+  P->>P: 役割を決める（5人のうち好みに寄せるのは2人まで）
+  P->>G: 3案ずつ（発想の型・誰の困りごとをどう解くか・8軸つき）&lt;br/&gt;合格した案の会話は外し、決まった条件だけ渡す
+  G-->>P: 案の一覧＋8軸プロフィール
+  P->>E: 案の文をまとめて埋め込み
+  E-->>P: 256次元ベクトル
+  P->>S: 候補・好み・すでに出た案
+  S->>S: fit / bridge / 目新しさ → MMR → 温度つき抽選（合格案に似た案は外す）
+  S-->>A: 選ばれた1案＋タグ（🤝 AさんとBさんの間）
+  A-->>J: CANDIDATE_SPAWNED（次の挑戦者。snapshot にタグと理由）
+  Note over A,P: 合意が大きく変わったら古い前提の作り置きを捨てて作り直す（遅れて届いた古い案が入る穴は実測計画 M2 で直す）
+</pre></div>
+</section>
+
+<!-- 07 -->
+<section id="seq-voice">
+  <h2>声・言及・迷い <small>07 / VOICE</small></h2>
+  <p>音声は gemini-3.5-transcribe-live で文字にし、1.2秒の無音で1発言にまとめます。部屋の語彙（キャラ名・企画名・論点）で聞き間違いを直したあと、gemini-3.5-flash が審査の話かどうかを仕分けます。雑談・アプリの話・聞き取れない発言は捨て、審査の話だけを言い直して使います（キャラの名前を呼んだ発言は待たずにそのまま使う）。文字起こしは画面に出さず、残った発言だけがチャット履歴に入ります。言葉にならない迷いも拾って、見ているキャラに反応させます。マイクは通話と同じものを使います。</p>
+  <div class="frame plain"><pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant M as マイク（AudioWorklet）
+  participant V as /voice
+  participant L as gemini-3.5-transcribe-live
+  participant A as SessionActor
+  participant H as 迷いの判定
+  participant G as gemini-3.5-flash
+  M->>V: 音声 16kHz（20ms ごと）
+  V->>L: 音声を中継
+  L-->>V: 途中の文字・確定した文字
+  Note over L: 予定：声の調子（温度感）を読み、AI の文脈に入れる（#4）
+  V->>A: SUBMIT_UTTERANCE（まとめた1発言）
+  A->>A: 部屋の語彙で聞き間違いを直す
+  A->>G: 仕分け（審査の話か）と言い直し
+  alt 雑談・アプリの話・聞き取れない
+    G-->>A: 捨てる（記録しない。好みにも合意にも入れない）
+  else 審査の話
+    G-->>A: 残す＋言い直した文
+    A->>A: 宛先・名前の言及 → 深掘りで交代を止める
+    A->>A: 合意台帳：論点と賛否を更新
+    A-->>M: JUDGE_UTTERANCE_RECEIVED（チャット履歴）・CONSENSUS_UPDATED（合意メモ）
+  end
+  M->>V: SOFT_SIGNAL（沈黙の長さ・声量・笑い）
+  Note over H: 「うーん」「なんか違う」＋見ているキャラ
+  V->>H: 迷いの候補
+  H->>H: しきい値と間隔を確認（連発させない）
+  H-->>A: 案Y に迷い
+  A-->>M: CANDIDATE_REACTED（🤔「どこが引っかかりました？」）
+  A->>G: 案Y の別案（迷いの軸を変える）
+  G-->>A: 別案
+  A-->>M: CANDIDATE_REVISED
+</pre></div>
+</section>
+
+<!-- 08 -->
+<section id="seq-final">
+  <h2>決勝から企画書まで <small>08 / FINAL</small></h2>
+  <p>決勝では、合格者が加わるたびに案どうしが批評し合い、新しい版を作ります。タップした1人にスポットライトを当てると、名前を呼ばない質問はそのキャラに届きます。版は v1・v2… と残り、前の版に戻せます（戻した版も新しい版として積む）。企画書は決勝の間に全員分を作り置きし、優勝と同時に出します（11〜13秒 → 0秒）。前半は Gemini が書き、後半の審査レポートは記録から決まった形で作ります。PDF はブラウザの中で作るので、サーバーにファイルは残りません。</p>
+  <div class="frame plain"><pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant J as 審査員たち
+  participant A as SessionActor
+  participant G as gemini-3.8-flash
+  participant B as ブラウザ（html2pdf）
+  Note over A: 合格者が加わるたびに、決勝の全員で相互批評
+  A->>G: 相互批評と改良（2〜3回）
+  G-->>A: 批評＋新しい版
+  A-->>J: FINALIST_CRITIQUE_POSTED（2.2秒ずつ）→ FINALIST_VERSION_PUBLISHED
+  J->>A: SET_SPOTLIGHT（1人に注目）
+  J->>A: ASK_CANDIDATE（名前を呼ばない質問はスポットライトのキャラへ）
+  J->>A: REQUEST_REFINEMENT / REVERT_IDEA_REVISION
+  A->>G: 企画書を決勝の全員分作り置き（版が変わったら作り直す）
+  alt 決勝が2人以上
+    J->>A: START_CHAMPION_VOTE → CAST_VOTE
+    opt 同票
+      A-->>J: TIE_DETECTED（ホストが決める）
+    end
+    A-->>J: CHAMPION_SELECTED
+  else 決勝が1人
+    J->>A: SELECT_CHAMPION（ホストがそのまま選ぶ）
+  end
+  A-->>J: PROPOSAL_UPDATED（作り置きをすぐ出す）
+  J->>B: PDF・文章コピー・共有
+  B->>B: 前半＋審査レポート（合意・好みの変化・効果の指標）→ PDF
+  opt 予定
+    J->>A: 終わったあとのアンケート3問（#20）
+    A->>A: ログから会議の指標を出す（#18）
+  end
+</pre></div>
+</section>
+
+<!-- 09 -->
+<section id="er">
+  <h2>ER 図 <small>09 / DATA MODEL</small></h2>
+  <p>Firestore には sessions/{id}（状態の JSON と seq）と events/{seq} の2種類だけを保存し、下の構造は状態の JSON の中身です。埋め込みのベクトルは大きいのでメモリだけに置き、保存しません。</p>
+  <div class="frame plain"><pre class="mermaid">
+erDiagram
+  SESSION ||--o{ JUDGE : "審査員（4人まで）"
+  SESSION ||--o{ CHARACTER : "登場キャラ"
+  CHARACTER ||--|| IDEA : "いまの案"
+  IDEA ||--o{ REVISION : "決勝での版"
+  REVISION ||--o{ CRITIQUE : "ダメ出し"
+  SESSION ||--|| LEDGER : "合意台帳"
+  LEDGER ||--o{ CLAIM : "主張"
+  CLAIM ||--o{ STANCE : "賛否の履歴"
+  JUDGE ||--o{ STANCE : "誰の賛否"
+  SESSION ||--o{ UTTERANCE : "発言"
+  SESSION ||--o{ VOTE : "投票"
+  SESSION ||--o| PROPOSAL : "企画書"
+  SESSION ||--o{ EVENT : "events/seq"
+  IDEA ||--|| IDEA_PROFILE : "8軸"
+  IDEA ||--o| PITCH_TAG : "出した理由"
+  JUDGE ||--|| JUDGE_TASTE : "好み"
+  SESSION ||--|| TEAM_TASTE : "チームの好み"
+  JUDGE ||--o{ SIGNAL : "行動・迷い"
+  CHARACTER |o--o{ SIGNAL : "対象"
+  SESSION ||--o| METRICS : "効果の指標"
+  SESSION ||--o{ BUZZER : "ゴールデンブザー"
+  JUDGE ||--o{ BUZZER : "押した人"
+  JUDGE ||--o{ SURVEY : "アンケート（予定）"
+
+  SESSION {
+    string id PK
+    string theme
+    string status "lobby / audition_active / champion_selection / completed"
+    string mode "solo / team"
+    string aiMode "gemini / fixture"
+    int finalists "決勝の人数 1〜4"
+    int challengeMs "持ち時間"
+    string spotlight "決勝で注目しているキャラ"
+    int seq
+  }
+  JUDGE {
+    string id PK
+    string name
+    bool isHost
+    bool connected
+  }
+  CHARACTER {
+    string id PK
+    int designId
+    string location "lower（挑戦中）/ upper（合格）/ archived"
+    string persona "発想の型"
+    datetime leavingAt "持ち時間が切れる時刻"
+    string holdBy "一時停止した審査員"
+    int pausedLeftMs "止めたときの残り"
+  }
+  IDEA {
+    string id PK
+    string title
+    string pitch
+    string slotRole "fit / bridge / explore / wildcard"
+  }
+  REVISION {
+    int version
+    string status "refining / critiquing / ready"
+    string body
+    string reason "改良の理由・巻き戻し"
+  }
+  CLAIM {
+    string id PK
+    string text
+    string status "proposed / agreed / rejected / superseded"
+  }
+  STANCE {
+    string judgeId FK
+    string stance "support / oppose"
+    datetime at
+  }
+  IDEA_PROFILE {
+    float cost "コスト"
+    float novelty "新規性"
+    float ease "手軽さ"
+    float buzz "話題性"
+    float sustain "継続性"
+    float social "社会性"
+    float scale "規模"
+    float reach "広さ"
+  }
+  PITCH_TAG {
+    string kind "fit / bridge / explore / wildcard"
+    string reason "AさんとBさんの間"
+  }
+  JUDGE_TASTE {
+    string judgeId FK
+    string axes "8軸の値"
+    float confidence
+    datetime updatedAt
+  }
+  SIGNAL {
+    string kind "promote / vote / reject / ask / mention / hesitation / laugh"
+    float weight
+    datetime at
+  }
+  METRICS {
+    float firstHalfPickRate
+    float secondHalfPickRate
+    string byTag "タグ別の採用率"
+    string meeting "予定：案の数・決まるまでの時間・発言の偏り"
+  }
+  BUZZER {
+    string judgeId FK
+    string instanceId FK "いまの挑戦者"
+  }
+  SURVEY {
+    string judgeId FK
+    string answers "予定：3問"
+  }
+</pre></div>
+  <p>8軸は packages/protocol の TASTE_AXES（-1〜+1）。UTTERANCE に入るのは、文字で打った発言と、仕分けで残った声の発言（言い直した文）だけです。METRICS の会議の指標と SURVEY は予定です（#18・#20）。</p>
+</section>
+
+<!-- 10 -->
+<section id="camp">
+  <h2>CAMP メッセージ <small>10 / PROTOCOL v1</small></h2>
+  <p>封筒・順序・重複排除・再接続は @camp-protocol/kit（packages/camp）が受け持ち、IDEA AUDITION の語彙は packages/protocol の Zod スキーマで検証します。Command と Event は Firestore に残り、Ephemeral（カーソルなど）は残しません。</p>
+  <div class="frame plain">
+  <table>
+    <thead><tr><th>種類</th><th>向き</th><th>メッセージ</th><th>役割</th></tr></thead>
+    <tbody>
+      <tr><td>hello / welcome</td><td>双方向</td><td><code>hello · welcome</code></td><td>部屋への参加と、現在の snapshot</td></tr>
+      <tr><td>Command</td><td>ブラウザ → サーバー</td><td><code>SET_JUDGE_NAME · START_AUDITION · SET_AI_MODE · PRESS_BUZZER · HOLD_CHALLENGE · REJECT_CANDIDATE · END_PRELIMINARY · SET_SPOTLIGHT · ASK_CANDIDATE · REQUEST_REFINEMENT · REVERT_IDEA_REVISION · SUBMIT_UTTERANCE · START_CHAMPION_VOTE · CAST_VOTE · CLOSE_VOTE · RESOLVE_TIE · SELECT_CHAMPION · LEAVE_SESSION · RESET_SESSION · REGENERATE_PROPOSAL</code></td><td>状態を変える頼みごと。result で成否が返る。REQUEST_PROMOTION・NEXT_IDEA・PIN_CLAIM・UNPIN_CLAIM は前の画面（ドラッグ昇格・論点の確定）の名残で、語彙には残っているが今の画面からは送らない</td></tr>
+      <tr><td>Signal</td><td>ブラウザ → サーバー</td><td><code>SOFT_SIGNAL</code></td><td>迷い・沈黙・笑い・声量と、そのとき見ていたカード。返事なし・1人毎秒2件まで（ADR-0010）</td></tr>
+      <tr><td>protocol_error</td><td>サーバー → ブラウザ</td><td><code>UNSUPPORTED_VERSION · MALFORMED · UNKNOWN_TYPE · NOT_JOINED · RATE_LIMITED · ROOM_NOT_FOUND</code></td><td>黙って捨てずに、相手が直せる情報を返す</td></tr>
+      <tr><td>Event</td><td>サーバー → 全員</td><td><code>SESSION_STARTED · SESSION_RESET · JUDGE_JOINED · JUDGE_RENAMED · JUDGE_LEFT · HOST_CHANGED · CANDIDATE_SPAWNED · CANDIDATE_LEAVING · BUZZER_PRESSED · CHALLENGE_PAUSED · CHALLENGE_RESUMED · PROMOTION_CONFIRMED · CANDIDATE_ARCHIVED · CANDIDATE_STAYED · PRELIMINARY_ENDED · SPOTLIGHT_CHANGED · CONSENSUS_UPDATED · PROPOSAL_UPDATED · AI_MODE_CHANGED · FINALIST_REFINEMENT_STARTED · FINALIST_CRITIQUE_POSTED · FINALIST_VERSION_PUBLISHED · CANDIDATE_ANSWERED · JUDGE_UTTERANCE_RECEIVED · CHAMPION_VOTE_STARTED · VOTE_CAST · TIE_DETECTED · CHAMPION_SELECTED</code></td><td>起きたこと＋snapshot 全体。画面は snapshot を置き換えるだけ</td></tr>
+      <tr><td>Event</td><td>サーバー → 全員</td><td><code>TASTE_UPDATED · CANDIDATE_REACTED · CANDIDATE_REVISED</code></td><td>好みのグラフの更新、🤔 の反応、別案への差し替え・前の版への巻き戻し</td></tr>
+      <tr><td>Ephemeral</td><td>ブラウザ → 他の人</td><td><code>CURSOR_MOVED · FOCUS_CHANGED · MIC_STATE_CHANGED · CALL_STATE · RTC_SIGNAL · THEME_DRAFT · DRAG_PREVIEW</code></td><td>保存しない一時的な共有。FOCUS_CHANGED は深掘り（交代を止める）と迷いの宛先探し、CALL_STATE・RTC_SIGNAL は通話をつなぐ受け渡し、THEME_DRAFT はロビーでホストの入力（テーマ・持ち時間・合格者の人数）をほかの人に映し、最初の挑戦者の作り置きにも使う</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="deploy">
+  <h2>デプロイの流れ <small>11 / DELIVERY</small></h2>
+  <p>アプリの継続的インテグレーション（CI）はまだ無く、夢斗の Mac から2段階で出しています。デプロイのときに Secret Manager から通話の中継（Cloudflare の TURN）のキーを渡します。メンバーは Google Cloud の権限が無くても、固定データ（fixture）モードで手元で動かせます。</p>
+  <div class="frame plain"><pre class="mermaid">
+flowchart LR
+  subgraph LOCAL["開発PC"]
+    C1["pnpm dev&lt;br/&gt;Vite :5173 → server :8787"]
+    C2["pnpm test / typecheck"]
+    C3["gcloud 設定 victory"]
+  end
+  GH[("GitHub（非公開）&lt;br/&gt;yuto-valiark/idea-audition")]
+  CB["Cloud Build&lt;br/&gt;Dockerfile（pnpm build → node）"]
+  AR[("Artifact Registry&lt;br/&gt;タグ = commit の番号")]
+  CR["Cloud Run&lt;br/&gt;idea-audition · asia-northeast1"]
+  SM[("Secret Manager&lt;br/&gt;turn-key-id · turn-key-api-token")]
+  HC{"/health が 200？&lt;br/&gt;call relay: cloudflare turn"}
+  C1 --> C2 -->|git push| GH
+  C2 --> C3 -->|"① gcloud builds submit --tag"| CB --> AR
+  AR -->|"② gcloud run deploy --image"| CR --> HC
+  SM -.->|"--update-secrets"| CR
+  HC -->|はい| OK["新しい revision に 100%"]
+  HC -->|いいえ| RB["前の revision に戻す"]
+  MB["チームメンバー"] -->|clone| GH
+  MB -->|"固定データ（Google Cloud 不要）"| C1
+</pre></div>
+</section>
+
+<!-- 12 -->
+<section id="trust">
+  <h2>権限と境界 <small>12 / TRUST BOUNDARIES</small></h2>
+  <p>点線の枠が信頼の境界です。インターネットから入れるのは部屋のリンクを知っている人だけで、Vertex AI と Firestore への鍵はコンテナの外に出ません。TURN のキーもサーバーだけが持ち、ブラウザには数時間で切れる接続情報だけを渡します。</p>
+  <div class="frame plain"><pre class="mermaid">
+flowchart LR
+  subgraph NET["インターネット（信頼しない）"]
+    U["ブラウザ"]
+  end
+  subgraph RUN["Cloud Run（公開 URL・認証なし）"]
+    RM{"部屋の発行&lt;br/&gt;回数の上限"}
+    ICE["GET /api/ice&lt;br/&gt;短い接続情報を作る"]
+    G{"部屋があるか&lt;br/&gt;hello で確認"}
+    APP["SessionActor"]
+  end
+  subgraph GCP["Google Cloud（サービスアカウントの権限）"]
+    VX["Vertex AI&lt;br/&gt;aiplatform.user"]
+    FS["Firestore&lt;br/&gt;datastore.user"]
+    SM["Secret Manager&lt;br/&gt;TURN のキー"]
+  end
+  subgraph CF["Cloudflare（Google Cloud の外）"]
+    TURN["TURN 中継"]
+  end
+  subgraph DEV["開発"]
+    MAC["夢斗の Mac&lt;br/&gt;gcloud の victory 設定"]
+    MEM["メンバー&lt;br/&gt;Vertex AI だけ"]
+  end
+  U -->|"HTTPS"| RM
+  U -->|"WebSocket"| G
+  U -->|"HTTPS"| ICE
+  SM -.->|起動時に環境変数へ| ICE
+  ICE -->|キーで接続情報を発行| TURN
+  U <-.->|"声（直接つながらないときだけ）"| TURN
+  RM --> APP
+  G -->|ある| APP
+  G -.->|ない| X["ROOM_NOT_FOUND で切断"]
+  APP -->|メタデータサーバーのトークン| VX & FS
+  MAC -->|"build / deploy"| RUN
+  MEM -.->|手元の開発| VX
+  style NET stroke-dasharray: 5 5
+  style GCP stroke-dasharray: 5 5
+  style CF stroke-dasharray: 5 5
+</pre></div>
+  <div class="notes">
+    <div class="note"><b>リポジトリに無いもの</b>API キー（使っていない）、サービスアカウントの鍵ファイル（作っていない）、TURN のキー（Secret Manager だけに置く）。合言葉は廃止しました。</div>
+    <div class="note"><b>音声</b>/voice の音声はサーバーが Gemini Live へ中継するだけで保存しません。残るのは、仕分けで残った発言の文字だけです。通話の声はサーバーを通りません。</div>
+    <div class="note"><b>声の特徴</b>送るのは沈黙の長さや声量などの数値だけで、音声そのものではありません。</div>
+    <div class="note"><b>手元の認証</b>夢斗の Mac は gcloud の victory 設定のトークンを使い、アプリケーションのデフォルト認証情報（ADC）は上書きしません。手元の保存先は本番と別の dev-local です。</div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section id="cost">
+  <h2>Gemini とコスト <small>13 / WHERE CREDITS GO</small></h2>
+  <p>Google Cloud のクレジットを使うのは Vertex AI への呼び出しだけです。誰も接続していない間は挑戦者の交代と作り置きを止めるので、放置しても呼び出しは増えません。固定データモードは0円です。通話の中継（Cloudflare TURN）は、直接つながらない回線のときだけ使います。</p>
+  <div class="frame plain">
+  <table>
+    <thead><tr><th>場面</th><th>モデル</th><th>頻度の目安</th><th>止まる条件</th></tr></thead>
+    <tbody>
+      <tr><td>次の挑戦者</td><td><code>gemini-3.5-flash</code>（思考 MINIMAL）</td><td>挑戦者は1人ずつ（持ち時間は既定60秒）。3案ずつ作り置き。ロビーでテーマを入れている間に2案を先に作る</td><td>接続0人・決勝・投票中・固定データ</td></tr>
+      <tr><td>案の埋め込み</td><td><code>gemini-embedding-001</code>（256次元）</td><td>生成のたびに数文。とても安い</td><td>同上。失敗時は8軸だけで選ぶ</td></tr>
+      <tr><td>質問への回答・合意の更新</td><td><code>gemini-3.5-flash</code></td><td>質問のたび。合意は発言が少し途切れたとき・行動の直後にまとめて</td><td>固定データ</td></tr>
+      <tr><td>発言の仕分け・言い直し</td><td><code>gemini-3.5-flash</code></td><td>声の発言のたび（キャラの名前を呼んだ発言は仕分けない）</td><td>マイクオフ・固定データ</td></tr>
+      <tr><td>迷いへの別案</td><td><code>gemini-3.5-flash</code></td><td>迷いを検出したとき。同じ案は25秒あける</td><td>固定データ・間隔中</td></tr>
+      <tr><td>相互批評・改良・企画書</td><td><code>gemini-3.8-flash</code>（思考 LOW）</td><td>合格・改良の頼みのたび。企画書は決勝の全員分を作り置きし、版が変わったら作り直す</td><td>固定データ</td></tr>
+      <tr><td>音声の文字起こし（予定：声の調子も）</td><td><code>gemini-3.5-transcribe-live</code></td><td>マイクをオンにしている間ずっと</td><td>マイクオフ</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 14 -->
+<section id="tree">
+  <h2>フォルダ構成 <small>14 / REPOSITORY</small></h2>
+  <p>1つのリポジトリに、アプリと CAMP が入っています。<span class="tree"><span class="s">packages/camp</span></span> は完成したら公開リポジトリに切り出します。</p>
+  <div class="frame plain"><pre class="tree">idea-audition/
+├─ packages/
+│  ├─ <span class="s">camp/</span>                         <span class="c">@camp-protocol/kit（どのアプリでも使える CAMP の実装、MIT）</span>
+│  │  ├─ src/core · client · server  <span class="c">封筒と語彙の組み立て · 再接続と再送 · 部屋と直列処理</span>
+│  │  ├─ SPEC.md · README.md · LICENSE
+│  │  └─ examples/quick-vote · test/
+│  └─ protocol/src/vocabulary/       <span class="c">IDEA AUDITION の語彙（Command・Event・snapshot・理由コード）</span>
+├─ apps/server/src/
+│  ├─ main.ts
+│  ├─ presentation/                  <span class="c">ws-server（/camp・POST /api/rooms・GET /api/ice）· voice-server · static-files</span>
+│  ├─ application/                   <span class="c">session-actor · room-directory · generation-planner · speech-lexicon</span>
+│  ├─ domain/                        <span class="c">session · taste · selection · consensus · metrics · transcript-repair</span>
+│  └─ infrastructure/                <span class="c">gemini/ · fixture/ · persistence/ · resilient-gateway · turn</span>
+├─ apps/web/src/
+│  ├─ App.tsx · net/camp-client.ts · store/
+│  ├─ scene/                         <span class="c">PreliminaryStage（予選）· FinalStage（決勝）</span>
+│  └─ features/                      <span class="c">audition · inspection · consensus · chat · taste · voice · call · champion</span>
+├─ docs/                             <span class="c">adr/ · protocol/ · plans/ · backlog/ · 02-architecture/</span>
+├─ scripts/                          <span class="c">grant-dev-access.sh · camp-split.sh</span>
+└─ Dockerfile</pre></div>
+</section>
+
+<!-- 15 -->
+<section id="protocol">
+  <h2>CAMP とOSSへの道 <small>15 / PROTOCOL &amp; OSS</small></h2>
+  <p>CAMP は TCP や WebSocket の仲間ではなく、その上に載るアプリケーション層のプロトコルです。WebSocket は「届ける」だけで、4人がほぼ同時にブザーを押したときに合格を1回だけにする方法、返事の前に切れた操作をどうするか、遅れて返った AI の結果をどう扱うかは決めてくれません。そこを決めているのが CAMP です（ADR-0010、docs/protocol/camp-v1.md）。</p>
+  <div class="frame plain"><pre class="mermaid">
+flowchart TB
+  APP["IDEA AUDITION の語彙&lt;br/&gt;PRESS_BUZZER · CANDIDATE_SPAWNED · SOFT_SIGNAL …"]
+  CAMP["CAMP v1（自作）&lt;br/&gt;直列処理と seq · 重複排除 · 再接続 · 古い AI 結果を捨てる · 部屋"]
+  WS["WebSocket（RFC 6455）&lt;br/&gt;双方向・メッセージ単位で届ける"]
+  TLS["TLS（暗号化）"]
+  TCP["TCP&lt;br/&gt;順番どおり確実に届ける"]
+  IP["IP"]
+  APP --> CAMP --> WS --> TLS --> TCP --> IP
+</pre></div>
+  <div class="frame plain">
+  <table>
+    <thead><tr><th>プロトコルとして決めること</th><th>CAMP v1 の答え</th></tr></thead>
+    <tbody>
+      <tr><td>送れるメッセージ</td><td>hello・welcome・command・result・event・ephemeral・signal・protocol_error</td></tr>
+      <tr><td>誰が入れるか</td><td>アプリが作った部屋だけ。ない部屋は <code>ROOM_NOT_FOUND</code>（終了コード 4404）</td></tr>
+      <tr><td>処理の順序</td><td>部屋ごとに1件ずつ。Event に欠番なしの <code>seq</code> と snapshot 全体</td></tr>
+      <tr><td>同時操作の衝突</td><td>状態の前提条件で判定。対象の版は <code>expected.rev</code> → <code>STALE_VERSION</code></td></tr>
+      <tr><td>二重処理と再接続</td><td><code>commandId</code> ごとに結果を覚えて同じ result を返す。再接続したら同じ ID で送り直す</td></tr>
+      <tr><td>AI の遅れた結果</td><td>部屋を作り直す前に始まった結果は捨てる（<code>epoch</code>）</td></tr>
+      <tr><td>バージョン・壊れたメッセージ・送りすぎ</td><td><code>protocol_error</code> で理由を返し、決まった終了コードで閉じる</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="notes">
+    <div class="note"><b>いまの状態</b>@camp-protocol/kit として実装し、適合テストと仕様書（SPEC.md）をそろえた。GitHub の camp-protocol/camp と npm の @camp-protocol は確保済み。完成したら英語の履歴で公開し直し、npm に出す。</div>
+    <div class="note"><b>アプリとの関係</b>IDEA AUDITION は同じリポジトリの packages/camp を読んでいる。npm に出したら、読み込み先を npm の版に切り替える（import はそのまま）。</div>
+    <div class="note"><b>アプリの言葉を持たない</b>CAMP の中にアプリの語彙が混ざらないことを、境界テストで毎回確かめている。</div>
+  </div>
+</section>
+</main>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker>
+    <symbol id="i-browser" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M6 6.5h.01M8.5 6.5h.01"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-ws" viewBox="0 0 24 24"><path d="M4 9h15l-3-3M20 15H5l3 3"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><path d="M12 3l8 6-3 11H7L4 9z"/><path d="M12 8l4 3-2 5h-4l-2-5z"/></symbol>
+    <symbol id="i-ledger" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v14c0 1.7 3.1 3 7 3s7-1.3 7-3V5M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></symbol>
+    <symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></symbol>
+    <symbol id="i-yen" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 7l4 5 4-5M12 12v6M9 13h6M9 16h6"/></symbol>
+    <symbol id="i-build" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="9" rx="1.5"/><path d="M12 3v11M8 7l4-4 4 4"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2c.6 5 5 9.4 10 10-5 .6-9.4 5-10 10-.6-5-5-9.4-10-10 5-.6 9.4-5 10-10z"/></symbol>
+    <symbol id="i-vector" viewBox="0 0 24 24"><circle cx="5" cy="18" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="19" cy="14" r="1.6"/><circle cx="9" cy="12" r="1.6"/><path d="M5 18l4-6 3-6M9 12l10 2"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="8" r="2"/><path d="M6 7v10M18 10a6 6 0 0 1-6 6H8"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8.5a3.5 3.5 0 0 0 0-7h-9a3.5 3.5 0 0 1 0-7H16"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M15 14.5c3 0 6 2 6 5"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  const svg = document.getElementById('map');
+  const NS = 'http://www.w3.org/2000/svg';
+  const tone = {client:['--t-client','--tile-client'],run:['--t-run','--tile-run'],gcp:['--t-gcp','--tile-gcp'],ai:['--t-ai','--tile-ai'],dev:['--t-dev','--tile-dev'],ext:['--t-ext','--tile-ext']};
+  // 境界：Google Cloud（外枠・点線）の中に Cloud Run と Vertex AI（内枠・実線）
+  const groups = [
+    {x:20,y:40,w:270,h:600,t:'client',label:'会場 · 審査員の PC'},
+    {x:320,y:40,w:950,h:600,t:'gcp',label:'Google Cloud · プロジェクト idea-audition（請求先 VICTORY）'},
+    {x:340,y:70,w:360,h:410,t:'run',label:'Cloud Run · asia-northeast1 · 最大1台',inner:true},
+    {x:980,y:70,w:270,h:390,t:'ai',label:'Vertex AI · global',inner:true},
+    {x:20,y:665,w:1250,h:110,t:'ext',label:'通話の経路 · ブラウザどうし（Cloud Run を通らない）'},
+    {x:20,y:795,w:1250,h:160,t:'dev',label:'開発 · チーム'}
+  ];
+  const N = (x,y,w,h,t,icon,title,sub)=>({x,y,w,h,t,icon,title,sub});
+  const nodes = [
+    N(40,100,230,64,'client','browser','審査員のブラウザ ×4','React 19 · Zustand · Motion'),
+    N(40,200,230,60,'client','doc','企画書 PDF','html2pdf.js · 端末の中で生成'),
+    N(40,300,230,64,'client','mic','マイク','AudioWorklet · 通話と共有'),
+    N(40,410,230,60,'client','eye','観覧者（5人目〜）','同じ画面を見て、聞くだけ'),
+    N(40,520,230,60,'client','phone','通話（WebRTC）','ブラウザどうしで直接'),
+    N(360,106,150,52,'run','folder','静的配信','web/dist'),
+    N(530,106,150,52,'run','link','部屋の発行','POST /api/rooms'),
+    N(360,170,150,52,'run','ws','/camp','CAMP v1 · JSON'),
+    N(530,170,150,52,'run','wave','/voice','音声を中継'),
+    N(360,262,320,52,'run','layers','SessionActor','部屋ごとに1件ずつ処理 · 状態の正本'),
+    N(360,332,150,52,'run','radar','好みエンジン','好み · 選抜 · 迷い'),
+    N(530,332,150,52,'run','ledger','合意台帳','人の発言と行動だけ'),
+    N(360,410,150,52,'run','key','通話の鍵渡し','GET /api/ice'),
+    N(530,410,150,52,'run','doc','発言の仕分け','審査の話だけ言い直す'),
+    N(740,190,190,52,'gcp','db','Firestore','本番 (default) · 開発 dev-local'),
+    N(740,440,190,52,'gcp','id','サービスアカウント','Vertex AI · Firestore の権限'),
+    N(740,520,190,52,'gcp','yen','予算アラート','使った額をメールで通知'),
+    N(740,584,190,48,'gcp','lock','Secret Manager','TURN のキー'),
+    N(340,520,170,52,'gcp','build','Cloud Build','Dockerfile → イメージ'),
+    N(530,520,170,52,'gcp','cube','Artifact Registry','コンテナイメージ'),
+    N(995,106,240,64,'ai','wave','gemini-3.5-transcribe-live','音声 → 文字（予定：声の調子）'),
+    N(995,202,240,64,'ai','spark','gemini-3.5-flash','案 · 回答 · 合意 · 発言の仕分け'),
+    N(995,298,240,64,'ai','spark','gemini-3.8-flash','改良 · 相互批評 · 企画書'),
+    N(995,382,240,64,'ai','vector','gemini-embedding-001','256次元 · メモリだけに保持'),
+    N(470,690,230,56,'ext','route','Google STUN','通話の経路探し'),
+    N(900,690,240,56,'ext','route','Cloudflare TURN','直接つながらないときだけ中継'),
+    N(40,855,210,60,'dev','laptop','開発 PC','pnpm dev · Vite'),
+    N(300,855,210,60,'dev','git','GitHub（非公開）','yuto-valiark/idea-audition'),
+    N(560,855,210,60,'dev','people','チームメンバー','clone → Issue / PR'),
+    N(1020,855,230,60,'dev','box','CAMP の公開リポジトリ','camp-protocol/camp')
+  ];
+  // [path, label, lx, ly, cls, both, anchor]（cls は '' か 'dash' だけ。色と太さは共通）
+  const edges = [
+    ['M270 120 H360','HTTPS · 画面と部屋の発行',276,113,'',false],
+    ['M270 150 H320 V196 H360','WebSocket（WSS）/camp',276,143,'',true],
+    ['M270 332 H325 V242 H560 V222','WebSocket /voice · 音声 16kHz ＋ 声の特徴',332,236,'',false],
+    ['M155 164 V200','優勝後',162,186,'dash',false],
+    ['M530 150 H520 V262','部屋を作る',514,258,'',false,'end'],
+    ['M380 222 V262','',0,0,'',false],
+    ['M660 222 V262','',0,0,'',false],
+    ['M436 314 V332','',0,0,'',true],
+    ['M606 314 V332','',0,0,'',true],
+    ['M606 410 V384','',0,0,'',false],
+    ['M680 274 H712 V216 H740','状態とイベントを保存',744,262,'',false],
+    ['M680 196 H720 V138 H995','音声を中継（WebSocket）',780,132,'',false],
+    ['M680 300 H960 V330 H995','生成リクエスト',744,294,'',false],
+    ['M960 300 V234 H995','',0,0,'',false],
+    ['M680 362 H960 V414 H995','埋め込み',744,356,'',false],
+    ['M740 452 H700','実行の権限',720,446,'dash',false,'middle'],
+    ['M740 608 H720 V472 H700','TURN のキー',716,600,'dash',false,'end'],
+    ['M930 546 H1115 V460','利用額',1000,540,'dash',false,'middle'],
+    ['M510 546 H530','',0,0,'',false],
+    ['M605 520 V480','デプロイ',612,504,'',false],
+    ['M270 545 H330 V436 H360','GET /api/ice',276,538,'',false],
+    ['M215 580 V718 H470','経路探し',300,711,'dash',false,'middle'],
+    ['M250 580 V758 H1020 V746','直接つながらないときは中継（テザリング・大学の Wi-Fi など）',640,771,'dash',true,'middle'],
+    ['M250 885 H300','git push',275,877,'',false,'middle'],
+    ['M560 885 H510','clone',535,877,'',false,'middle'],
+    ['M770 885 H1020','切り出して公開（完成時）',895,877,'dash',false,'middle'],
+    ['M145 855 V785 H425 V572','gcloud builds submit（gcloud の victory 設定）',160,779,'',false],
+    ['M100 855 V825 H835 V242','開発は dev-local に保存',560,819,'dash',false,'middle']
+  ];
+  const el = (n,a,p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};
+  const txt = (s,a,p)=>{const e=el('text',a,p);e.textContent=s;return e;};
+  for(const g of groups){
+    const [c,t] = tone[g.t];
+    el('rect',{x:g.x,y:g.y,width:g.w,height:g.h,rx:g.inner?12:16,fill:g.inner?`var(${t})`:'none','fill-opacity':g.inner?.45:0,stroke:`var(${c})`,'stroke-width':g.inner?1.4:1.6,'stroke-dasharray':g.inner?'':'6 5'});
+    txt(g.label,{x:g.x+16,y:g.y+(g.inner?22:22),class:'gl',fill:`var(${c})`,style:`fill:var(${c})`});
+  }
+  for(const e of edges){
+    const [d,label,lx,ly,cls,both,anchor] = e;
+    const a = {d,class:'edge '+cls,'marker-end':'url(#arr)'};
+    if(both) a['marker-start']='url(#arr)';
+    el('path',a);
+  }
+  for(const n of nodes){
+    const [c,t] = tone[n.t];
+    const g = el('g',{class:'node'});
+    el('rect',{class:'box',x:n.x,y:n.y,width:n.w,height:n.h,rx:10},g);
+    const ts = 34, ty = n.y+(n.h-ts)/2;
+    el('rect',{x:n.x+9,y:ty,width:ts,height:ts,rx:8,fill:`var(${t})`},g);
+    el('use',{href:'#i-'+n.icon,x:n.x+9+7,y:ty+7,width:20,height:20,class:'ico',stroke:`var(${c})`,style:`stroke:var(${c})`},g);
+    txt(n.title,{x:n.x+52,y:n.y+n.h/2-3,class:'nt'},g);
+    txt(n.sub,{x:n.x+52,y:n.y+n.h/2+12,class:'ns'},g);
+  }
+  for(const e of edges){
+    const [d,label,lx,ly,cls,both,anchor] = e;
+    if(label) txt(label,{x:lx,y:ly,class:'el','text-anchor':anchor||'start'});
+  }
+})();
+</script>
+<script>
+/* claude.ai の表示では Mermaid がそのまま描かれる。書き出した HTML ではされないので、
+   描かれていない図が残っていたら Mermaid を読み込んで自分で描く。 */
+(function(){
+  const SRC = 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js';
+  function pending(){
+    return [...document.querySelectorAll('pre.mermaid')].filter(p => !p.querySelector('svg') && !p.hasAttribute('data-processed'));
+  }
+  function draw(nodes){
+    const dark = document.documentElement.dataset.theme === 'dark' ||
+      (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+    window.mermaid.initialize({ startOnLoad:false, theme: dark ? 'dark' : 'default', securityLevel:'strict',
+      fontFamily:'"Zen Kaku Gothic New","Hiragino Sans",sans-serif' });
+    window.mermaid.run({ nodes }).catch(e => console.error(e));
+  }
+  function check(){
+    const nodes = pending();
+    if (!nodes.length) return;
+    if (window.mermaid) return draw(nodes);
+    const s = document.createElement('script');
+    s.src = SRC;
+    s.onload = () => draw(pending());
+    document.head.appendChild(s);
+  }
+  if (document.readyState === 'complete') setTimeout(check, 1200);
+  else addEventListener('load', () => setTimeout(check, 1200));
+})();
+</script>

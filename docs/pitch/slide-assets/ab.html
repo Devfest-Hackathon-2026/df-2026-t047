@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.panel{position:absolute;top:8px;height:424px;border-radius:14px;padding:14px 16px}
+.h{font-size:15px;font-weight:800}.sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.say{font-size:11.5px;padding:6px 10px;border-radius:10px;background:#221635;border:1px solid #3a2758;margin-top:6px;display:flex;gap:7px;align-items:center}
+.av{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#120818;flex:none}
+.arrow{font-size:16px;color:var(--pink);text-align:center;margin:6px 0 2px}
+.res{border-radius:10px;padding:9px 12px;font-size:12px;margin-top:4px}
+img{display:block;border-radius:10px;border:1px solid #3a2758}
+</style></head><body>
+<div class="panel" style="left:8px;width:330px;background:#0f0919;border:1.5px solid #3b2756">
+  <div class="h" style="color:#cdbfe0">作り置きを順に出す方式</div><div class="sub">比較のための想定（固定キュー）</div>
+  <div class="say"><span class="av" style="background:#ff7ad9">B</span>コストは低めで、すぐ参加できるのがいい</div>
+  <div class="say"><span class="av" style="background:#58c8ff">C</span>毎日続けられる仕組みにしたい</div>
+  <div class="say"><span class="av" style="background:#ffc04d">D</span>一回きりより、続くほうがいいね</div>
+  <div class="arrow">↓</div>
+  <div class="res" style="background:#2a1020;border:1.5px solid #7a3048;color:#ffb0b0"><b>次に出るのは、会話の前に作った案</b><br><span style="font-size:11px;color:#d79a9a">会話は届かない。合意が変わっても、古い前提の案が順番どおり出てくる</span></div>
+  <div class="res" style="background:#160f22;border:1px dashed #4a3366;color:var(--muted);font-size:11px;margin-top:10px">→ 「さっきの話、聞いてた？」</div>
+</div>
+<div style="position:absolute;left:346px;top:200px;font-size:13px;font-weight:800;color:var(--pink)">VS</div>
+<div class="panel glow" style="left:376px;width:791px;background:#140b22;border:1.5px solid var(--pink)">
+  <div class="h">IDEA AUDITION</div><div class="sub">同じ会話から、合意が更新され、次の生成の条件が変わる（実際の画面）</div>
+  <div style="position:absolute;left:16px;top:62px;width:250px">
+    <div class="say" style="margin-top:0"><span class="av" style="background:#ff7ad9">B</span>コストは低めで、すぐ参加できるのがいい</div>
+    <div class="say"><span class="av" style="background:#58c8ff">C</span>毎日続けられる仕組みにしたい</div>
+    <div class="say"><span class="av" style="background:#ffc04d">D</span>一回きりより、続くほうがいいね</div>
+    <div class="res" style="background:#1b1030;border:1px solid #4a3366;color:var(--muted);font-size:10.5px;margin-top:12px;line-height:1.6">合意が大きく動いたら、古い合意で作った作り置きの案を捨て、新しい合意を条件に Gemini が作り直す</div>
+  </div>
+  <div style="position:absolute;left:280px;top:62px;width:236px"><div class="tag">① 合意台帳が更新</div><img src="memo_crop.png" style="width:236px"></div>
+  <div style="position:absolute;left:530px;top:62px;width:245px"><div class="tag">② 決勝の案が合意を反映</div><img src="card_crop.png" style="width:220px">
+    <div class="tag" style="margin-top:10px">③ 新しく出る案も合意に沿う</div><img src="newcard_crop.png" style="width:196px"></div>
+  <svg width="791" height="424" style="position:absolute;left:0;top:0"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FF72ED"/></marker></defs>
+  <path d="M266 110 L278 110" stroke="#FF72ED" stroke-width="2.5" marker-end="url(#a)"/><path d="M516 110 L528 110" stroke="#FF72ED" stroke-width="2.5" marker-end="url(#a)"/></svg>
+</div>
+</body></html>

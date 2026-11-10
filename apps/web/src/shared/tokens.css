@@ -1,0 +1,120 @@
+/* デザイントークン（値は チームで作った初期の画面モックから移植） */
+:root {
+  color-scheme: dark;
+  --bg: #09051b;
+  --bg-elev: #1a1028;
+  --bg-panel: #1b102c;
+  --ink: #f7f3ff;
+  --ink-soft: #d9cde6;
+  --ink-muted: #9c8caf;
+  --ink-faint: #6c597e;
+  --line: #76559e55;
+  --line-strong: #8962ad;
+  --purple: #b665ff;
+  --purple-soft: #ce88ff;
+  --pink: #f367ff;
+  --blue: #55c7ff;
+  --gold: #ffc85c;
+  --gold-soft: #f5ce84;
+  --gold-line: #e6bc70;
+  --ok: #74efbd;
+  --warn: #ff8caa;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, system-ui, sans-serif;
+  --ease-pop: cubic-bezier(0.2, 0.9, 0.25, 1.2);
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+}
+
+body {
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  transition:
+    background 0.18s,
+    transform 0.18s,
+    border-color 0.18s,
+    filter 0.18s;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+:focus-visible {
+  outline: 2px solid #f593ff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* オフィシャル会議モード（#36）：白基調・紺アクセントのフラットな配色に切り替える */
+:root[data-formality='official'] {
+  color-scheme: light;
+  --bg: #f8f9fa;
+  --bg-elev: #ffffff;
+  --bg-panel: #ffffff;
+  --ink: #202124;
+  --ink-soft: #3c4043;
+  --ink-muted: #5f6368;
+  --ink-faint: #80868b;
+  --line: #dadce0;
+  --line-strong: #bdc1c6;
+  --purple: #0b57d0;
+  --purple-soft: #1a73e8;
+  --pink: #0b57d0;
+  --blue: #1a73e8;
+  --gold: #0b57d0;
+  --gold-soft: #1a73e8;
+  --gold-line: #bdc1c6;
+  --ok: #188038;
+  --warn: #d93025;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+}
+
+:root[data-formality='official'] :focus-visible {
+  outline-color: #1a73e8;
+}

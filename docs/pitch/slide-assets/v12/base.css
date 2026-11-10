@@ -1,0 +1,17 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1672px;height:941px;overflow:hidden;color:#F8F3FF;font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+background:radial-gradient(ellipse at 50% -10%,#5b1fa088 0%,transparent 55%),radial-gradient(ellipse at 50% 120%,#7a2fd066 0%,transparent 55%),#0a0518}
+.bg{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.bg i{position:absolute;top:-5%;width:30%;height:100%;background:linear-gradient(180deg,#c27bff40,transparent 75%);clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);filter:blur(3px)}
+.bg i:nth-child(1){left:2%;rotate:22deg;transform-origin:50% 0}.bg i:nth-child(2){left:35%;opacity:.6}.bg i:nth-child(3){right:2%;rotate:-22deg;transform-origin:50% 0}
+.hd{position:absolute;left:60px;top:40px;font-size:22px;letter-spacing:3px;color:#e9dcff}.hd b{font-weight:800}
+.ln{position:absolute;left:60px;right:60px;top:84px;height:2px;background:linear-gradient(90deg,#c97cfa,#5d387f 60%,transparent)}
+.no{position:absolute;right:56px;top:18px;font-size:60px;font-style:italic;font-weight:200;color:#c9a6f0}
+h1{font-weight:900;font-style:italic;letter-spacing:1px;line-height:1.25;text-shadow:0 0 22px #b06bff66}
+h1 em{font-style:italic;color:#FF72ED;text-shadow:0 0 24px #ff72ed99}
+.frame{border:2.5px solid #c97cfa;border-radius:18px;overflow:hidden;box-shadow:0 0 36px #b250ff88,0 20px 60px #000a;background:#000}
+.frame img{display:block;width:100%}
+.pill{display:inline-flex;align-items:center;gap:10px;font-size:20px;font-weight:800;padding:12px 24px;border-radius:999px;border:2px solid #c97cfa;background:#1a0f2acc;box-shadow:0 0 16px #b250ff55}
+.num{display:inline-flex;width:30px;height:30px;border-radius:50%;background:#FF72ED;color:#1a0820;font-size:16px;font-weight:900;align-items:center;justify-content:center}
+.card{border:1.5px solid #6a3fa0;border-radius:18px;background:linear-gradient(180deg,#22123acc,#120a20cc);box-shadow:0 0 20px #8a3ce033}
+.sub{font-size:22px;color:#e3d3f5;line-height:1.7}

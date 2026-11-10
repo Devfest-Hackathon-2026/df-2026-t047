@@ -1,0 +1,303 @@
+/* PDF 用の紙面（A4 縦・白地）。画面のテーマとは独立させる */
+.doc {
+  width: 794px; /* A4 幅（96dpi） */
+  padding: 40px 48px;
+  background: #ffffff;
+  color: #1d1626;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.75;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* 画面内ビューア表示時は親コンテナ幅に合わせて収める */
+.doc[data-preview='true'] {
+  width: 100%;
+  max-width: 794px;
+  margin: 0 auto;
+  padding: clamp(20px, 2.5vw, 36px) clamp(20px, 3vw, 44px);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(10, 4, 24, 0.35);
+}
+
+.brand {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #7a3fc8;
+}
+
+.cover {
+  border-bottom: 3px solid #7a3fc8;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.coverRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cover h1,
+.partHeader h1 {
+  font-size: 26px;
+  line-height: 1.35;
+  margin: 6px 0 4px;
+  color: #241336;
+  background: none;
+  letter-spacing: normal;
+  white-space: normal;
+  text-align: left;
+}
+
+.catch {
+  font-size: 15px;
+  font-weight: 700;
+  color: #9a4f00;
+  margin: 0 0 8px;
+}
+
+.meta {
+  font-size: 11px;
+  color: #5d5068;
+  margin: 0;
+}
+
+.mascot {
+  width: 110px;
+  flex-shrink: 0;
+  filter: none;
+}
+
+.visual {
+  margin: 0 0 14px;
+  border: 1px solid #ddd3e8;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #faf7fd;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.visualImg {
+  display: block;
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.partHeader {
+  border-bottom: 3px solid #7a3fc8;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.section {
+  margin-bottom: 8px;
+}
+
+.section p {
+  margin: 0;
+}
+
+.section[data-tone='warn'] {
+  background: #fff6e6;
+  border: 1px solid #f0c27a;
+  border-radius: 6px;
+  padding: 6px 12px 4px;
+}
+
+.h2 {
+  font-size: 13.5px;
+  margin: 14px 0 5px;
+  padding-left: 8px;
+  border-left: 4px solid #7a3fc8;
+  color: #241336;
+  text-align: left;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2px 0 6px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd3e8;
+  padding: 5px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  background: #f5f0fb;
+  width: 30%;
+  font-weight: 700;
+}
+
+.table thead th {
+  width: auto;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.list li {
+  margin: 2px 0;
+}
+
+.avoid {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.pageBreak {
+  break-before: page;
+  page-break-before: always;
+  height: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin: 4px 0 6px;
+}
+
+.stats div {
+  border: 1px solid #ddd3e8;
+  border-radius: 6px;
+  padding: 6px 4px;
+  text-align: center;
+  background: #faf7fd;
+}
+
+.stats b {
+  display: block;
+  font-size: 20px;
+  color: #7a3fc8;
+  line-height: 1.2;
+}
+
+.stats span {
+  font-size: 10px;
+  color: #5d5068;
+}
+
+.claim {
+  border: 1px solid #b9e6cf;
+  background: #f1fbf6;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+}
+
+.claim b {
+  color: #1f7a52;
+}
+
+.tag {
+  margin-left: 6px;
+  font-size: 10px;
+  background: #1f7a52;
+  color: #fff;
+  border-radius: 3px;
+  padding: 0 5px;
+}
+
+.timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  font-size: 10.5px;
+  color: #5d5068;
+}
+
+.rev {
+  border-left: 3px solid #d7c6ef;
+  padding: 2px 0 2px 10px;
+  margin-bottom: 8px;
+}
+
+.rev p {
+  margin: 0;
+}
+
+.revHead {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.revHead b {
+  color: #7a3fc8;
+}
+
+.revHead span {
+  margin-left: auto;
+  font-size: 10px;
+  color: #8a7d96;
+}
+
+.qa {
+  margin-bottom: 6px;
+}
+
+.qa p {
+  margin: 0 0 0 1em;
+}
+
+.muted {
+  color: #5d5068;
+  font-size: 11.5px;
+  margin: 2px 0;
+}
+
+.small {
+  font-size: 11px;
+  color: #5d5068;
+}
+
+.footer {
+  margin-top: 18px;
+  padding-top: 8px;
+  border-top: 1px solid #ddd3e8;
+  font-size: 10px;
+  color: #8a7d96;
+}
+
+/* 好みの読み取りと効果（ADR-0009） */
+.taste {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 640px) {
+  .doc[data-preview='true'] .twoCol,
+  .doc[data-preview='true'] .taste {
+    grid-template-columns: 1fr;
+  }
+  .doc[data-preview='true'] .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

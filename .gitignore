@@ -16,16 +16,11 @@ GoogleService-Info.plist
 # 依存関係とビルドの成果物
 node_modules/
 dist/
-build/
-out/
-.next/
-.wrangler/
-__pycache__/
-*.pyc
-.venv/
-venv/
+coverage/
+test-results/
+playwright-report/
 
-# OS とエディタ
+# OS とエディタ・ログ
 .DS_Store
 Thumbs.db
 .idea/

@@ -1,0 +1,580 @@
+{
+  "seed": 1,
+  "oneWayDelayMs": 40,
+  "node": "v24.9.0",
+  "at": "2026-11-09T18:47:17.725Z",
+  "results": {
+    "s1": [
+      {
+        "impl": "CAMP",
+        "people": 4,
+        "sent": 1000,
+        "serverCount": 476,
+        "clientCounts": [
+          476
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": null,
+        "lost": 524,
+        "duplicated": 0,
+        "bytes": 3141378,
+        "messages": 1766
+      },
+      {
+        "impl": "WS",
+        "people": 4,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 197,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 8599120,
+        "messages": 5004
+      },
+      {
+        "impl": "WS+再送",
+        "people": 4,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 157,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 8627120,
+        "messages": 6004
+      },
+      {
+        "impl": "HTTP",
+        "people": 4,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 3653,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 2474178,
+        "messages": 2016
+      },
+      {
+        "impl": "CAMP",
+        "people": 8,
+        "sent": 1000,
+        "serverCount": 10482,
+        "clientCounts": [
+          10482
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": null,
+        "lost": 42,
+        "duplicated": 9524,
+        "bytes": 91309859,
+        "messages": 29904
+      },
+      {
+        "impl": "WS",
+        "people": 8,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 243,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 17145240,
+        "messages": 9008
+      },
+      {
+        "impl": "WS+再送",
+        "people": 8,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 208,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 17173240,
+        "messages": 10008
+      },
+      {
+        "impl": "HTTP",
+        "people": 8,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 1871,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 2486286,
+        "messages": 2032
+      },
+      {
+        "impl": "CAMP",
+        "people": 16,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 616,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 54384507,
+        "messages": 17016
+      },
+      {
+        "impl": "WS",
+        "people": 16,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 317,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 34242281,
+        "messages": 17016
+      },
+      {
+        "impl": "WS+再送",
+        "people": 16,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 333,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 38349880,
+        "messages": 18016
+      },
+      {
+        "impl": "HTTP",
+        "people": 16,
+        "sent": 1000,
+        "serverCount": 1000,
+        "clientCounts": [
+          1000
+        ],
+        "divergedClients": 0,
+        "msUntilAllScreens": 1089,
+        "lost": 0,
+        "duplicated": 0,
+        "bytes": 2771455,
+        "messages": 2063
+      }
+    ],
+    "s2": [
+      {
+        "impl": "CAMP",
+        "seed": 1,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS",
+        "seed": 1,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 4,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS+再送",
+        "seed": 1,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "HTTP",
+        "seed": 1,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "CAMP",
+        "seed": 2,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS",
+        "seed": 2,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 4,
+        "duplicated": 0,
+        "aiCalls": 39,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS+再送",
+        "seed": 2,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 2,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "HTTP",
+        "seed": 2,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 2,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "CAMP",
+        "seed": 3,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 0,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS",
+        "seed": 3,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 3,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS+再送",
+        "seed": 3,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 41,
+        "extraAiCalls": 1,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "HTTP",
+        "seed": 3,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 41,
+        "extraAiCalls": 1,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "CAMP",
+        "seed": 4,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS",
+        "seed": 4,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 3,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS+再送",
+        "seed": 4,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 42,
+        "extraAiCalls": 2,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "HTTP",
+        "seed": 4,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 20,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 42,
+        "extraAiCalls": 2,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "CAMP",
+        "seed": 5,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 0,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS",
+        "seed": 5,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 4,
+        "duplicated": 0,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "WS+再送",
+        "seed": 5,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 0,
+        "duplicated": 6,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      },
+      {
+        "impl": "HTTP",
+        "seed": 5,
+        "sent": 440,
+        "asks": 40,
+        "cuts": 21,
+        "lost": 0,
+        "duplicated": 5,
+        "aiCalls": 40,
+        "extraAiCalls": 0,
+        "divergedClients": 0,
+        "seconds": 24.2
+      }
+    ],
+    "s3": [
+      {
+        "impl": "CAMP",
+        "trials": 30,
+        "staleAnswersApplied": 0,
+        "staleShownAtEnd": 0,
+        "aiCalls": 30,
+        "lost": 0,
+        "duplicated": 0
+      },
+      {
+        "impl": "WS",
+        "trials": 30,
+        "staleAnswersApplied": 30,
+        "staleShownAtEnd": 4,
+        "aiCalls": 30,
+        "lost": 0,
+        "duplicated": 0
+      },
+      {
+        "impl": "WS+再送",
+        "trials": 30,
+        "staleAnswersApplied": 30,
+        "staleShownAtEnd": 4,
+        "aiCalls": 30,
+        "lost": 0,
+        "duplicated": 0
+      },
+      {
+        "impl": "HTTP",
+        "trials": 30,
+        "staleAnswersApplied": 30,
+        "staleShownAtEnd": 4,
+        "aiCalls": 30,
+        "lost": 0,
+        "duplicated": 0
+      }
+    ],
+    "s4": [
+      {
+        "impl": "CAMP",
+        "oneWayDelayMs": 0,
+        "ops": 200,
+        "p50": 2,
+        "p95": 3,
+        "max": 5,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 5871,
+        "messagesPerOp": 5
+      },
+      {
+        "impl": "WS",
+        "oneWayDelayMs": 0,
+        "ops": 200,
+        "p50": 1,
+        "p95": 2,
+        "max": 3,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 4059,
+        "messagesPerOp": 5
+      },
+      {
+        "impl": "WS+再送",
+        "oneWayDelayMs": 0,
+        "ops": 200,
+        "p50": 1,
+        "p95": 2,
+        "max": 3,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 4088,
+        "messagesPerOp": 6
+      },
+      {
+        "impl": "HTTP",
+        "oneWayDelayMs": 0,
+        "ops": 200,
+        "p50": 291,
+        "p95": 396,
+        "max": 620,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 1955,
+        "messagesPerOp": 3
+      },
+      {
+        "impl": "CAMP",
+        "oneWayDelayMs": 40,
+        "ops": 200,
+        "p50": 84,
+        "p95": 86,
+        "max": 91,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 5871,
+        "messagesPerOp": 5
+      },
+      {
+        "impl": "WS",
+        "oneWayDelayMs": 40,
+        "ops": 200,
+        "p50": 83,
+        "p95": 85,
+        "max": 92,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 4059,
+        "messagesPerOp": 5
+      },
+      {
+        "impl": "WS+再送",
+        "oneWayDelayMs": 40,
+        "ops": 200,
+        "p50": 84,
+        "p95": 85,
+        "max": 86,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 4088,
+        "messagesPerOp": 6
+      },
+      {
+        "impl": "HTTP",
+        "oneWayDelayMs": 40,
+        "ops": 200,
+        "p50": 372,
+        "p95": 476,
+        "max": 1160,
+        "notSeenBySomeone": 0,
+        "bytesPerOp": 1896,
+        "messagesPerOp": 2.9
+      }
+    ]
+  }
+}

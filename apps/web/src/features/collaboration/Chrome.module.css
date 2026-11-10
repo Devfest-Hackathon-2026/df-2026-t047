@@ -1,0 +1,604 @@
+.header {
+  position: relative;
+  z-index: 2;
+  height: 64px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 26px;
+  background: #0b071de6;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.appIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  filter: drop-shadow(0 0 6px rgba(178, 80, 255, 0.55));
+}
+
+.brand strong {
+  font-size: 20px;
+  letter-spacing: 1.2px;
+  font-style: italic;
+}
+
+.brand strong span {
+  font-weight: 500;
+}
+
+.tag {
+  font-size: 12px;
+  color: #9a8ba9;
+  border-left: 1px solid #564163;
+  padding-left: 24px;
+  /* ヘッダーのボタンが多いときは縦に折り返さず、入らない分は「…」で切る */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+@media (max-width: 1360px) {
+  .tag {
+    display: none;
+  }
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: #c5b5d7;
+  letter-spacing: 0.5px;
+}
+
+.status,
+.statusWarn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.statusWarn {
+  color: var(--warn);
+}
+
+.wifi {
+  color: var(--ok);
+  opacity: 0.7;
+}
+
+.spectator {
+  border: 1px solid #67507f;
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--ink-muted);
+}
+
+.onlineDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 7px #74efbd77;
+}
+
+.divider {
+  width: 1px;
+  height: 17px;
+  background: #4d3b5d;
+  margin: 0 8px;
+}
+
+.footer {
+  /* ワイプの高さ（決勝のとき）。自分のマイクとカメラのボタン2つを縦に積んだ高さも、これにそろえる */
+  --wipe-base: clamp(60px, 12.5vh, 120px);
+  /*
+   * 人数（--n、Footer で入れる）が多いと横に入りきらないので、右側（挑戦者・チャット欄・ボタン）に
+   * --side-min の幅を残せる大きさまでにする。フッターの高さは --wipe-base のままなので、舞台の大きさは変わらない
+   */
+  --side-min: 600px;
+  --wipe-h: min(var(--wipe-base), calc((100vw - 94px - var(--side-min)) / (var(--n, 4) * 1.3333 + 0.5)));
+  position: relative;
+  z-index: 3;
+  margin: 10px 32px 16px;
+  padding-top: 10px;
+  border-top: 1px solid #69438666;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0;
+}
+
+/* 決勝（予選の台が無いとき）はワイプを大きくする。舞台を下げても、顔がよく見えるように */
+@media (min-width: 761px) {
+  .footer:not([data-compact]) {
+    --wipe-base: clamp(76px, 16vh, 168px);
+  }
+}
+
+.judges {
+  align-self: flex-end;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* 右側：上にこれまでの挑戦者、下にチャット欄とボタン。ワイプの上下にそろえる */
+.side {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--wipe-base);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  /* 右側の実際の幅でボタンの見せ方を変える（審査員が増えてワイプが広がると、ここが狭くなる） */
+  container: footer-side / inline-size;
+}
+
+
+.sideRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 自分のマイクとカメラ（ワイプの右に縦に並べる。2つの高さの合計がワイプの高さと同じ） */
+.myControls {
+  --gap: 6px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--gap);
+  height: var(--wipe-h);
+}
+
+.myControls > button {
+  width: calc((var(--wipe-h) - var(--gap)) / 2);
+  height: 100%;
+  margin: 0;
+  border-radius: 12px;
+}
+
+.myControls > button svg {
+  width: 42%;
+  height: 42%;
+}
+
+/* ボタンは縮めない（縮めると「合意メモ」などが縦に割れる）。狭いときは下の @container で名前を隠す */
+.actions {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.actions button {
+  white-space: nowrap;
+}
+
+/* 右側が狭いとき（審査員4人の決勝など）：ボタンは記号と数だけにして、発言欄に幅をゆずる */
+@container footer-side (max-width: 720px) {
+  .btnLabel {
+    display: none;
+  }
+  .actions {
+    gap: 6px;
+  }
+}
+
+.hint {
+  font-size: 9px;
+  color: #9d85af;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.actions button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #261536;
+  border: 1px solid #6f448e;
+  border-radius: 6px;
+  font-size: 11px;
+  padding: 9px 10px;
+}
+
+.actions b {
+  background: #7a4ca2;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+}
+
+.toasts {
+  position: fixed;
+  top: 116px;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 110;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  background: #2c183eee;
+  border: 1px solid #bd79eb;
+  border-radius: 7px;
+  padding: 11px 18px;
+  font-size: 12px;
+  box-shadow: 0 5px 25px #0006;
+  color: #eed8fc;
+  max-width: 90vw;
+  animation:
+    toastIn 0.25s ease-out,
+    toastOut 0.3s ease-in 3.4s forwards;
+}
+
+.toast[data-tone='warn'] {
+  border-color: #ff7aa0;
+  color: #ffd6e2;
+  background: #3a1428ee;
+}
+
+.toast[data-tone='gold'] {
+  border-color: #e6bc70;
+  color: #fde7bd;
+  background: #33210fee;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .tag,
+  .hint {
+    display: none;
+  }
+}
+
+.aiBadge {
+  margin-left: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  border: 1px solid #6f448e;
+  color: #d9c6e5;
+  background: #261536;
+}
+
+.aiBadge[data-mode='gemini'] {
+  border-color: #74efbd88;
+  color: #bff7df;
+  background: #10261f;
+}
+
+.aiBadge:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.invite,
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.invite {
+  border: 1px solid #c785ff;
+  background: linear-gradient(105deg, #9a45e8, #7736db);
+  color: white;
+}
+
+
+.status,
+.right > span {
+  white-space: nowrap;
+}
+
+/* 狭い画面（スマホで招待リンクを開いたとき）：部屋 ID・人数・Wi-Fi を省いて、招待ボタンを残す */
+@media (max-width: 760px) {
+  .status,
+  .divider,
+  .right > svg,
+  .right > span:not(.statusWarn):not(.spectator) {
+    display: none;
+  }
+  .brand strong {
+    font-size: 16px;
+  }
+}
+
+.copy {
+  border: 1px solid #694284;
+  background: #251537;
+  color: #e5d6f5;
+}
+
+/*
+ * 幅が狭いとき（ノート PC を半分にしたときなど）：ワイプを小さくする。
+ * 右側には「記号だけのボタン（約250px）＋ 発言欄の最小幅（160px）」が入る幅を残す
+ */
+@media (max-width: 1100px) {
+  .footer {
+    --wipe-base: clamp(50px, 9vh, 72px);
+    --side-min: 440px;
+    margin: 8px 12px 10px;
+    gap: 8px;
+  }
+}
+
+/* ロゴ（黒地のネオン画像。黒は画面になじませる） */
+.logo {
+  height: 42px;
+  width: auto;
+
+  filter: drop-shadow(0 0 6px #b250ff66);
+}
+
+/* スマホの幅：ワイプとボタンをさらに小さくする */
+@media (max-width: 760px) {
+  .footer {
+    --wipe-base: 52px;
+  }
+}
+
+/* 予選：ワイプは舞台の台に出すので、フッターは1段（マイク・カメラを横に並べる） */
+.footer[data-compact] .side {
+  min-height: 0;
+}
+
+.footer[data-compact] .myControls {
+  grid-template-rows: none;
+  grid-auto-flow: column;
+  height: 40px;
+}
+
+.footer[data-compact] .myControls > button {
+  width: 40px;
+}
+
+/* オフィシャル会議モード（#36）：ヘッダーと下のバーを白地に合わせる */
+/* ヘッダーは紺の帯に白の文字（会議ツールの見た目） */
+:global(:root[data-formality='official']) .header {
+  height: 58px;
+  gap: 18px;
+  padding: 0 24px;
+  color: #fff;
+  background: #1b2440;
+  border-bottom: 0;
+}
+:global(:root[data-formality='official']) .tag {
+  color: #c5cbe0;
+  font-size: 13px;
+}
+:global(:root[data-formality='official']) .right {
+  color: #e3e7f3;
+}
+:global(:root[data-formality='official']) .header .copy,
+:global(:root[data-formality='official']) .header .aiBadge {
+  border: 1px solid #ffffff40;
+  background: #ffffff12;
+  color: #fff;
+}
+:global(:root[data-formality='official']) .header .divider {
+  background: #ffffff33;
+}
+:global(:root[data-formality='official']) .actions button {
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--ink);
+}
+:global(:root[data-formality='official']) .invite {
+  border-color: #ffffff40;
+  background: #ffffff12;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+
+.wordmark img {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+/* 会議モードの切り替え（小さなスイッチ） */
+.modeSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: #ffffff14;
+  border: 1px solid #ffffff33;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.modeSwitch i {
+  position: relative;
+  width: 30px;
+  height: 18px;
+  background: var(--blue);
+  border-radius: 999px;
+}
+
+.modeSwitch i::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* ---- オフィシャルの下のバー ---- */
+.officialFooter {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 24px 14px;
+  padding: 10px 12px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.12);
+}
+
+.officialControls {
+  display: flex;
+  gap: 8px;
+}
+
+:global(:root[data-formality='official']) .officialControls > button[class] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  height: 44px;
+  margin: 0;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  box-shadow: none;
+  animation: none;
+}
+
+:global(:root[data-formality='official']) .officialControls > button[data-state='off'] {
+  color: #c5221f;
+  background: #fce8e6;
+  border-color: #f6c7c3;
+}
+
+:global(:root[data-formality='official']) .officialControls > button[data-state='listening'],
+:global(:root[data-formality='official']) .officialControls > button[data-state='speaking'],
+:global(:root[data-formality='official']) .officialControls > button[data-state='starting'],
+:global(:root[data-formality='official']) .officialControls > button[data-on] {
+  color: var(--blue);
+  border-color: #aecbfa;
+  background: #e8f0fe;
+}
+
+.officialInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.minutesButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.officialIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--ink-soft);
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  cursor: pointer;
+}
+:global(:root[data-formality='official']) .actions b {
+  background: var(--purple);
+  color: #fff;
+}
+:global(:root[data-formality='official']) .footer {
+  border-top-color: var(--line);
+}
+:global(:root[data-formality='official']) .hint {
+  color: var(--ink-muted);
+}
+:global(:root[data-formality='official']) .aiBadge[data-mode='gemini'] {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+/* オフィシャル会議モードの知らせ：落ち着いた濃い灰色の帯（Meet の通知のように） */
+:global(:root[data-formality='official']) .toast,
+:global(:root[data-formality='official']) .toast[data-tone='gold'],
+:global(:root[data-formality='official']) .toast[data-tone='warn'] {
+  color: #fff;
+  background: #303134;
+  border: 0;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}

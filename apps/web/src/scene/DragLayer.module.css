@@ -1,0 +1,77 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  /* 舞台より上、詳細画面（30）より下。移動中のキャラが詳細画面の上に浮かないように */
+  z-index: 28;
+}
+
+.ghost,
+.flight {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.ghostMascot,
+.flightMascot {
+  width: clamp(120px, 10vw, 175px);
+  translate: -50% -60%;
+}
+
+.ghost .ghostMascot {
+  animation: wiggle 0.6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 22px #ffc95a) drop-shadow(0 14px 18px #0008);
+  scale: 1.08;
+}
+
+.ghost[data-phase='pending'] .ghostMascot {
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+.flight .flightMascot {
+  filter: drop-shadow(0 0 26px #ffd06e);
+}
+
+.flight[data-kind='return'] .flightMascot {
+  filter: drop-shadow(0 0 10px #b665ff);
+}
+
+.trail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 200px;
+  translate: -50% -55%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe2a055, #ffbd4622 40%, transparent 70%);
+  animation: trail 0.75s ease-out forwards;
+}
+
+@keyframes wiggle {
+  from {
+    rotate: -4deg;
+  }
+  to {
+    rotate: 4deg;
+  }
+}
+
+@keyframes pulse {
+  to {
+    scale: 1.14;
+  }
+}
+
+@keyframes trail {
+  from {
+    opacity: 1;
+    scale: 0.6;
+  }
+  to {
+    opacity: 0;
+    scale: 1.6;
+  }
+}

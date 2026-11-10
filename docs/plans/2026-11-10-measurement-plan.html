@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>IDEA AUDITION 実測計画</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  :root {
+    --ink: #1c1426; --mute: #5d5270; --line: #ddd3ea; --soft: #f6f1fc;
+    --accent: #7b2fd0; --pink: #c2338f; --gold: #a86b00; --ok: #1f7a55;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--ink); font: 10.2pt/1.7 "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+  h1 { font-size: 22pt; line-height: 1.25; margin: 0 0 4px; letter-spacing: .5px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .meta { color: var(--mute); font-size: 9pt; margin: 0 0 14px; }
+  h2 { font-size: 14pt; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--accent); break-after: avoid; }
+  h2 .no { color: var(--accent); margin-right: 6px; }
+  h3 { font-size: 11.5pt; margin: 14px 0 4px; break-after: avoid; }
+  p { margin: 4px 0 8px; }
+  ul, ol { margin: 4px 0 8px; padding-left: 1.3em; }
+  li { margin: 2px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.2pt; break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 5px 7px; vertical-align: top; text-align: left; }
+  th { background: var(--soft); font-weight: 700; color: #3a2a55; }
+  .lead { background: var(--soft); border-left: 4px solid var(--accent); padding: 10px 14px; margin: 10px 0 14px; }
+  .lead b { color: var(--accent); }
+  .tag { display: inline-block; font-size: 8pt; font-weight: 700; padding: 0 7px; border-radius: 999px; border: 1px solid; margin-right: 4px; white-space: nowrap; }
+  .t-sim { color: #1d5fa8; border-color: #9cc0ea; background: #eef5fd; }
+  .t-bot { color: #6a3fb0; border-color: #c8b0ec; background: #f5effd; }
+  .t-user { color: var(--pink); border-color: #ebb0d4; background: #fdf0f7; }
+  .t-done { color: var(--ok); border-color: #9fd8bf; background: #eefaf4; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin: 8px 0 12px; }
+  .card h3 { margin-top: 2px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kv { display: grid; grid-template-columns: 6.2em 1fr; gap: 2px 10px; margin: 4px 0; }
+  .kv dt { color: var(--mute); font-weight: 700; }
+  .kv dd { margin: 0; }
+  .warn { border-left: 4px solid var(--gold); background: #fff8ea; padding: 8px 12px; margin: 8px 0; break-inside: avoid; }
+  .warn b { color: var(--gold); }
+  .big { font-size: 18pt; font-weight: 800; color: var(--accent); }
+  .page-break { break-before: page; }
+  .timeline td:first-child { white-space: nowrap; font-weight: 700; width: 7.5em; }
+  .small { font-size: 8.6pt; color: var(--mute); }
+  code { font-family: Menlo, monospace; font-size: 8.6pt; background: #f2eef8; padding: 0 4px; border-radius: 3px; }
+  .people { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0 12px; }
+  .people div { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .people b { display: block; font-size: 17pt; color: var(--accent); line-height: 1.2; }
+  .people span { font-size: 8.6pt; color: var(--mute); }
+</style>
+</head>
+<body>
+
+<h1>IDEA AUDITION 実測計画<br><em>「作る意味があったのか」を数字で示す</em></h1>
+<p class="meta">チーム VICTORY ／ 2026-11-09 作成 ／ 提出締切 2026-11-10（火）19:00 に間に合わせる版</p>
+
+<div class="lead">
+  <b>ねらい</b>：ピッチの PROOF のスライドに載せる数字を、明日までに実測でそろえる。<br>
+  「正しく作ったので 0件でした」ではなく、<b>CAMP や合意の反映を外すと実際に何が起きるか</b>を同じ条件で比べ、その差を見せる。あわせて、実際に人が使ったときの効果（時間・手戻り・納得感）を、ふつうのチャット AI と比べて測る。
+</div>
+
+<h2><span class="no">1</span>何を測るか（全体像）</h2>
+<table>
+  <tr><th style="width:4.5em">記号</th><th>実験</th><th>示したいこと</th><th style="width:7.5em">方法</th><th style="width:6em">人</th></tr>
+  <tr><td>M1</td><td>同時のブザー：二重合格</td><td>CAMP なしでは合格が二重に確定する。ありでは 0</td><td><span class="tag t-sim">シミュレーター</span></td><td>0人</td></tr>
+  <tr><td>M2</td><td>合意の変更：古い前提の案</td><td>合意が変わった後に、古い前提の案が舞台に出てしまう割合。CAMP ありでは 0%</td><td><span class="tag t-sim">シミュレーター</span></td><td>0人</td></tr>
+  <tr><td>M3</td><td>一度否定した方向の再提示</td><td>合意を反映しないと、否定した方向の案がまた出る。反映するとどれだけ減るか</td><td><span class="tag t-bot">自動の会議＋Gemini</span></td><td>0人（確認1人）</td></tr>
+  <tr><td>M4</td><td>合意から次の案までの秒数</td><td>人が決めてから、何秒で次の案に反映されるか</td><td><span class="tag t-bot">M3・M6のログ</span></td><td>0人</td></tr>
+  <tr><td>M5</td><td>待ち時間の削減</td><td>開始→最初のキャラ、優勝→企画書の待ち時間</td><td><span class="tag t-done">測定済み＋再測定</span></td><td>0人</td></tr>
+  <tr><td>M6</td><td>15分でいくつ見て、何分で決まったか</td><td>ふつうのチャット AI で決める会議と比べた効果（案の数・時間・納得感・理由を言えるか）</td><td><span class="tag t-user">ユーザー実験</span></td><td>12〜16人＋評価者2〜3人</td></tr>
+</table>
+
+<h3>必要な人数（合計）</h3>
+<div class="people">
+  <div><b>12〜16人</b><span>M6 の参加者<br>（3〜4人 × 4グループ）</span></div>
+  <div><b>2〜3人</b><span>最終案の評価者<br>（参加しない人）</span></div>
+  <div><b>2人</b><span>進行役・記録係<br>（チームから、各回）</span></div>
+  <div><b>1人</b><span>M3 の判定の抜き取り確認<br>（チームから）</span></div>
+</div>
+<p class="small">M1・M2・M3・M4・M5 は人を集めずに回せる。人が要るのは M6 と評価だけ。4グループは「順番」と「テーマ」の組み合わせをそろえるための最小数（2 × 2）。集まれば 6グループにする。</p>
+
+<h2><span class="no">2</span>M1：同時のブザーで、合格は1回だけか</h2>
+<div class="card">
+  <span class="tag t-sim">シミュレーター</span><span class="tag">人：0人</span><span class="tag">準備 約3時間・実行 数分</span>
+  <h3>やり方</h3>
+  <p>本物のサーバーのアクター（<code>SessionActor</code>）に、偽の審査員を4〜8人つなぎ、時計と通信の遅れを操作できる環境で何度も審査させる。同じ入力を「守りあり（今の CAMP）」と「守りなし（素朴な作り）」の両方に流して比べる。</p>
+  <table>
+    <tr><th>守りなし（素朴な作り）の中身</th><th>守りあり（CAMP）</th></tr>
+    <tr><td>各ブラウザが「全員押した」と判断したら、それぞれが合格を送る</td><td>全員一致はサーバーが1か所で判定し、1回だけ確定</td></tr>
+    <tr><td>同じ操作の再送（返事が来ず送り直した）も、そのたびに実行</td><td>commandId で重複を捨てる</td></tr>
+    <tr><td>票がどの挑戦者あてか確かめない（交代の直前に押した票が、次の人に入る）</td><td>挑戦者の ID を見て、前の挑戦者への票は断る</td></tr>
+  </table>
+  <h3>条件（各 1,000回）</h3>
+  <ul>
+    <li>4人がほぼ同時に押す（0〜10ms の差）／ 最後の1人が連打 ／ 交代の直前に押す</li>
+    <li>通信の遅れ：0・50・200ms（ばらつきあり）、返事の取りこぼしで再送：0%・10%</li>
+    <li>参加人数：2・4・8人</li>
+  </ul>
+  <h3>測る数字</h3>
+  <ul>
+    <li><b>二重合格の回数</b>（サーバーが出した「合格」イベントの数で数える。画面の光り方では数えない）</li>
+    <li><b>別の挑戦者に入った票の数</b>、最後に全員の画面の状態が一致した割合</li>
+  </ul>
+  <p class="small">ピッチの言い方（例）：「4人が同時に押す条件で1,000回。素朴な作りでは二重合格が N回。CAMP では 0回」</p>
+</div>
+
+<h2><span class="no">3</span>M2：合意が変わったあと、古い前提の案が出ないか</h2>
+<div class="card">
+  <span class="tag t-sim">シミュレーター</span><span class="tag">人：0人</span><span class="tag">準備 約3時間・実行 数分</span>
+  <h3>やり方</h3>
+  <p>AI の返事の遅さと到着の順番を自由に変えられる「偽の AI」を使う。案を頼んでいる最中に合意を変え（例：広告 → 口コミ）、届いた案のうち<b>古い合意をもとに作った案が舞台に出たか</b>を数える。</p>
+  <table>
+    <tr><th>比べる3つ</th><th>中身</th></tr>
+    <tr><td>なし</td><td>届いた案をそのまま出す</td></tr>
+    <tr><td>今の作り</td><td>合意が変わった瞬間にストックの古い案は捨てる。ただし、<b>変わる前に頼んで、変わった後に届いた案</b>はそのまま入る</td></tr>
+    <tr><td>あり（直したあと）</td><td>案が届いた時点で「どの版の合意をもとに作ったか」を今の合意と照らし、古ければ使わない</td></tr>
+  </table>
+  <div class="warn"><b>先に直すこと</b>：コードを確認したところ、「今の作り」には上の穴がある（<code>ensureStock</code> が届いた案の合意の版を見ていない。案が無いときは古い案を1件残す作りもある）。M2 の「あり」は、この穴を直した版で測る。直す前の数字も「今の作り」として残し、改善の幅として出す。</div>
+  <h3>条件（代表 1,000回、ほかは各 100回）</h3>
+  <ul>
+    <li>AI の返事の遅さ：0.5・2・5秒 ／ 到着の順番：頼んだ順・逆順・ばらばら</li>
+    <li>生成中の合意の変更：1回・3回 ／ 同時に頼む案の数：1・3</li>
+  </ul>
+  <h3>測る数字</h3>
+  <ul>
+    <li><b>古い前提の案が舞台に出た割合</b>（なし ／ 今の作り ／ あり）</li>
+    <li>合意が変わってから、新しい合意の案が舞台に出るまでの秒数</li>
+    <li>合意の変更で無駄になった生成の数（捨てた案の数）</li>
+  </ul>
+</div>
+
+<h2><span class="no">4</span>M3：一度否定した方向が、また出てこないか</h2>
+<div class="card">
+  <span class="tag t-bot">自動の会議＋本物の Gemini</span><span class="tag">人：0人（確認に1人）</span><span class="tag">準備 約2時間・実行 約2時間</span>
+  <h3>やり方</h3>
+  <p>人を集めずに測るため、<b>決まった台本の会議</b>を自動で流す。台本では、はじめに出た方向を審査員がはっきり否定し、別の方向で合意する（例：「広告で一気に広める」→「広告はなし。学生の口コミで広げよう」）。そのあと出てくる次の案 10件に、否定した方向が入っているかを数える。</p>
+  <table>
+    <tr><th>条件</th><th>中身</th></tr>
+    <tr><td>A：合意を反映しない</td><td>会議の内容を、次の案づくりに渡さない</td></tr>
+    <tr><td>B：合意を反映する（今の作り）</td><td>合意メモを次の案づくりに渡し、古い前提の案は捨てる</td></tr>
+  </table>
+  <ul>
+    <li>台本：テーマ3つ × 否定する方向2つ ＝ 6本。各条件で 各3回まわす（合計 36回、案は約 360件）</li>
+    <li>判定：各案が「否定した方向」を含むかを Gemini に判定させる。チームの1人が 20%を抜き取りで見て、判定のずれを数える</li>
+    <li>モデル・プロンプト・案の数は、A と B でそろえる</li>
+  </ul>
+  <h3>測る数字</h3>
+  <ul>
+    <li><b>否定した方向の再提示率</b>（A と B）</li>
+    <li>合意の反映率：合意した条件（「口コミで」など）を満たす案の割合</li>
+  </ul>
+  <p class="small">ピッチの言い方（例）：「否定した方向が、反映しないと次の10案のうち X 件また出た。IDEA AUDITION では Y 件」</p>
+</div>
+
+<h2><span class="no">5</span>M4：合意から次の案までの秒数</h2>
+<p>M3 と M6 のログから取る。追加の実験はいらない。</p>
+<ul>
+  <li>起点：合意メモが更新された時刻（<code>CONSENSUS_UPDATED</code>）</li>
+  <li>終点：その合意の版をもとに作った案が、はじめて舞台に出た時刻（<code>CANDIDATE_SPAWNED</code> の <code>basedOnConsensus</code>）</li>
+  <li>出す数字：中央値と 95%点（p50・p95）。本物の Gemini で、本番の環境（Cloud Run）で測る</li>
+</ul>
+
+<h2><span class="no">6</span>M5：待ち時間の削減（測定済み＋再測定）</h2>
+<table>
+  <tr><th>場面</th><th>前</th><th>今</th><th>しくみ</th></tr>
+  <tr><td>開始 → 最初のキャラが出るまで</td><td>約1.5〜3.0秒</td><td><b>約0.06秒</b></td><td>ロビーでテーマを入れている間に、最初の案を作っておく</td></tr>
+  <tr><td>優勝 → 企画書が出るまで</td><td>11〜13秒</td><td><b>0秒</b></td><td>決勝の間に、全員分の企画書を作り置きする</td></tr>
+</table>
+<p>本番で各 10回測り直して、中央値と最大を出す（今は 2〜4回の測定）。テーマを入れてすぐ始めた場合の数字（作り置きが間に合わない場合）も、隠さず一緒に出す。</p>
+
+<h2><span class="no">7</span>M6：15分でいくつ見て、何分で決まったか（ユーザー実験）</h2>
+<div class="card">
+  <span class="tag t-user">ユーザー実験</span><span class="tag">参加 12〜16人</span><span class="tag">評価 2〜3人</span><span class="tag">1グループ 約45分</span>
+  <h3>比べる2つ</h3>
+  <div class="grid2">
+    <div><b>X：ふつうのチャット AI</b><br>1台の画面で Gemini（チャット）に案を出させ、みんなで話して1案に決める。</div>
+    <div><b>Y：IDEA AUDITION</b><br>全員がそれぞれの PC で参加し、ブザーで選んで決勝で磨き、優勝を決める。</div>
+  </div>
+  <p class="small">他社の製品を前面に出さないルールに合わせ、比べる相手も Google の Gemini にする。どちらも同じモデルの世代を使う。</p>
+
+  <h3>進め方（1グループ 3〜4人、約45分）</h3>
+  <ol>
+    <li>説明 5分：目的は伝えず「アイデアを1つに決めてもらう」とだけ伝える</li>
+    <li>1回目 15分（X か Y）→ アンケート 3分</li>
+    <li>2回目 15分（もう一方、別のテーマ）→ アンケート 3分</li>
+    <li>ふり返り 3分：どちらの決め方がよかったか、なぜか</li>
+  </ol>
+  <p>同じ人が両方やる（人の差を消すため）。どちらを先にやるかと、どのテーマをどちらで使うかを、グループごとに入れ替える。</p>
+  <table>
+    <tr><th>グループ</th><th>1回目</th><th>2回目</th></tr>
+    <tr><td>1</td><td>X ＋ テーマ甲</td><td>Y ＋ テーマ乙</td></tr>
+    <tr><td>2</td><td>Y ＋ テーマ甲</td><td>X ＋ テーマ乙</td></tr>
+    <tr><td>3</td><td>X ＋ テーマ乙</td><td>Y ＋ テーマ甲</td></tr>
+    <tr><td>4</td><td>Y ＋ テーマ乙</td><td>X ＋ テーマ甲</td></tr>
+  </table>
+  <p class="small">テーマ甲・乙は難しさが近いものにする（例：「大学の学食をもっと楽しくする企画」「図書館をもっと使いたくなる企画」）。</p>
+
+  <h3>測る数字</h3>
+  <table>
+    <tr><th>数字</th><th>取り方</th></tr>
+    <tr><td>15分で見た案の数</td><td>X：AI の返答に出た案を記録係が数える ／ Y：舞台に出たキャラの数（ログ）</td></tr>
+    <tr><td>1案に決まるまでの時間</td><td>X：記録係がストップウォッチ ／ Y：開始から優勝までの時刻（ログ）</td></tr>
+    <tr><td>話した回数・偏り</td><td>Y：発言のログ ／ X：記録係が「誰が話したか」を正の字で数える</td></tr>
+    <tr><td>選んだ理由を言えるか（Own the Why）</td><td>アンケートで「なぜこの案にしたか」を各自が自由に書く。理由の数と具体さを、評価者が数える</td></tr>
+    <tr><td>納得感・自分たちで選んだ感・楽しさ</td><td>アンケート（5段階）</td></tr>
+    <tr><td>最終案の質</td><td>評価者が、条件を伏せて「新しさ・実現できるか・テーマに合うか」を各5点で採点</td></tr>
+  </table>
+  <h3>評価者の採点</h3>
+  <p>最終案（各グループ2案、合計8〜12案）を同じ書式（タイトル＋3行の説明）にそろえ、どちらの条件で出た案かを伏せて、並び順もばらばらにして渡す。評価者はグループに参加していない人にする。</p>
+</div>
+
+<div class="warn"><b>当日の環境の注意</b>：大学の Wi-Fi では、ブラウザどうしの音声通話がつながらないことがある（今の作りは TURN サーバーが無い）。M6 は同じ部屋で<b>顔を合わせて話し</b>、アプリの通話はオフにする。声の文字起こしは使う場合、全員ヘッドセットにして、ほかの人の声を拾わないようにする。ネットが不安ならテザリングを用意する。</div>
+
+<h2><span class="no">8</span>段取り（11/9 夜 〜 11/10 19:00）</h2>
+<table class="timeline">
+  <tr><th>時間</th><th>やること</th><th style="width:9em">担当の目安</th></tr>
+  <tr><td>11/9 夜</td><td>参加者と評価者を集める（グループの時間を決める）。アンケートを Google フォームで作る。テーマ甲・乙と M3 の台本を決める</td><td>人集め：チーム全員</td></tr>
+  <tr><td>11/9 夜</td><td>M2 の穴を直す。M1・M2 のシミュレーターを作って回す。ログを書き出すスクリプトを作る</td><td>開発（Claude Code と1人）</td></tr>
+  <tr><td>11/10 午前</td><td>M3 の自動の会議を流す（本番の Gemini）。M5 を本番で測り直す</td><td>開発</td></tr>
+  <tr><td>11/10 10:00〜15:00</td><td>M6 のユーザー実験。2つの部屋で並行すれば 4グループが 約1.5時間、1部屋なら 約3時間</td><td>進行役・記録係を2人ずつ</td></tr>
+  <tr><td>11/10 15:00〜16:30</td><td>評価者の採点。M3 の判定の抜き取り確認。ログとアンケートを集計してグラフにする</td><td>評価者・開発</td></tr>
+  <tr><td>11/10 16:30〜18:30</td><td>PROOF のスライドと README・説明ドキュメントに反映</td><td>発表担当</td></tr>
+  <tr><td>11/10 19:00</td><td>提出</td><td></td></tr>
+</table>
+
+<h3>当日までに用意するもの</h3>
+<ul>
+  <li>M6 用の PC：Y は1人1台（3〜4台 × 部屋の数）、X は1台＋大きめの画面。ヘッドセット人数分</li>
+  <li>本番の URL で部屋を作れることの確認（同じ回線から1時間に作れる部屋は10個まで）</li>
+  <li>記録用紙（X の案の数・時間・発言の正の字）、ストップウォッチ</li>
+  <li>同意の説明：ログとアンケートを、名前を伏せて発表に使うこと</li>
+</ul>
+
+<h2><span class="no">9</span>ピッチにどう出すか</h2>
+<p>CAMP の説明は「問題（10枚目の絵）」→「本当に効くのか（実測）」の2枚にする。実測のスライドは次の3つに絞る。</p>
+<table>
+  <tr><th>見せ方</th><th>使う数字</th></tr>
+  <tr><td>CAMP がないと、こう壊れる → あると 0</td><td>M1 の二重合格、M2 の古い前提の案（なし ／ 今の作り ／ あり）</td></tr>
+  <tr><td>会議の手戻りが減る</td><td>M3 の再提示率、M4 の合意から次の案までの秒数</td></tr>
+  <tr><td>人が使うと、こう変わる</td><td>M6 の「見た案の数・決まるまでの時間・理由を言えた数・納得感」、M5 の待ち時間</td></tr>
+</table>
+
+<h2><span class="no">10</span>正直に出すためのルール</h2>
+<ul>
+  <li>どの数字にも「シミュレーター／自動の会議／ユーザー実験」「何回・何人」を必ず添える</li>
+  <li>「1,000回で 0件」は、その条件で起きなかったという意味で、どんな環境でも起きないという証明ではない</li>
+  <li>M6 は 12〜16人の小さな実験。統計的に勝ったとは言わず、「この人数ではこうだった」と言う</li>
+  <li>よくならなかった数字も、ドキュメントには載せる。ピッチに載せるかは、そのうえで選ぶ</li>
+  <li>実験の生ログ（JSONL）、集計スクリプト、アンケートの元データは、リポジトリの <code>docs/experiments/</code> に残し、1つのコマンドで集計し直せるようにする</li>
+</ul>
+
+<h2><span class="no">11</span>作るもの（開発のタスク）</h2>
+<table>
+  <tr><th>タスク</th><th>中身</th><th style="width:5.5em">目安</th></tr>
+  <tr><td>M2 の穴を直す</td><td>案が届いた時点で合意の版を照らし、古ければ使わない。テストを足す</td><td>1時間</td></tr>
+  <tr><td>シミュレーター（M1・M2）</td><td>偽の審査員・偽の AI・時計を操作する。守りあり／なしを切り替える。結果を JSONL に出す</td><td>3〜4時間</td></tr>
+  <tr><td>自動の会議（M3）</td><td>台本どおりに発言を送る審査員ボット。条件 A／B の切り替え。案の判定を Gemini で</td><td>2時間</td></tr>
+  <tr><td>ログの書き出し（M4・M6）</td><td>部屋ごとのイベント・発言・判定を Firestore から書き出す</td><td>1時間</td></tr>
+  <tr><td>集計とグラフ</td><td>全実験の数字を表とグラフにする</td><td>1〜2時間</td></tr>
+</table>
+
+</body>
+</html>

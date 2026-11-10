@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.t{font-size:16px}.s{font-size:12px}
+.col{position:absolute;top:58px;height:250px}
+.step{position:absolute;font-size:12.5px;font-weight:700;display:flex;align-items:center;white-space:nowrap}
+.pill{display:inline-block;font-size:10.5px;padding:3px 8px;border:1px solid var(--line);border-radius:99px;color:var(--muted);margin:3px 3px 0 0}
+</style></head><body>
+<div class="zone" style="left:250px;top:18px;width:905px;height:404px;border-color:#4a3a80"></div>
+<div class="zl" style="left:266px;top:27px">GOOGLE CLOUD</div>
+
+<!-- browsers -->
+<div class="box" style="left:14px;top:58px;width:200px;height:250px">
+  <div class="tag">審査員 × 4</div>
+  <div class="t">ブラウザ（React）</div>
+  <div class="s">操作・発言を送り、届いた状態を表示するだけ</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px">
+    <div class="box" style="position:relative;left:0;top:0;padding:6px;text-align:center;font-size:12px">A</div><div class="box" style="position:relative;left:0;top:0;padding:6px;text-align:center;font-size:12px">B</div>
+    <div class="box" style="position:relative;left:0;top:0;padding:6px;text-align:center;font-size:12px">C</div><div class="box" style="position:relative;left:0;top:0;padding:6px;text-align:center;font-size:12px">D</div>
+  </div>
+  <div class="s" style="margin-top:10px;color:var(--pink);font-weight:700">CAMP Client</div>
+</div>
+<div class="box" style="left:14px;top:330px;width:200px;height:90px;border-style:dashed"><div class="tag" style="color:var(--green)">WEBRTC</div><div class="s" style="margin:0">通話の声はブラウザ同士で直接（サーバーを通らない）</div></div>
+
+<!-- cloud run -->
+<div class="zone" style="left:268px;top:42px;width:556px;height:290px;border-color:#5a4590"></div><div class="zl" style="left:282px;top:48px;color:#a98bd0">CLOUD RUN</div>
+<div class="box glow" style="left:280px;top:66px;width:250px;height:212px">
+  <div class="tag">CAMP SERVER（OSS）</div>
+  <div class="t">人の操作と AI の結果を<br>1列に並べて確定</div>
+  <div class="s" style="margin-top:10px">・部屋ごとに1件ずつ処理<br>・通し番号 seq で全員に同じ順<br>・二度押し・再送は1回に<br>・古い AI の結果は捨てる</div>
+</div>
+<div class="box" style="left:560px;top:66px;width:250px;height:212px;background:var(--panel2)">
+  <div class="tag">IDEA AUDITION</div>
+  <div class="t">人間の意思を<br>「次の生成の条件」に</div>
+  <div class="s" style="margin-top:10px">合意台帳：論点と賛否（版つき）<br>好みエンジン：8軸の好み<br>生成プランナー：寄せる／外す／つなぐ</div>
+  <div class="s" style="margin-top:8px;color:var(--pink)">合意が動いたら、古い合意の作り置きを捨てる</div>
+</div>
+<div class="box" style="left:280px;top:340px;width:530px;height:70px"><div class="tag" style="color:var(--violet)">FIRESTORE</div><div class="s" style="margin:0">確定したイベントと最新の状態を保存。サーバーが再起動しても部屋を復元</div></div>
+
+<!-- gemini -->
+<div class="box glow" style="left:860px;top:66px;width:280px;height:212px">
+  <div class="tag">VERTEX AI</div>
+  <div class="t" style="font-size:22px">Gemini</div>
+  <div class="s" style="margin-top:6px">案の生成・改良・相互批評・回答・合意の整理・企画書（構造化出力）</div>
+  <div style="margin-top:8px"><span class="pill">3.5 / 3.8 Flash</span><span class="pill">Embedding</span><span class="pill">Live 文字起こし</span></div>
+</div>
+<div class="box" style="left:860px;top:340px;width:280px;height:70px"><div class="s" style="margin:0">API キーを持たず、Cloud Run のサービスアカウントで認証</div></div>
+
+<svg width="1175" height="440"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FF72ED"/></marker><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C97CFA"/></marker></defs>
+<path d="M214 140 L276 140" stroke="#FF72ED" stroke-width="2.5" marker-end="url(#a)"/>
+<path d="M530 140 L556 140" stroke="#FF72ED" stroke-width="2.5" marker-end="url(#a)"/>
+<path d="M810 140 L856 140" stroke="#FF72ED" stroke-width="2.5" marker-end="url(#a)"/>
+<path d="M1000 278 L1000 312 L405 312 L405 282" stroke="#C97CFA" stroke-width="2.5" fill="none" marker-end="url(#b)"/>
+<path d="M280 230 L218 230" stroke="#C97CFA" stroke-width="2.5" marker-end="url(#b)"/>
+</svg>
+<div class="step" style="left:218px;top:112px"><span class="num">1</span></div>
+<div class="step" style="left:534px;top:112px"><span class="num">2</span></div>
+<div class="step" style="left:814px;top:112px"><span class="num">3</span></div>
+<div class="step" style="left:640px;top:316px"><span class="num">4</span>生成結果も同じ列に並べて確定</div>
+<div class="step" style="left:222px;top:202px"><span class="num">5</span></div>
+<div class="step" style="left:16px;top:426px;font-size:0"></div>
+</body></html>

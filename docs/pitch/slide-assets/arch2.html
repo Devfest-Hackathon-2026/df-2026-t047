@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><script src="icons.js"></script><style>
+:root{--bg:#0b0716;--pink:#FF72ED;--violet:#C97CFA;--green:#5be3b0;--blue:#7cc4ff;--text:#F8F3FF;--muted:#B9A8D0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1250px;height:545px;overflow:hidden;color:var(--text);font-family:"Hiragino Sans",sans-serif;
+background-color:var(--bg);background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:16px 16px}
+.zone{position:absolute;border:1.4px dashed #4b3670;border-radius:14px}
+.zone.solid{border-style:solid;border-color:#5a4590;background:#ffffff04}
+.zl{position:absolute;font-size:11px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.tile{position:absolute;width:140px;margin-left:-70px;text-align:center}
+.ic{width:50px;height:50px;margin:0 auto;border-radius:12px;background:#1a1129;border:1.4px solid #4d3570;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px #0008}
+.ic svg{width:26px;height:26px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nm{font-size:11.5px;font-weight:800;margin-top:5px;line-height:1.25}
+.sb{font-size:8.6px;color:var(--muted);margin-top:2px;line-height:1.35;font-family:"SF Mono",Menlo,monospace}
+.chip{position:absolute;font-size:9.5px;font-weight:700;padding:5px 7px;border-radius:8px;background:#1a1129;border:1px solid #4d3570;text-align:center;white-space:nowrap}
+.lb{position:absolute;font-size:8.8px;font-family:"SF Mono",Menlo,monospace;padding:1px 4px;border-radius:4px;background:var(--bg);white-space:nowrap}
+</style></head><body>
+<div id="z"></div><svg id="s" width="1250" height="545" style="position:absolute;left:0;top:0"></svg><div id="t"></div>
+<script>
+const C={pink:'#FF72ED',violet:'#C97CFA',green:'#5be3b0',blue:'#7cc4ff',gray:'#9b8bb5',gold:'#ffcf6b'};
+const Z=document.getElementById('z'),T=document.getElementById('t'),S=document.getElementById('s');
+function zone(x,y,w,h,label,color,solid,bottom){Z.insertAdjacentHTML('beforeend',`<div class="zone ${solid?'solid':''}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;${color?'border-color:'+color+'88':''}"></div><div class="zl" style="left:${x+12}px;top:${bottom?y+h-20:y+8}px;color:${color||'#a993cf'}">${label}</div>`)}
+function tile(x,y,icon,name,sub,color){T.insertAdjacentHTML('beforeend',`<div class="tile" style="left:${x}px;top:${y-25}px"><div class="ic" style="border-color:${color}aa;box-shadow:0 0 14px ${color}33"><svg viewBox="0 0 24 24" style="stroke:${color}">${ICONS[icon]}</svg></div><div class="nm">${name}</div><div class="sb">${sub}</div></div>`)}
+let mid=0;
+function line(pts,color,{label,lx,ly,dash,both}={}){mid++;
+ S.insertAdjacentHTML('beforeend',`<defs><marker id="m${mid}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${color}"/></marker></defs><polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${color}" stroke-width="1.6" ${dash?'stroke-dasharray="5 4"':''} marker-end="url(#m${mid})" ${both?`marker-start="url(#m${mid})"`:''}/>`);
+ if(label)T.insertAdjacentHTML('beforeend',`<div class="lb" style="left:${lx}px;top:${ly}px;color:${color}">${label}</div>`)}
+// zones
+zone(100,22,300,505,'ブラウザ（審査員 ×4・観覧者）');
+zone(420,8,822,530,'Google Cloud','#7cc4ff');
+zone(434,34,474,494,'Cloud Run（asia-northeast1・1コンテナ）','#FF72ED',true,true);
+zone(924,34,306,300,'Vertex AI','#C97CFA');
+zone(924,346,306,182,'',null);
+// people
+tile(48,150,'users','審査員','最大4人','#7cc4ff');
+tile(48,330,'eye','観覧者','5人目〜・聞くだけ','#9b8bb5');
+// browser
+tile(175,95,'monitor','React 画面','React 19 / Zustand','#7cc4ff');
+tile(320,95,'plug-zap','CAMP Client','kit/client','#FF72ED');
+tile(175,250,'mic','マイク','16kHz PCM','#5be3b0');
+tile(320,400,'phone','通話','WebRTC P2P','#5be3b0');
+tile(175,445,'file-text','企画書 PDF','html2pdf.js','#ffcf6b');
+// cloud run
+tile(500,92,'globe','画面の配信','','#7cc4ff');
+tile(500,220,'door-open','部屋づくり','POST /api/rooms','#7cc4ff');
+tile(640,150,'route','CAMP Server','kit/server  /camp','#FF72ED');
+tile(800,150,'list-ordered','SessionActor','1部屋=1つ  順に確定','#FF72ED');
+tile(640,385,'audio-lines','音声の中継','/voice','#5be3b0');
+tile(800,385,'spell-check','聞き間違い補正','会議の語彙で直す','#5be3b0');
+// domain chips
+T.insertAdjacentHTML('beforeend',`<div class="zl" style="left:700px;top:228px;color:#d9a8ff">IDEA AUDITION のルール</div>`);
+[['合意台帳',700,250],['好み 8軸',800,250],['生成プランナー',700,285],['入れ替え（注目度）',800,285]].forEach(([n,x,y])=>T.insertAdjacentHTML('beforeend',`<div class="chip" style="left:${x}px;top:${y}px;width:92px">${n}</div>`));
+// managed
+tile(1000,95,'sparkles','Gemini 3.5 Flash','案の生成・回答<br>合意の整理・別案','#C97CFA');
+tile(1165,95,'brain-circuit','Gemini 3.8 Flash','改良・相互批評<br>企画書','#C97CFA');
+tile(1000,245,'radar','Gemini Embedding','似た案・好みとの近さ','#C97CFA');
+tile(1165,245,'captions','Gemini Live','リアルタイム文字起こし','#C97CFA');
+tile(1000,410,'database','Firestore','確定イベント<br>最新の状態・部屋','#ffcf6b');
+tile(1165,410,'network','Google STUN','通話の経路探し','#5be3b0');
+// flows
+line([[73,150],[98,150]],C.blue);
+line([[73,330],[98,330]],C.gray,{});
+line([[200,95],[293,95]],C.pink,{});
+line([[400,56],[500,56],[500,65]],C.blue,{label:'HTTPS 画面・JS',lx:408,ly:42});
+line([[400,220],[473,220]],C.blue,{label:'POST',lx:418,ly:205});
+line([[345,95],[400,95],[400,150],[613,150]],C.pink,{label:'WSS /camp',lx:424,ly:134,both:true});
+line([[667,150],[773,150]],C.pink,{label:'command ⇄ event(seq)',lx:674,ly:134});
+line([[827,152],[880,152],[880,247]],C.pink,{both:true});
+line([[200,250],[410,250],[410,385],[613,385]],C.green,{label:'WSS /voice  PCM',lx:424,ly:371});
+line([[640,358],[640,330],[1090,330],[1090,245],[1138,245]],C.green,{label:'Live API',lx:1000,ly:316});
+line([[667,385],[773,385]],C.green,{label:'文字',lx:700,ly:371});
+line([[800,358],[800,312]],C.green,{label:'発言',lx:806,ly:328});
+line([[827,140],[918,140],[918,95],[973,95]],C.violet,{label:'構造化出力 JSON',lx:832,ly:120,both:true});
+line([[918,95],[918,26],[1165,26],[1165,68]],C.violet,{});
+line([[918,140],[918,245],[973,245]],C.violet,{label:'embed',lx:925,ly:200});
+line([[827,165],[902,165],[902,410],[973,410]],C.gold,{label:'保存・復元',lx:910,ly:432,both:true});
+line([[345,388],[372,388],[372,112],[347,112]],C.green,{label:'つなぐ受け渡し（Ephemeral）',lx:226,ly:320,dash:true});
+T.insertAdjacentHTML('beforeend',`<div style="position:absolute;left:112px;top:512px;display:flex;gap:9px;font-size:8.8px;color:#b9a8d0">`+[['#FF72ED','CAMP'],['#C97CFA','Gemini'],['#5be3b0','声'],['#ffcf6b','保存'],['#7cc4ff','HTTP']].map(([c,n])=>`<span style="display:flex;align-items:center;gap:3px"><i style="width:12px;height:2px;background:${c};display:inline-block"></i>${n}</span>`).join('')+`</div>`);
+line([[293,400],[232,400]],C.green,{label:'ほかの審査員と直接',lx:206,ly:380,dash:true,both:true});
+line([[345,410],[388,410],[388,534],[1110,534],[1110,410],[1138,410]],C.green,{label:'STUN',lx:640,ly:527,dash:true});
+</script></body></html>

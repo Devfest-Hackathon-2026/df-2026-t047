@@ -1,0 +1,3 @@
+# gcloud run deploy --source で Cloud Build に送らないもの（.dockerignore と同じ方針）
+#!include:.dockerignore
+.gcloudignore

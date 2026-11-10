@@ -1,0 +1,7 @@
+.mascot {
+  aspect-ratio: 2 / 2;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 10px var(--accent-glow, rgba(164, 92, 255, 0.28)));
+  pointer-events: none;
+  user-select: none;
+}

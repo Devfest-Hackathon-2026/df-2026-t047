@@ -1,0 +1,15 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1600px;height:900px;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#2a0f4a 0%,#12071f 55%,#07030d 100%);color:#F8F3FF;font-family:"Hiragino Sans",sans-serif}
+.hdr{position:absolute;left:0;top:0;right:0;height:58px;display:flex;align-items:center;gap:14px;padding:0 24px;border-bottom:1px solid #2a1a40;background:#0b0614cc}
+.hdr img{width:30px;height:30px;border-radius:8px}
+.brand{font-style:italic;font-weight:800;font-size:19px;letter-spacing:1px}.brand span{font-weight:500}
+.tag{color:#9a8ba9;font-size:12px;border-left:1px solid #3a2a50;padding-left:14px}
+.sp{flex:1}
+.pill{font-size:12px;padding:5px 10px;border-radius:8px;border:1px solid #3b2a55;background:#1a0f2a;color:#d8c8ee;display:flex;gap:6px;align-items:center}
+.pill.g{color:#7ef0c0;border-color:#2e6b55}
+.exit{border-color:#7a3048;color:#ffb0c0}
+.ic{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ch{background:url(mascots.png) no-repeat;background-size:400% 200%}
+.beam{position:absolute;top:58px;width:420px;height:760px;background:linear-gradient(180deg,rgba(214,150,255,.38),rgba(214,150,255,0) 80%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);filter:blur(2px)}
+.card{background:linear-gradient(180deg,#22123a,#150b25);border:1.5px solid #6a3fa0;border-radius:16px}
+.lbl{font-size:11px;letter-spacing:2px;font-weight:800;color:#c9a6f0}

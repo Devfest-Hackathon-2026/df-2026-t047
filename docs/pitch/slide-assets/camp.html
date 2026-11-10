@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.t{font-size:14px}.s{font-size:11.5px}
+.lane{position:absolute;left:8px;width:1159px;border-radius:12px;background:#0f0919;border:1px solid #2a1c40}
+.ln{position:absolute;left:20px;font-size:10px;letter-spacing:1.5px;font-weight:700;color:#8d76ad}
+.chip{position:absolute;font-size:11px;padding:4px 9px;border-radius:99px;border:1px solid var(--line);background:var(--panel2);white-space:nowrap}
+.bad{color:#ff8a8a;border-color:#7a3048}
+.ok{color:var(--green);border-color:#2e6b55}
+</style></head><body>
+<div class="lane" style="top:8px;height:96px"></div><div class="ln" style="top:16px">CLIENTS（@camp-protocol/kit/client）</div>
+<div class="lane" style="top:112px;height:206px;border-color:#5D387F"></div><div class="ln" style="top:290px;left:auto;right:24px;color:var(--pink)">CAMP SERVER（@camp-protocol/kit/server）— 部屋ごとに1件ずつ</div>
+<div class="lane" style="top:326px;height:106px"></div><div class="ln" style="top:334px">ASYNC AI（Gemini）</div>
+
+<div class="box" style="left:24px;top:36px;width:200px;height:58px;padding:7px 10px"><div class="t">A：選抜する</div><div class="s" style="margin:0">commandId a-17・版 v3</div></div>
+<div class="box" style="left:240px;top:36px;width:200px;height:58px;padding:7px 10px"><div class="t">B：同じ枠を選抜</div><div class="s" style="margin:0">commandId b-09（ほぼ同時）</div></div>
+<div class="box" style="left:456px;top:36px;width:200px;height:58px;padding:7px 10px"><div class="t">A：通信が切れて再送</div><div class="s" style="margin:0">commandId a-17（同じもの）</div></div>
+<div class="box" style="left:860px;top:36px;width:296px;height:58px;padding:7px 10px;border-color:var(--violet)"><div class="t">全員が同じ順で受け取る</div><div class="s" style="margin:0">event（seq と状態の全体つき）＋ 本人に result</div></div>
+
+<div class="box glow" style="left:24px;top:146px;width:150px;height:96px"><div class="tag">1. 検査</div><div class="s" style="margin:0">形式・バージョン・送りすぎ。壊れたものは protocol_error</div></div>
+<div class="box glow" style="left:188px;top:146px;width:150px;height:96px"><div class="tag">2. 重複の確認</div><div class="s" style="margin:0">同じ commandId は実行せず、前回の result を返す</div></div>
+<div class="box glow" style="left:352px;top:146px;width:166px;height:96px"><div class="tag">3. アプリのルール</div><div class="s" style="margin:0">先着が通る。後の操作や古い版は理由つきで断る</div></div>
+<div class="box glow" style="left:532px;top:146px;width:150px;height:96px"><div class="tag">4. 確定</div><div class="s" style="margin:0">状態を変え、通し番号 seq を1つ進める</div></div>
+<div class="box glow" style="left:696px;top:146px;width:150px;height:96px"><div class="tag">5. 配信</div><div class="s" style="margin:0">event を全員へ、result を本人へ</div></div>
+
+<div class="chip ok" style="left:696px;top:254px">A の選抜：ok（seq 42）</div>
+<div class="chip bad" style="left:352px;top:254px">B：NOT_IN_LOWER（もう上がっている）</div>
+<div class="chip" style="left:188px;top:284px">A の再送：前回の result を返すだけ（二重に実行しない）</div>
+
+<div class="box" style="left:24px;top:358px;width:250px;height:64px;padding:8px 10px"><div class="t">task() で生成を開始</div><div class="s" style="margin:0">開始時の epoch を覚えておく</div></div>
+<div class="box" style="left:330px;top:358px;width:250px;height:64px;padding:8px 10px"><div class="t">その間に「やり直し」</div><div class="s" style="margin:0">reset() で epoch が進む</div></div>
+<div class="box" style="left:636px;top:358px;width:260px;height:64px;padding:8px 10px;border-color:#7a3048"><div class="t" style="color:#ff9b9b">遅れて届いた結果は捨てる</div><div class="s" style="margin:0">epoch が違う → 状態に入れない</div></div>
+<div class="box" style="left:912px;top:358px;width:244px;height:64px;padding:8px 10px;border-color:#2e6b55"><div class="t" style="color:var(--green)">epoch が同じなら確定へ</div><div class="s" style="margin:0">人の操作と同じ列で 4 → 5</div></div>
+
+<svg width="1175" height="440"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FF72ED"/></marker><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C97CFA"/></marker></defs>
+<path d="M124 94 L92 144" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M340 94 L110 144" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M556 94 L120 144" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M174 194 L186 194" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M338 194 L350 194" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M518 194 L530 194" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M682 194 L694 194" stroke="#FF72ED" stroke-width="2" marker-end="url(#a)"/>
+<path d="M846 180 L1000 98" stroke="#C97CFA" stroke-width="2" marker-end="url(#b)"/>
+<path d="M274 390 L328 390" stroke="#C97CFA" stroke-width="2" marker-end="url(#b)"/>
+<path d="M580 390 L634 390" stroke="#C97CFA" stroke-width="2" marker-end="url(#b)"/>
+<path d="M1034 356 L1034 316 L640 316 L640 246" fill="none" stroke="#5be3b0" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#b)"/>
+</svg>
+</body></html>

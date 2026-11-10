@@ -1,0 +1,1606 @@
+/* ステージ（上段・下段）。値の多くは チームで作った初期の画面モックから移植 */
+
+.finalStage {
+  position: relative;
+  /* 予選が終わると最終オーディションだけになる（#5） */
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 10px 5% 4px;
+  isolation: isolate;
+  transition: background 0.3s;
+  border-radius: 24px;
+}
+
+.finalStage[data-drop='active'] {
+  background: radial-gradient(ellipse at 50% 70%, #ffb64818, transparent 70%);
+}
+
+.finalStage[data-drop='active'][data-hover] {
+  background: radial-gradient(ellipse at 50% 70%, #ffb64838, transparent 72%);
+}
+
+.finalStage[data-drop='active'] .upperRing {
+  border-color: #ffdf80;
+  box-shadow:
+    0 0 25px #ffc44e99,
+    0 5px 0 #704521,
+    inset 0 0 22px #e7aa3e44;
+}
+
+.finalStage[data-drop='full'] {
+  background: radial-gradient(ellipse at 50% 70%, #ff5c8a14, transparent 70%);
+}
+
+.fullNotice {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  translate: -50% 0;
+  z-index: 6;
+  font-size: 11px;
+  color: #ffc2d2;
+  background: #3a1428e6;
+  border: 1px solid #ff7aa066;
+  padding: 7px 14px;
+  border-radius: 6px;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 4;
+  min-height: 30px;
+}
+
+.heading > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.heading svg {
+  color: #eec674;
+  width: 20px;
+}
+
+.heading h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  margin: 0;
+}
+
+.heading h2 span {
+  font-size: 9px;
+  font-weight: 400;
+  color: #9c7ab1;
+  letter-spacing: 1.5px;
+  margin-left: 12px;
+}
+
+.count {
+  font-size: 10px;
+  border: 1px solid #76529a;
+  padding: 3px 7px;
+  border-radius: 4px;
+  color: #b59ecf;
+  background: #2d173b;
+}
+
+.gold {
+  color: var(--gold-soft);
+  border-color: #8e683d;
+  background: #4d302233;
+}
+
+.purpleDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple-soft);
+  box-shadow: 0 0 10px var(--purple);
+}
+
+.finalButton {
+  color: #f0d396;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  border: 1px solid #9c763f;
+  padding: 7px 12px;
+  border-radius: 5px;
+  background: #593d2522;
+}
+
+.voteStatus {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--gold-soft);
+}
+
+.quietButton {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #b59cce;
+  font-size: 10px;
+}
+
+/* --------------------------------- 上段 --------------------------------- */
+
+.finalLineup {
+  height: calc(100% - 30px);
+  display: flex;
+  justify-content: center;
+  gap: 3.5%;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+  padding: 0 6% 16px;
+}
+
+.emptySlot {
+  flex: 1;
+  text-align: center;
+  max-width: 235px;
+  align-self: center;
+  color: #947554;
+}
+
+.emptyOrbit {
+  width: 85px;
+  height: 65px;
+  border: 1px dashed #9d724766;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 0 auto 16px;
+  rotate: -8deg;
+  background: radial-gradient(ellipse, #a1793b15, transparent);
+}
+
+.emptyOrbit svg {
+  color: #c2a27a;
+  opacity: 0.7;
+}
+
+.finalStage[data-drop='active'] .emptyOrbit {
+  border-color: #ffd98a;
+  animation: orbit 1.2s ease-in-out infinite alternate;
+}
+
+.emptySlot p {
+  font-size: 12px;
+  margin: 0 0 6px;
+  color: #c2a27a;
+}
+
+.emptySlot > span {
+  font-size: 9px;
+  color: #7d687f;
+}
+
+.ring {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  height: 75px;
+  border-radius: 50%;
+  z-index: -1;
+  bottom: 2px;
+  border: 2px solid #c18bffc9;
+  background: radial-gradient(ellipse, #6a268b22 50%, #7f2dd344 70%, #b56dff33);
+  box-shadow:
+    0 0 8px #ad3dff99,
+    0 7px 0 #29183e,
+    0 11px 0 #54217d,
+    0 12px 1px #a35cda,
+    0 22px 30px #6b1e8b44,
+    inset 0 0 14px #9833df55;
+  pointer-events: none;
+}
+
+.upperRing {
+  left: 11%;
+  right: 11%;
+  height: 66px;
+  border-color: #e5bb6399;
+  box-shadow:
+    0 0 7px #ffbd4644,
+    0 5px 0 #39233d,
+    0 10px 0 #25122c,
+    0 11px 1px #bb854c88,
+    0 20px 25px #6f306333;
+  background: radial-gradient(ellipse, #b86f2210 55%, #d1985022 70%);
+}
+
+/* --------------------------------- 下段 --------------------------------- */
+
+.ideaStage[data-paused] {
+  opacity: 0.4;
+  filter: saturate(0.6);
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.ideaStage {
+  position: relative;
+  flex: 1 1 50%;
+  min-height: 0;
+  isolation: isolate;
+  padding-top: 6px;
+}
+
+.ideaStage .heading {
+  padding: 0 12px;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.ideaStage .heading > div,
+.ideaStage .heading button {
+  pointer-events: auto;
+  background: #0d0720d9;
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+.lineup {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2.6%;
+  height: calc(100% - 30px);
+  padding: 0 4% 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.lowerSlot {
+  position: relative;
+  width: 17.5%;
+  max-width: 230px;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.lowerRing {
+  bottom: 18px;
+}
+
+.wordmark {
+  position: absolute;
+  bottom: -14px;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 7px;
+  text-align: center;
+  color: #7d46ad44;
+  z-index: -1;
+}
+
+.preparing {
+  width: 100%;
+  height: 58%;
+  border: 1px dashed #6f4a8f88;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  color: var(--ink-muted);
+  font-size: 11px;
+  margin-bottom: 26px;
+  background: #140b2499;
+}
+
+.preparing p {
+  margin: 0;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #b665ff44;
+  border-top-color: var(--purple-soft);
+  animation: spin 0.9s linear infinite;
+}
+
+/* ------------------------------- 出演者 ------------------------------- */
+
+.performer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  isolation: isolate;
+}
+
+.spotlight {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 150%;
+  height: 160%;
+  translate: -50% 0;
+  background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 62%);
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+  z-index: -2;
+  opacity: 0;
+  animation: spot 1.6s ease-out 0.2s forwards;
+  pointer-events: none;
+}
+
+.character {
+  display: block;
+  touch-action: none;
+  cursor: grab;
+  position: relative;
+  width: 100%;
+  height: clamp(64px, 10vh, 150px);
+  z-index: 3;
+}
+
+.character:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.character:hover:not(:disabled) .mascot {
+  translate: -50% -6px;
+  rotate: -2deg;
+}
+
+.character:active {
+  cursor: grabbing;
+}
+
+.mascot {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  width: clamp(96px, min(11vw, 15vh), 196px);
+  translate: -50% 0;
+  transition:
+    translate 0.2s var(--ease-pop),
+    rotate 0.2s;
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+.performer:nth-child(odd) .mascot {
+  animation-delay: -1.3s;
+}
+
+.performer[data-dragging] .character,
+.performer[data-dragging] .speech {
+  visibility: hidden;
+}
+
+.performer[data-dragging] .flip {
+  opacity: 0.35;
+  border-style: dashed;
+}
+
+.performer[data-held] .mascot {
+  translate: -50% -14px;
+  filter: drop-shadow(0 0 14px var(--holder));
+}
+
+.heldTag {
+  position: absolute;
+  top: -6px;
+  z-index: 5;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 3px;
+  background: var(--holder);
+  color: #110a20;
+  white-space: nowrap;
+}
+
+.flip {
+  background: linear-gradient(145deg, #28143aef, #100923 75%);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-md);
+  width: 100%;
+  padding: 11px 9px 10px;
+  min-height: clamp(96px, 14.5vh, 160px);
+  box-shadow:
+    0 0 4px var(--accent),
+    0 0 18px color-mix(in srgb, var(--accent) 30%, transparent),
+    inset 0 0 8px color-mix(in srgb, var(--accent) 20%, transparent),
+    0 7px 15px #0006;
+  z-index: 4;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.flip::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+.flip:hover {
+  translate: 0 -2px;
+}
+
+.flipTitle {
+  font-size: clamp(13px, 1.15vw, 19px);
+  font-weight: 800;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flipIcon {
+  font-size: clamp(22px, 1.8vw, 32px);
+  line-height: 1.1;
+  color: var(--accent);
+  margin: 5px 0;
+  text-shadow: 0 0 7px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+.flip p {
+  white-space: pre-line;
+  font-size: clamp(10px, 0.75vw, 12px);
+  line-height: 1.6;
+  color: #e4d7ed;
+  margin: 3px 0 0;
+}
+
+.podium {
+  height: 20px;
+  width: 91%;
+  position: absolute;
+  bottom: 8px;
+  z-index: -1;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #39205b, #17092b);
+  border: 2px solid var(--accent);
+  box-shadow:
+    0 4px 0 #28173f,
+    0 7px 0 #160b25,
+    0 0 12px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.name {
+  /* キャラの名前札：ステージの光の上でも読めるよう、濃い地に白い太字で */
+  margin-top: 10px;
+  font-size: clamp(11px, 0.85vw, 14px);
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  color: #ffffff;
+  background: #120a22e6;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 2px 10px 2px 8px;
+  box-shadow: 0 2px 8px #0008;
+  text-shadow: 0 1px 2px #000;
+}
+
+.name > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.name small {
+  color: #f5d28b;
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  margin-left: 2px;
+}
+
+.speech {
+  position: absolute;
+  bottom: calc(100% - 10px);
+  z-index: 6;
+  background: #25143ded;
+  border: 1px solid #925cb8;
+  padding: 6px 9px;
+  border-radius: 9px;
+  color: #ecd2ff;
+  font-size: 11px;
+  max-width: 220px;
+  white-space: normal;
+  line-height: 1.5;
+  pointer-events: none;
+  box-shadow: 0 4px 14px #0007;
+}
+
+.speech b {
+  display: block;
+  font-size: 9px;
+  color: #c9a6ea;
+  font-weight: 600;
+}
+
+/* ------------------------------ 上段の出演者 ------------------------------ */
+
+.finalPerformer {
+  --mascot-col: clamp(74px, 6.4vw, 124px);
+  width: 31%;
+  max-width: clamp(300px, 23vw, 460px);
+  display: grid;
+  grid-template-columns: var(--mascot-col) 1fr;
+  grid-template-rows: 1fr auto auto;
+  column-gap: 4px;
+  align-items: end;
+  transition: opacity 0.2s;
+}
+
+.finalPerformer[data-arriving] {
+  opacity: 0;
+}
+
+.finalPerformer .character {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  margin-bottom: 10px;
+}
+
+.finalPerformer .mascot {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  translate: 0 0;
+}
+
+.finalPerformer .character:hover:not(:disabled) .mascot {
+  translate: 0 -5px;
+}
+
+.finalPerformer .podium {
+  width: var(--mascot-col);
+  left: 0;
+  bottom: 20px;
+  height: 16px;
+}
+
+/*
+ * 足元の影：台座の上面に落ちる。キャラの呼吸（breathe、3.2秒）で体が浮くと少し小さく薄くなる。
+ * 奇数番目のキャラは呼吸を -1.3 秒ずらしているので、影も同じだけずらす
+ */
+.finalPerformer .podium::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 64%;
+  height: 80%;
+  translate: -50% -60%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #050210e6, #05021070 60%, transparent);
+  animation: footShadow 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.finalPerformer:nth-child(odd) .podium::after {
+  animation-delay: -1.3s;
+}
+
+/* キャラをつかんで動かしているあいだは、元の場所に影を残さない */
+.finalPerformer[data-dragging] .podium::after {
+  visibility: hidden;
+}
+
+@keyframes footShadow {
+  0%,
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+  50% {
+    scale: 0.92 1;
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finalPerformer .podium::after {
+    animation: none;
+  }
+}
+
+.finalPerformer .speech {
+  left: 0;
+  bottom: calc(100% - 6px);
+}
+
+.finalFlip {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: left;
+  border-color: var(--gold-line);
+  min-height: clamp(104px, 16vh, 170px);
+  padding: 8px 10px 8px;
+  box-shadow:
+    0 0 5px #d09b5288,
+    0 0 20px #ffbd4622,
+    inset 0 0 10px #ad773322;
+  perspective: 600px;
+}
+
+.finalFlip .flipTitle {
+  font-size: clamp(12px, 1vw, 17px);
+}
+
+.finalFlip p {
+  margin: 4px 0;
+  font-size: clamp(9px, 0.7vw, 11px);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-height: 820px) {
+  .points li:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+.flipBody {
+  transform-origin: 50% 0;
+}
+
+.origin {
+  font-size: 9px;
+  color: #b89a72;
+  text-decoration: line-through;
+  text-decoration-color: #b89a7288;
+  margin-bottom: 2px;
+}
+
+.points {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  text-align: left;
+  display: grid;
+  gap: 2px;
+}
+
+.points li {
+  font-size: clamp(8.5px, 0.65vw, 10.5px);
+  color: #f5d28b;
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+  line-height: 1.4;
+}
+
+.points li[data-kind='keep'] {
+  color: #bfe9d6;
+}
+
+.improvement {
+  font-size: 9px;
+  color: #f5d28b;
+  border-top: 1px solid #78532966;
+  padding-top: 5px;
+  margin-top: 6px;
+}
+
+.finalPerformer[data-status='refining'] .finalFlip,
+.finalPerformer[data-status='critiquing'] .finalFlip {
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+.finalPerformer .name {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 10px;
+  font-size: 8px;
+}
+
+.finalPerformer .voteButton,
+.finalPerformer .tieNote {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+}
+
+.critique {
+  border-color: #b88c48;
+  color: #f2ddb4;
+  background: #2b1a2ef2;
+}
+
+.voteButton {
+  margin-top: 10px;
+  min-height: 40px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #2a1606;
+  background: linear-gradient(105deg, #ffe08a, #f0a83e);
+  border: 1px solid #ffe7a6;
+  border-radius: 999px;
+  box-shadow: 0 0 18px #ffbd4688, inset 0 1px 0 #fff6d0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.voteButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 26px #ffbd46aa, inset 0 1px 0 #fff6d0;
+}
+
+/* 自分が入れた案：金の縁で光らせ、押しても変わらない */
+.voteButton[data-chosen] {
+  color: #1d1205;
+  background: linear-gradient(105deg, #fff2b8, #ffc75a);
+  box-shadow: 0 0 0 3px #ffd36b66, 0 0 30px #ffc54aaa;
+  cursor: default;
+}
+
+/* ほかの案に入れたあと：控えめにして、押せば入れ替えられる */
+.voteButton[data-other] {
+  color: #f3dfb5;
+  background: #2a1c10cc;
+  border-color: #9c763f;
+  box-shadow: none;
+}
+
+.tieNote {
+  margin-top: 8px;
+  font-size: 10px;
+  color: var(--gold-soft);
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(-3px) scaleY(1.015);
+  }
+}
+
+@keyframes glow {
+  to {
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes spot {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes orbit {
+  to {
+    scale: 1.08;
+    box-shadow: 0 0 16px #ffc44e66;
+  }
+}
+
+/* ------------------------- 退場予告・会話での言及 ------------------------- */
+
+.performer[data-leaving] .flip {
+  filter: saturate(0.45) brightness(0.75);
+  border-style: dashed;
+  transition: filter 0.4s;
+}
+
+.performer[data-leaving] .mascot {
+  animation: wobble 0.7s ease-in-out infinite alternate;
+  opacity: 0.8;
+}
+
+.leavingTag {
+  /* フリップの右上（上端の枠の上）に小さく出す。企画名・説明には重ねない。右端は × ボタンの分あける */
+  position: absolute;
+  top: calc(clamp(64px, 10vh, 150px) - 22px);
+  right: 20px;
+  z-index: 7;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: 2px 8px 4px;
+  border-radius: 10px;
+  background: #2a0f22f2;
+  border: 1px solid #ff7aa0aa;
+  color: #ffd0de;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #0008;
+}
+
+.leavingTag i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: #ff7aa0;
+  transform-origin: left;
+  animation: drain linear forwards;
+}
+
+.mentions {
+  margin-left: 4px;
+  font-size: 9px;
+  letter-spacing: 0;
+  color: #fde7bd;
+  background: #5a3a1888;
+  border: 1px solid #b2853c88;
+  border-radius: 8px;
+  padding: 0 5px;
+}
+
+@keyframes drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes wobble {
+  from {
+    rotate: -3deg;
+  }
+  to {
+    rotate: 3deg;
+  }
+}
+
+/* ------------------------------- 見送り ------------------------------- */
+
+.rejectButton {
+  position: absolute;
+  z-index: 6;
+  top: calc(clamp(64px, 10vh, 150px) - 9px);
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #ffd0de;
+  background: #3a1428f0;
+  border: 1px solid #ff7aa099;
+  opacity: 0;
+  scale: 0.8;
+  transition:
+    opacity 0.15s,
+    scale 0.15s;
+}
+
+.performer:hover .rejectButton,
+.rejectButton:focus-visible,
+.performer[data-leaving] .rejectButton {
+  opacity: 1;
+  scale: 1;
+}
+
+.rejectButton:hover {
+  background: #ff5c8a;
+  color: #1a0710;
+}
+
+.leavingTag b {
+  font-size: 12px;
+  margin: 0 1px;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------- 好みエンジン（ADR-0009） ------------------------- */
+
+/* フリップの左上（退場予告の反対側）に、この案が出てきた理由を出す */
+.pitchTag {
+  position: absolute;
+  top: calc(clamp(64px, 10vh, 150px) - 22px);
+  left: 8px;
+  z-index: 7;
+  max-width: 62%;
+  padding: 2px 8px 3px;
+  border-radius: 10px;
+  background: #1d1233f0;
+  border: 1px solid #a77ad4aa;
+  color: #eadcff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: auto;
+  box-shadow: 0 2px 8px #0008;
+}
+
+.pitchTag[data-role='bridge'] {
+  border-color: #ffd36bcc;
+  color: #ffeec4;
+  background: #2b2010f0;
+}
+
+.pitchTag[data-role='fit'] {
+  border-color: #7fd6ffbb;
+  color: #d9f3ff;
+}
+
+.performer[data-leaving] .pitchTag {
+  max-width: 44%;
+}
+
+.revisedChip {
+  position: absolute;
+  bottom: 5px;
+  right: 7px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #ffd36b;
+  letter-spacing: 0.4px;
+}
+
+.flip[data-revised] {
+  animation: revised-glow 1.4s ease-out 1;
+}
+
+@keyframes revised-glow {
+  0% { box-shadow: 0 0 0 0 #ffd36b, 0 0 30px #ffd36b88; }
+  100% { box-shadow: 0 0 4px var(--accent), 0 7px 15px #0006; }
+}
+
+/* 迷いに気づいたキャラは小さく首をかしげる */
+.performer[data-thinking] .mascot {
+  animation: thinking-tilt 1.2s ease-in-out 3;
+}
+
+@keyframes thinking-tilt {
+  0%, 100% { rotate: 0deg; }
+  30% { rotate: -7deg; }
+  60% { rotate: 5deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .performer[data-thinking] .mascot,
+  .flip[data-revised] {
+    animation: none;
+  }
+}
+
+/* 幅が狭いとき：下段の企画名を切らずに2行まで折り返す */
+@media (max-width: 1100px) {
+  .flipTitle {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 12px;
+    line-height: 1.3;
+  }
+}
+
+/* 改良・批評の途中：経過秒数と、左右に流れる細いバー */
+.busy {
+  display: block;
+}
+
+.busy small {
+  opacity: 0.75;
+}
+
+.busyBar {
+  display: block;
+  height: 2px;
+  margin-top: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #f5d28b, transparent) 0 0 / 40% 100% no-repeat, #78532955;
+  animation: busySlide 1.2s linear infinite;
+}
+
+@keyframes busySlide {
+  from {
+    background-position: -40% 0, 0 0;
+  }
+  to {
+    background-position: 140% 0, 0 0;
+  }
+}
+
+/* 幅が狭いとき：決勝のカードが細長く伸びないよう、キャラを小さくして中身を絞る */
+@media (max-width: 1100px) {
+  .finalPerformer {
+    --mascot-col: 48px;
+    width: 32%;
+  }
+  .finalFlip {
+    min-height: 0;
+    padding: 6px 8px;
+  }
+  .finalFlip .points,
+  .finalFlip .origin {
+    display: none;
+  }
+  .finalFlip p {
+    -webkit-line-clamp: 1;
+  }
+}
+
+/* ===== 最終オーディション：スポットライト（タップしたキャラにみんなで注目） ===== */
+.finalPerformer {
+  transition: opacity 0.35s, filter 0.35s, scale 0.35s;
+}
+.finalPerformer .character:not(:disabled) {
+  cursor: pointer;
+}
+.finalPerformer[data-spot='on'] {
+  scale: 1.08;
+  z-index: 3;
+}
+.finalPerformer[data-spot='on'] .mascot {
+  filter: drop-shadow(0 0 22px var(--accent)) drop-shadow(0 0 40px color-mix(in srgb, var(--accent) 60%, transparent));
+}
+.finalPerformer[data-spot='on'] .finalFlip {
+  border-width: 2px;
+  box-shadow: 0 0 10px var(--accent), 0 0 34px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.finalPerformer[data-spot='off'] {
+  opacity: 0.38;
+  filter: saturate(0.5) brightness(0.8);
+  scale: 0.94;
+}
+.spotBeam {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 170%;
+  height: 230%;
+  translate: -50% 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 62%),
+    linear-gradient(180deg, #fff3 0%, transparent 70%);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+  animation: spotIn 0.4s ease-out;
+}
+@keyframes spotIn {
+  from { opacity: 0; }
+}
+.finalStage[data-spotlight]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 60%, transparent 35%, #05020dcc 100%);
+}
+.spotBanner {
+  position: absolute;
+  left: 50%;
+  top: 46px;
+  translate: -50% 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 92%;
+  padding: 8px 14px 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  background: #160b26ee;
+  border: 1.5px solid #ffcf6b;
+  box-shadow: 0 0 22px #ffb94a55;
+  color: #fff4dc;
+}
+.spotBanner b {
+  color: #ffd76b;
+}
+.spotBanner small {
+  font-size: 11px;
+  color: #d8c7a8;
+}
+.spotBanner span {
+  font-size: 12px;
+  color: #e9dcff;
+}
+.spotBanner button {
+  margin-left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #ffcf6b88;
+  background: transparent;
+  color: #ffd76b;
+  cursor: pointer;
+}
+
+/* ===== 立体的なステージ：奥行きのある床と、高台になった舞台 ===== */
+.floorGrid {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -6%;
+  height: 58%;
+  z-index: -3;
+  pointer-events: none;
+  transform: perspective(520px) rotateX(64deg);
+  transform-origin: 50% 100%;
+  background:
+    repeating-linear-gradient(90deg, #8f4cd422 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, #8f4cd422 0 1px, transparent 1px 48px),
+    radial-gradient(ellipse at 50% 100%, #3a1660aa, transparent 70%);
+  mask-image: linear-gradient(0deg, #000 30%, transparent 100%);
+}
+.upperDrum {
+  position: absolute;
+  left: 11%;
+  right: 11%;
+  bottom: -40px;
+  height: 75px;
+  z-index: -2;
+  pointer-events: none;
+  border-radius: 0 0 50% 50% / 0 0 34px 34px;
+  background:
+    linear-gradient(90deg, #00000088, transparent 18%, transparent 82%, #00000088),
+    linear-gradient(180deg, #4a2a3f, #23121f 55%, #120812);
+  border: 2px solid #e5bb6355;
+  border-top: 0;
+  box-shadow:
+    0 14px 0 -4px #2a1622,
+    0 26px 34px #000c,
+    inset 0 -6px 14px #ffcb6b22;
+}
+.upperDrum::after {
+  content: '';
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: -30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #000a, transparent 70%);
+  filter: blur(4px);
+}
+
+/* ===== 決勝のフリップ：3人だけなので大きく。中身が多ければ中で下に流す ===== */
+.finalLineup {
+  align-items: flex-end;
+  padding-bottom: 6vh;
+}
+.finalPerformer {
+  --mascot-col: clamp(110px, 9vw, 190px);
+  width: 32%;
+  max-width: clamp(360px, 31vw, 620px);
+}
+.finalFlip {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(150px, 24vh, 260px);
+  max-height: clamp(220px, 40vh, 430px);
+  padding: 12px 14px 10px;
+}
+.finalFlip .flipBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b88a4f55 transparent;
+  mask-image: linear-gradient(180deg, #000 85%, transparent 100%);
+  padding-bottom: 10px;
+}
+.finalFlip .flipTitle {
+  font-size: clamp(15px, 1.35vw, 23px);
+  white-space: normal;
+}
+.finalFlip p {
+  margin: 6px 0 4px;
+  font-size: clamp(11px, 0.85vw, 14px);
+  line-height: 1.6;
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.outline {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 8px;
+  margin: 8px 0 4px;
+  font-size: clamp(10.5px, 0.78vw, 13px);
+  line-height: 1.5;
+}
+.outline dt {
+  color: #ff9bf0;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.outline dd {
+  margin: 0;
+  color: #efe4ff;
+}
+.finalFlip .points li {
+  font-size: clamp(10px, 0.75vw, 12.5px);
+}
+.reflected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.reflected span {
+  font-size: clamp(9.5px, 0.7vw, 11.5px);
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: #12301fcc;
+  border: 1px solid #2e6b55;
+  color: #9ff0c9;
+}
+.finalFlip .improvement {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+}
+.originNote {
+  color: #a98c6a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 最終オーディション：台座ごと舞台を持ち上げる（画面の下に寄りすぎないように） */
+.finalStage {
+  --lift: 13vh;
+}
+.finalStage .finalLineup {
+  padding-bottom: calc(var(--lift) + 6vh);
+}
+.finalStage .upperRing {
+  bottom: var(--lift);
+}
+.finalStage .upperDrum {
+  bottom: calc(var(--lift) - 40px);
+}
+.finalStage .floorGrid {
+  bottom: calc(var(--lift) - 6%);
+}
+
+/* 舞台の奥のネオンサイン（ロゴ） */
+.backdrop {
+  position: absolute;
+  left: 50%;
+  top: 2%;
+  width: min(40%, 620px);
+  translate: -50% 0;
+  z-index: -1;
+  pointer-events: none;
+
+  opacity: 0.92;
+  filter: drop-shadow(0 0 18px #b250ffaa) drop-shadow(0 0 40px #8a2be255);
+}
+
+/* 考え中（C2）：首をかしげ続け、頭の横に「…」の吹き出し */
+.finalPerformer[data-busy] .mascot {
+  animation: ponder 1.8s ease-in-out infinite;
+}
+
+@keyframes ponder {
+  0%, 100% { rotate: 0deg; }
+  25% { rotate: -6deg; }
+  60% { rotate: 4deg; }
+}
+
+.thought {
+  position: absolute;
+  top: -14%;
+  left: -4%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 9px 4px;
+  border-radius: 14px;
+  background: #f6efffee;
+  color: #3b2160;
+  box-shadow: 0 0 14px #b250ff88;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* 吹き出しのしっぽ（小さな丸） */
+.thought::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  bottom: -7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f6efffee;
+}
+
+.thought small {
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.thoughtDots {
+  display: flex;
+  gap: 4px;
+}
+
+.thoughtDots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8a4fd8;
+  animation: thought-dot 1s ease-in-out infinite;
+}
+
+.thoughtDots i:nth-child(2) { animation-delay: 0.15s; }
+.thoughtDots i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes thought-dot {
+  0%, 100% { opacity: 0.3; translate: 0 0; }
+  40% { opacity: 1; translate: 0 -3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finalPerformer[data-busy] .mascot,
+  .thoughtDots i {
+    animation: none;
+  }
+}
+
+/* ===== 決勝の配置の調整（⑦）：キャラを大きく、横幅を広く使い、企画名の変な改行をなくす ===== */
+.finalLineup {
+  gap: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.finalPerformer {
+  --mascot-col: clamp(120px, 11.5vw, 230px);
+  width: 33%;
+  max-width: clamp(400px, 34vw, 680px);
+}
+.finalFlip {
+  min-height: clamp(170px, 30vh, 300px);
+}
+/* 「ー」だけが次の行に落ちるような改行を避け、行の長さをそろえる */
+.finalFlip .flipTitle {
+  text-wrap: balance;
+  line-break: strict;
+  /* 日本語を文節で折り返す（「推しメ／ニュー」のような語の途中での改行を避ける。対応していないブラウザはそのまま） */
+  word-break: auto-phrase;
+}
+
+/* 決勝の人数がロビーで変わる：4人のときはカードを細く、キャラも少し小さく */
+.finalLineup[data-count='4'] .finalPerformer {
+  --mascot-col: clamp(90px, 8vw, 170px);
+  width: 24%;
+}
+
+/* 決勝の吹き出しは、見出し・注目の帯・ほかのキャラのフリップより手前に出す（重なっても隠れない） */
+.finalStage .finalLineup {
+  z-index: 9;
+  /* 手前に出しても、空いている所で見出しのボタン（優勝を決める）を押せなくしない */
+  pointer-events: none;
+}
+.finalStage .finalLineup > * {
+  pointer-events: auto;
+}
+.finalStage .finalPerformer {
+  position: relative;
+}
+.finalStage .finalPerformer:has(> .speech) {
+  z-index: 30;
+}
+.finalStage .speech {
+  z-index: 31;
+}
+
+/* ===== 最終投票：だれが投票済みか（中身は締め切るまで伏せる） ===== */
+.ballot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px 6px 14px;
+  border: 1px solid #b98a4a;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2a1708e6, #1a0f26e6);
+  box-shadow: 0 0 22px #ffbd4633;
+  font-size: 12px;
+  color: #f3dfb5;
+  pointer-events: auto;
+}
+.ballotTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: var(--gold-soft);
+  white-space: nowrap;
+}
+.voters {
+  display: flex;
+  gap: 6px;
+}
+.voter {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px 2px 3px;
+  border-radius: 999px;
+  border: 1px dashed #ffffff33;
+  color: #bfaecf;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.voter i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1.5px dashed color-mix(in srgb, var(--judge) 70%, transparent);
+  color: #1d1205;
+}
+.voter[data-voted] {
+  border: 1px solid color-mix(in srgb, var(--judge) 70%, transparent);
+  background: color-mix(in srgb, var(--judge) 20%, transparent);
+  color: #fff;
+}
+.voter[data-voted] i {
+  border: none;
+  background: var(--judge);
+}
+.ballotCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #d9c3a0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.ballotCount b {
+  font-size: 16px;
+  color: #ffe08a;
+}
+.ballotBar {
+  width: 54px;
+  height: 5px;
+  border-radius: 999px;
+  background: #ffffff1f;
+  overflow: hidden;
+}
+.ballotBar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #ffd977, #f0a83e);
+  transition: width 0.3s ease;
+}
+
+/* オフィシャル会議モード（#36）：決勝の「優勝を決める」は白地でも読めるよう紺の枠と文字にする */
+:global(:root[data-formality='official']) .finalButton {
+  border-color: var(--purple);
+  background: var(--bg-elev);
+  color: var(--purple);
+}
+
+/* オフィシャル会議モード（#36）：企画のカードは暗いままなので、文字は明るい色に固定する（ページの文字色が濃くなっても埋もれないように） */
+:global(:root[data-formality='official']) .flip {
+  color: #f6efff;
+}
+
+/* 決勝の案のイメージ画像（フリップの上。できたらふわっと出す） */
+.flipImage {
+  display: block;
+  width: 100%;
+  height: clamp(56px, 10vh, 120px);
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  border: 1px solid var(--gold-line);
+  animation: flipImageIn 0.5s ease-out;
+}
+
+@keyframes flipImageIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 高さの低い画面（1280×720 など）では、フリップが見出しにかぶらないよう画像を細くする */
+@media (max-height: 780px) {
+  .flipImage {
+    height: 38px;
+    margin-bottom: 4px;
+  }
+}
+
+/*
+ * 決勝：舞台を下げ（持ち上げを小さく）、フリップを縦に長くして、案の画像を切り抜かずに全部出す。
+ * 画像は横長（約 16:9）。オフィシャルの比較表と同じく、幅いっぱいで縦はそのまま
+ */
+.finalStage {
+  --lift: 2vh;
+  /* フリップの高さを、舞台の高さ（見出し・名札を除いた分）までに収める */
+  container-type: size;
+}
+.finalFlip {
+  max-height: min(clamp(280px, 60vh, 680px), calc(100cqh - 120px));
+}
+.finalFlip .flipImage {
+  flex: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #0a0614;
+}
+@media (max-height: 780px) {
+  .finalFlip .flipImage {
+    height: auto;
+    max-height: 22vh;
+  }
+}

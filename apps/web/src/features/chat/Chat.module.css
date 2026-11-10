@@ -1,0 +1,264 @@
+.input {
+  flex: 1;
+  /* ワイプと右のボタンのあいだを埋める（審査員が少ないほど広くなる） */
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #6b477f;
+  border-radius: 8px;
+  background: #0b0719;
+  padding: 0 6px 0 12px;
+  height: 40px;
+}
+
+.input[data-listening] {
+  border-color: var(--ok);
+  box-shadow: 0 0 12px #74efbd33;
+}
+
+.input input {
+  flex: 1;
+  background: none;
+  border: 0;
+  outline: none;
+  color: white;
+  font-size: 12px;
+  min-width: 0;
+  /* 長い案内文（「ルナ、コストを下げて」…）は欄が狭いと「…」で切る */
+  text-overflow: ellipsis;
+}
+
+.input button {
+  color: #c6a4db;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+
+.captions {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  translate: -50% 0;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  pointer-events: none;
+  z-index: 20;
+  width: min(760px, 90vw);
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  max-width: 100%;
+  background: #140b24ee;
+  border: 1px solid color-mix(in srgb, var(--judge) 60%, transparent);
+  border-left: 3px solid var(--judge);
+  border-radius: 7px;
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #efe4fb;
+  box-shadow: 0 6px 20px #0008;
+  animation: rise 0.25s ease-out;
+}
+
+.caption b {
+  color: var(--judge);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.caption em {
+  font-style: normal;
+  font-size: 10px;
+  color: #110a20;
+  background: var(--gold-soft);
+  border-radius: 3px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.caption span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+.chatToggle {
+  position: relative;
+}
+
+.chatToggle i {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--gold-soft);
+  color: #110a20;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+
+/* Arena（ヘッダーとフッターの間）の中に置く。ヘッダー・フッターにはかからない */
+.chatPanel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(360px, 92vw);
+  z-index: 28;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: #160c26f5;
+  border-left: 1px solid #8750b0;
+  box-shadow: -10px 0 40px #000a;
+  padding: 12px 14px;
+  animation: slideIn 0.2s ease-out;
+}
+
+.chatPanel header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  position: sticky;
+  top: -12px;
+  background: #160c26;
+  padding: 2px 0 8px;
+}
+
+.chatPanel header strong {
+  font-size: 14px;
+}
+
+.chatPanel header small {
+  font-size: 10px;
+  color: var(--ink-muted);
+}
+
+.chatPanel header button {
+  margin-left: auto;
+  color: #bfa6d1;
+}
+
+.chatEmpty {
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.chatList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.chatList li {
+  border: 1px solid #5b3c7066;
+  border-left: 3px solid var(--judge);
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: #1f1233;
+}
+
+.chatList li div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.chatList b {
+  color: var(--judge);
+  font-size: 11px;
+}
+
+.chatList em {
+  font-style: normal;
+  font-size: 10px;
+  color: #110a20;
+  background: var(--gold-soft);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.chatList time {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--ink-muted);
+}
+
+.chatList p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #efe4fb;
+  overflow-wrap: anywhere;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    translate: 24px 0;
+  }
+}
+
+/* オフィシャル会議モード（#36）：発言欄を白地に合わせる */
+:global(:root[data-formality='official']) .input {
+  border-color: var(--line-strong);
+  background: var(--bg-elev);
+}
+:global(:root[data-formality='official']) .input input {
+  color: var(--ink);
+}
+:global(:root[data-formality='official']) .input input::placeholder {
+  color: var(--ink-muted);
+}
+:global(:root[data-formality='official']) .input button {
+  color: var(--ink-soft);
+}
+:global(:root[data-formality='official']) .input[data-listening] {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px #e8f0fe;
+}
+:global(:root[data-formality='official']) .input {
+  height: 44px;
+  padding: 0 6px 0 16px;
+  border-radius: 12px;
+  background: var(--bg);
+}
+:global(:root[data-formality='official']) .input input {
+  font-size: 14px;
+}
+/* 送信は青の丸。発言ログは右の列にあるので、履歴のボタンは出さない */
+:global(:root[data-formality='official']) .input button[aria-label='送信'] {
+  width: 34px;
+  height: 34px;
+  color: #fff;
+  background: #5b3fd0;
+  border-radius: 50%;
+}
+:global(:root[data-formality='official']) .input button[aria-label='送信']:disabled {
+  background: #c9c3ec;
+}
+:global(:root[data-formality='official']) .chatToggle {
+  display: none;
+}

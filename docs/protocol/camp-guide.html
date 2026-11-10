@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>CAMP ガイド</title>
+<style>
+  @page { size: A4; margin: 15mm 14mm 16mm 14mm; }
+  :root { --ink:#1b1428; --mute:#5c5270; --line:#ddd4ea; --soft:#f6f2fc; --accent:#6b2fc7; --pink:#c0338d; --ai:#1d6fa8; --gold:#9a6200; --ok:#1d7a53; }
+  * { box-sizing: border-box; }
+  body { margin:0; color:var(--ink); font:10pt/1.7 "Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; }
+  h1 { font-size:24pt; line-height:1.2; margin:0 0 4px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .meta { color:var(--mute); font-size:9pt; margin:0 0 12px; }
+  h2 { font-size:14pt; margin:22px 0 8px; padding-bottom:4px; border-bottom:2px solid var(--accent); break-after:avoid; }
+  h2 .no { color:var(--accent); margin-right:6px; }
+  h3 { font-size:11pt; margin:14px 0 4px; break-after:avoid; }
+  p { margin:4px 0 8px; }
+  ul,ol { margin:4px 0 8px; padding-left:1.3em; } li { margin:2px 0; }
+  table { width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:9pt; break-inside:avoid; }
+  th,td { border:1px solid var(--line); padding:4px 7px; vertical-align:top; text-align:left; }
+  th { background:var(--soft); color:#3a2a55; }
+  code { font-family:Menlo,monospace; font-size:8.4pt; background:#f1ecf8; padding:0 4px; border-radius:3px; }
+  .lead { background:var(--soft); border-left:4px solid var(--accent); padding:10px 14px; margin:10px 0 14px; }
+  .lead b { color:var(--accent); }
+  .new { display:inline-block; font-size:7.5pt; font-weight:700; color:#fff; background:var(--pink); border-radius:3px; padding:0 5px; margin-left:4px; vertical-align:1px; }
+  .box { border:1px solid var(--line); border-radius:8px; padding:10px 14px; margin:8px 0 12px; break-inside:avoid; }
+  .warn { border-left:4px solid var(--gold); background:#fff8ea; padding:8px 12px; margin:8px 0; break-inside:avoid; }
+  .warn b { color:var(--gold); }
+  .figure { margin:8px 0 12px; break-inside:avoid; text-align:center; }
+  .figure svg { max-width:100%; height:auto; }
+  .cap { font-size:8.5pt; color:var(--mute); text-align:center; margin-top:2px; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .files { columns:2; column-gap:18px; font-family:Menlo,monospace; font-size:8pt; line-height:1.55; margin:6px 0 10px; }
+  .files div { break-inside:avoid; }
+  .files .d { color:var(--mute); }
+  .tag { display:inline-block; font-size:7.5pt; padding:0 6px; border-radius:999px; border:1px solid; white-space:nowrap; }
+  .t-pub { color:#1d6fa8; border-color:#9cc0ea; } .t-npm { color:#6b2fc7; border-color:#c8b0ec; } .t-both { color:var(--ok); border-color:#9fd8bf; }
+  .pb { break-before:page; }
+</style>
+</head>
+<body>
+
+<h1>CAMP ガイド<br><em>人と AI が一緒に決める場の、通信の約束</em></h1>
+<p class="meta">Collaborative Agent Mediation Protocol ／ <code>@camp-protocol/kit</code> 0.1.0 ／ 2026-11-09 時点（なりすまし防止の修正を含む） ／ チーム VICTORY</p>
+
+<div class="lead">
+<b>一言でいうと</b>：何人もの人が同時に操作し、その間に遅い AI の結果が届く場で、<b>全員の画面を同じ順番・同じ状態にそろえる</b>ための約束（プロトコル）と、その部品（npm パッケージ）。<br>
+オーディションか会議かといったアプリの中身は知らない。HTTP が「買い物かご」を知らないのと同じで、<b>どんな命令があるか</b>はアプリが渡す。
+</div>
+
+<h2><span class="no">1</span>どこにいるのか</h2>
+<div class="figure">
+<svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+  <g font-size="13">
+    <rect x="20" y="10" width="520" height="40" rx="8" fill="#fde9f4" stroke="#c0338d"/><text x="36" y="35" fill="#1b1428"><tspan font-weight="700">③ アプリのルール</tspan>　全員一致で合格、合意メモ、審査員の案…</text>
+    <rect x="20" y="58" width="520" height="40" rx="8" fill="#fde9f4" stroke="#c0338d"/><text x="36" y="83" fill="#1b1428"><tspan font-weight="700">② 語彙</tspan>　PRESS_BUZZER などの命令の一覧と形（zod）</text>
+    <rect x="20" y="106" width="520" height="52" rx="8" fill="#efe6fb" stroke="#6b2fc7" stroke-width="2"/><text x="36" y="128" fill="#1b1428" font-weight="700">① CAMP 本体（@camp-protocol/kit）＝ 公開する部品</text><text x="36" y="148" fill="#5c5270" font-size="11.5">順番・二重実行の防止・つなぎ直し・古い AI の結果・なりすまし防止・自分を守る上限</text>
+    <rect x="20" y="166" width="520" height="34" rx="8" fill="#f3f3f3" stroke="#bbb"/><text x="36" y="188" fill="#555">WebSocket（とにかく届ける）</text>
+    <rect x="20" y="206" width="520" height="34" rx="8" fill="#f3f3f3" stroke="#bbb"/><text x="36" y="228" fill="#555">TCP / IP（線の上を運ぶ）</text>
+  </g>
+  <g font-size="12" fill="#1b1428">
+    <path d="M560 30 h20 v68 h-20" fill="none" stroke="#c0338d" stroke-width="1.5"/><text x="590" y="58" font-weight="700" fill="#c0338d">アプリごとに違う</text><text x="590" y="76" fill="#5c5270">IDEA AUDITION が書く</text>
+    <path d="M560 112 h20 v40 h-20" fill="none" stroke="#6b2fc7" stroke-width="1.5"/><text x="590" y="130" font-weight="700" fill="#6b2fc7">どのアプリでも共通</text><text x="590" y="148" fill="#5c5270">npm で配る</text>
+  </g>
+</svg>
+<div class="cap">図1　CAMP は WebSocket の上、アプリの下にある共通の層</div>
+</div>
+
+<h3>WebSocket だけだと、アプリが自分で解かないといけないこと</h3>
+<table>
+<tr><th style="width:34%">困りごと</th><th>例（IDEA AUDITION）</th><th style="width:28%">CAMP の答え</th></tr>
+<tr><td>同時に操作されたら、どれを先に確定するか</td><td>4人がほぼ同時にブザーを押す</td><td>部屋ごとに1件ずつ処理し、確定に通し番号 <code>seq</code></td></tr>
+<tr><td>返事が来ず送り直したら、二度実行されないか</td><td>通信が切れて「合格」が2回確定する</td><td><code>commandId</code> で前の結果を返すだけ</td></tr>
+<tr><td>切れてつなぎ直したら、取りこぼしはどうなるか</td><td>トンネルで切れた人の画面だけ古い</td><td>welcome で状態の全体を渡す</td></tr>
+<tr><td>遅れて届いた AI の結果を、そのまま使ってよいか</td><td>やり直したのに古い案が出る</td><td>epoch が違えば捨てる</td></tr>
+<tr><td>他人のふりをされないか<span class="new">今回</span></td><td>ホストの ID を名乗って優勝を決める</td><td>本人にだけ渡す合言葉</td></tr>
+</table>
+
+<h2><span class="no">2</span>3つの層の分担（IDEA AUDITION の場合）</h2>
+<table>
+<tr><th style="width:18%">層</th><th style="width:30%">場所</th><th>中身</th></tr>
+<tr><td>① CAMP 本体</td><td><code>packages/camp</code></td><td>封筒の形、WebSocket の受け口、版の確認、形の検査のしくみ、二重実行の防止（ResultCache）、順番（SeqGate）、クライアント（つなぎ直し・送り直し）、汎用の部屋（CampRoom：epoch と task）、合言葉</td></tr>
+<tr><td>② 語彙</td><td><code>packages/protocol</code></td><td><code>defineVocabulary</code> に渡す命令（PRESS_BUZZER・CAST_VOTE…）、イベントの名前、断る理由、snapshot の形</td></tr>
+<tr><td>③ アプリのルール</td><td><code>apps/server</code>（SessionActor・AuditionSession）</td><td>全員一致の判定、持ち時間、決勝、合意メモ、AI への依頼と古い結果の扱い、保存（Firestore）</td></tr>
+</table>
+<p>新しい機能（たとえば「審査員も案を出す」）は、②に命令を1つ、③に処理を足すだけで、①は変わらない。①は命令の中身を見ずに、「誰の・どの番号の命令か」「順番」「二重」「古さ」だけを扱う。</p>
+<div class="warn"><b>正確に言うために</b>：IDEA AUDITION のサーバーは、①の汎用の部屋（CampRoom）は使わず、同じ考え方（1件ずつ処理・epoch・合言葉）を SessionActor で自分で実装している。①から使っているのは、封筒・形の検査・WebSocket の受け口・ResultCache・クライアント・合言葉の部品。「CAMP の仕様に沿ったアプリ」であり、すべての保証が npm の部品の中にあるわけではない。</div>
+
+<h2 class="pb"><span class="no">3</span>メッセージは7種類</h2>
+<table>
+<tr><th style="width:15%">種類</th><th style="width:16%">向き</th><th style="width:16%">返事・保存</th><th>使いどころ</th></tr>
+<tr><td><code>hello</code></td><td>クライアント→</td><td>—</td><td>つないだ直後に1回。部屋 ID、前の参加者 ID と<b>合言葉</b>、最後に受け取った seq</td></tr>
+<tr><td><code>welcome</code></td><td>→クライアント</td><td>—</td><td>参加者 ID（満員なら null＝観覧）、<b>合言葉（本人にだけ）</b>、状態の全体</td></tr>
+<tr><td><code>command</code></td><td>クライアント→</td><td>result が必ず返る</td><td>状態を変える頼みごと。<code>commandId</code> 付き</td></tr>
+<tr><td><code>result</code></td><td>→本人</td><td>—</td><td>成功か、断った理由（UPPER_FULL・NOT_HOST…）</td></tr>
+<tr><td><code>event</code></td><td>→全員</td><td>通し番号 seq</td><td>確定した変化と、その時点の状態の全体</td></tr>
+<tr><td><code>ephemeral</code></td><td>どちらも</td><td>保存しない</td><td>カーソル、マイクのオンオフ、通話をつなぐ合図。送り手はサーバーが付け直す</td></tr>
+<tr><td><code>signal</code></td><td>クライアント→</td><td>返事なし・間引く</td><td>「うーん」など言葉にならない反応。1人1秒の件数まで</td></tr>
+</table>
+<p>このほか、直せる情報を返す <code>protocol_error</code>（版違い・壊れた形・hello 前・送りすぎ・部屋が無い）がある。</p>
+
+<h2><span class="no">4</span>1つの接続の流れ</h2>
+<div class="figure">
+<svg viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif" font-size="11.5">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#444"/></marker>
+  <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#c0338d"/></marker></defs>
+  <rect x="40" y="8" width="170" height="30" rx="6" fill="#efe6fb" stroke="#6b2fc7"/><text x="125" y="28" text-anchor="middle" font-weight="700">ブラウザ（CampClient）</text>
+  <rect x="520" y="8" width="200" height="30" rx="6" fill="#efe6fb" stroke="#6b2fc7"/><text x="620" y="28" text-anchor="middle" font-weight="700">サーバー（受け口 → 部屋）</text>
+  <line x1="125" y1="38" x2="125" y2="550" stroke="#bbb" stroke-dasharray="4 4"/><line x1="620" y1="38" x2="620" y2="550" stroke="#bbb" stroke-dasharray="4 4"/>
+  <text x="20" y="62" font-weight="700" fill="#6b2fc7">① 入る</text>
+  <line x1="125" y1="80" x2="612" y2="80" stroke="#444" marker-end="url(#a)"/><text x="140" y="74">hello {部屋 ID, 参加者 ID?, 合言葉?}</text>
+  <text x="630" y="72" fill="#5c5270" font-size="10.5">10秒で来ないと切る</text><text x="630" y="87" fill="#5c5270" font-size="10.5">版・形・部屋を確認</text>
+  <rect x="190" y="96" width="420" height="40" rx="6" fill="#fde9f4" stroke="#c0338d"/><text x="202" y="113" fill="#1b1428">ID と合言葉が両方合う → 同じ人として戻す</text><text x="202" y="129" fill="#1b1428">合わない・初めて → 新しい参加者（満員なら観覧）</text>
+  <line x1="612" y1="156" x2="133" y2="156" stroke="#c0338d" marker-end="url(#p)"/><text x="140" y="150" fill="#c0338d">welcome {参加者 ID, 合言葉（この接続にだけ）, 状態の全体}</text>
+  <text x="20" y="190" font-weight="700" fill="#6b2fc7">② 操作</text>
+  <line x1="125" y1="208" x2="612" y2="208" stroke="#444" marker-end="url(#a)"/><text x="140" y="202">command {commandId, 命令, 中身}</text>
+  <rect x="190" y="216" width="420" height="40" rx="6" fill="#f6f2fc" stroke="#6b2fc7"/><text x="202" y="233">形の検査（語彙）→ 同じ commandId なら前の結果を返すだけ</text><text x="202" y="249">→ アプリのルールで判定（部屋ごとに1件ずつ）</text>
+  <line x1="612" y1="274" x2="133" y2="274" stroke="#444" marker-end="url(#a)"/><text x="140" y="268">result {ok か、断った理由}　← 本人にだけ</text>
+  <line x1="612" y1="298" x2="133" y2="298" stroke="#444" marker-end="url(#a)"/><text x="140" y="292">event {seq: 42, 何が起きたか, 状態の全体}　← 全員に同じ順番で</text>
+  <text x="20" y="332" font-weight="700" fill="#6b2fc7">③ 一時的な共有</text>
+  <line x1="125" y1="350" x2="612" y2="350" stroke="#444" stroke-dasharray="5 3" marker-end="url(#a)"/><text x="140" y="344">ephemeral（カーソル・通話の合図）／ signal（「うーん」）</text>
+  <text x="630" y="346" fill="#5c5270" font-size="10.5">送り手を付け直して</text><text x="630" y="361" fill="#5c5270" font-size="10.5">ほかの人へ（保存なし）</text>
+  <text x="20" y="388" font-weight="700" fill="#6b2fc7">④ 切れたら</text>
+  <text x="140" y="388" fill="#5c5270">0.4秒 → 0.8秒 → … 最大5秒でつなぎ直す</text>
+  <line x1="125" y1="420" x2="612" y2="420" stroke="#444" marker-end="url(#a)"/><text x="140" y="414">hello {参加者 ID, 合言葉, 最後の seq}</text>
+  <line x1="612" y1="446" x2="133" y2="446" stroke="#c0338d" marker-end="url(#p)"/><text x="140" y="440" fill="#c0338d">welcome {状態の全体}　→ 取りこぼしは「全体の取り直し」で埋まる</text>
+  <line x1="125" y1="474" x2="612" y2="474" stroke="#444" marker-end="url(#a)"/><text x="140" y="468">返事の来ていない command を、同じ commandId で送り直す</text>
+  <text x="630" y="470" fill="#5c5270" font-size="10.5">②の重複防止で</text><text x="630" y="485" fill="#5c5270" font-size="10.5">二度は実行しない</text>
+  <text x="140" y="508" fill="#5c5270">古い seq・重複した event は、クライアントが捨てる（SeqGate）</text>
+  <text x="140" y="528" fill="#5c5270">版違い（4400）・部屋が無い（4404）のときは、つなぎ直さない</text>
+</svg>
+<div class="cap">図2　hello から切断・復帰まで</div>
+</div>
+
+<h2 class="pb"><span class="no">5</span>遅い AI の結果：epoch</h2>
+<div class="figure">
+<svg viewBox="0 0 760 236" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif" font-size="11.5">
+  <defs><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1d6fa8"/></marker></defs>
+  <line x1="30" y1="60" x2="730" y2="60" stroke="#6b2fc7" stroke-width="3"/><text x="30" y="48" font-weight="700" fill="#6b2fc7">部屋の確定の列（seq）</text>
+  <rect x="80" y="50" width="70" height="20" rx="4" fill="#efe6fb" stroke="#6b2fc7"/><text x="115" y="64" text-anchor="middle">epoch 1</text>
+  <rect x="380" y="50" width="70" height="20" rx="4" fill="#fde9f4" stroke="#c0338d"/><text x="415" y="64" text-anchor="middle">reset</text>
+  <rect x="460" y="50" width="70" height="20" rx="4" fill="#efe6fb" stroke="#6b2fc7"/><text x="495" y="64" text-anchor="middle">epoch 2</text>
+  <path d="M130 70 C 200 140, 520 150, 600 80" fill="none" stroke="#1d6fa8" stroke-width="1.6" marker-end="url(#b)" stroke-dasharray="6 4"/>
+  <text x="180" y="152" fill="#1d6fa8">epoch 1 で頼んだ AI の結果が、reset のあとに届く</text>
+  <text x="600" y="100" fill="#c0338d" font-weight="700">✕ 捨てる</text>
+  <path d="M500 70 C 540 120, 640 120, 680 72" fill="none" stroke="#1d6fa8" stroke-width="1.6" marker-end="url(#b)"/>
+  <text x="560" y="140" fill="#1d6fa8">epoch 2 で頼んだ結果</text><text x="682" y="100" fill="#1d7a53" font-weight="700">○ 列に入る</text>
+  <text x="30" y="180" fill="#5c5270">AI の結果は人の操作と同じ列に並び、同じ seq で全員に届く。</text>
+  <text x="30" y="198" fill="#5c5270">反映の途中で例外が出ても、記録するだけでサーバーは止まらない<tspan fill="#c0338d" font-weight="700">（今回の修正）</tspan>。</text>
+  <text x="30" y="216" fill="#5c5270">「合意が変わったら古い前提の案を捨てる」は、IDEA AUDITION（③）が合意の版で同じ考え方をしている。</text>
+</svg>
+<div class="cap">図3　頼んだときの epoch と今が違えば、結果を捨てる</div>
+</div>
+
+<h3>人と AI の扱いの違い</h3>
+<table>
+<tr><th style="width:18%"></th><th>人（参加者）</th><th>AI</th></tr>
+<tr><td>入り方</td><td>ブラウザから command を送る。commandId を持ち、result が返る</td><td>参加者ではない。サーバーが頼み、あとから結果が届く</td></tr>
+<tr><td>二重の防止</td><td>同じ commandId は二度実行しない</td><td>頼んだときの epoch（や合意の版）を覚えておく</td></tr>
+<tr><td>古くなったら</td><td>捨てない。ルールに合わなければ理由つきで断る</td><td>黙って捨てる</td></tr>
+<tr><td>役割</td><td>決める（ブザー・投票・賛否）</td><td>提案する（案・改良・回答）</td></tr>
+<tr><td>同じところ</td><td colspan="2">確定するときは同じ列に並び、同じ seq で全員に届く</td></tr>
+</table>
+
+<h2><span class="no">6</span>なりすまし防止：合言葉<span class="new">今回の修正</span></h2>
+<div class="cols">
+<div class="box"><b>前の問題</b><br>参加者 ID（<code>p_1</code>・審査員 ID）は、状態の中で全員に配られる。hello にその ID を付けるだけで、その人として戻れた。部屋のリンクを知っている人なら、ホストを含む誰にでもなりすませた。</div>
+<div class="box"><b>今の作り</b><br>入ったとき、本人の接続にだけ合言葉（24バイトの乱数）を渡す。状態やイベントには入れない。つなぎ直しは ID と合言葉が<b>両方</b>合うときだけ。合わなければ新しい参加者として入る。比べるときは、時間差で中身が漏れない方法（timingSafeEqual）を使う。</div>
+</div>
+<p>ブラウザは ID と合言葉をこのタブの sessionStorage に覚える。だから再読み込みしても同じ人に戻れ、ほかの人は席を奪えない。v1 の中で任意の項目を足しただけなので、版は上げていない（仕様書 §10 の「任意の項目は足してよい」）。</p>
+
+<h3 style="break-before:page">合言葉は具体的にどういうものか</h3>
+<p>人が覚えて打ち込むパスワードではない。サーバーが作り、ブラウザが裏で覚えておく<b>ランダムな文字列</b>（コードでは <code>resumeToken</code>）。</p>
+<table>
+<tr><th style="width:22%">項目</th><th>中身</th></tr>
+<tr><td>形</td><td>暗号用の乱数24バイトを、URL に使える文字にした32文字。例（形のイメージ）：<code>q3Vf9xL0aK2-ZbT7mWc1Rr8uYdE5sN4h</code></td></tr>
+<tr><td>作り方</td><td><code>randomBytes(24).toString('base64url')</code>（<code>server/resume-token.ts</code>）。当てずっぽうで当たる確率は実質ゼロ</td></tr>
+<tr><td>だれが知っているか</td><td>サーバーと本人のブラウザだけ。状態（snapshot）にもイベントにも入れない</td></tr>
+<tr><td>どこに残るか</td><td>そのタブの sessionStorage。同じタブで再読み込みしても戻れ、新しいタブで開くと別の人として入る</td></tr>
+<tr><td>いつ消えるか</td><td>席が消えるとき（満員で、切断した人の席を空けたときなど）</td></tr>
+</table>
+<table>
+<tr><th style="width:22%">順番</th><th>やりとり</th></tr>
+<tr><td>① はじめて入る</td><td>サーバーが参加者 ID（例 <code>p_1</code>）と合言葉を作り、welcome でその人の接続にだけ送る</td></tr>
+<tr><td>② 覚える</td><td>ブラウザが ID と合言葉の組を sessionStorage に入れる</td></tr>
+<tr><td>③ 切れて戻る</td><td>hello に「ID ＋ 合言葉」を付けて送る</td></tr>
+<tr><td>④ 照らし合わせる</td><td>一致すれば同じ人として席に戻す。合わなければ別の新しい参加者として入れる</td></tr>
+</table>
+<div class="cols">
+<div class="box"><b>参加者 ID</b><br>状態に入り、全員の画面に届く。だれが投票したか・だれがホストかを出すのに必要。</div>
+<div class="box"><b>合言葉</b><br>本人の welcome にしか乗らない。ほかの人は知りようがない。ID だけ名乗っても戻れない。</div>
+</div>
+
+<h2 class="pb"><span class="no">7</span>自分を守る仕組みと、アプリに任せること</h2>
+<table>
+<tr><th style="width:36%">仕組み</th><th>値・中身</th></tr>
+<tr><td>hello の待ち時間</td><td>10秒（来なければ 4408 で切る）</td></tr>
+<tr><td>1通の大きさ</td><td>64KB まで（アプリの設定で変えられる）</td></tr>
+<tr><td>1接続の通数</td><td>1秒120通まで（超えたら 4429 で切る）</td></tr>
+<tr><td>生存確認</td><td>25秒ごとに ping。応えなければ切る</td></tr>
+<tr><td>部屋の数<span class="new">今回</span></td><td>手軽な起動のしかた（<code>createCampServer</code>）では最大100</td></tr>
+<tr><td>部屋 ID</td><td><code>kqd-rmzw-tbe</code> の形。26の10乗通り、暗号用の乱数</td></tr>
+<tr><td>送り手</td><td>クライアントの名乗りは信じず、接続から決める</td></tr>
+<tr><td>形の検査</td><td>すべてのメッセージを zod で検査。知らない命令は UNKNOWN_TYPE、形違いは INVALID_PAYLOAD</td></tr>
+<tr><td>知らないパスへの接続</td><td>何も返さず切らずに HTTP 404 で断る（前段に「壊れた応答」と見なされてサーバーごと入れ替えられないように）</td></tr>
+</table>
+
+<div class="cols">
+<div class="box"><b>CAMP が守ること</b>（1つの部屋・1つのサーバーの中で）
+<ul><li>全員が同じ変化を同じ順番（seq）で受け取る</li><li>1つの操作は二度実行されない（部屋ごとに直近500件を覚える）</li><li>reset 前に始めた AI の結果は状態に入らない</li><li>つなぎ直せば最新の状態にそろう</li><li>他人の席は奪えない</li></ul></div>
+<div class="box"><b>アプリに任せること</b>
+<ul><li>ルール（誰が何をしてよいか）</li><li>ログイン（誰なのか）。WebSocket の手前か、部屋の登録で確かめる</li><li>部屋づくりの回数の制限（1人あたり）</li><li>保存（汎用の部屋はメモリだけ）</li><li>1つの部屋を複数のサーバーで動かすこと（1つの部屋は1つのサーバーに固定する）</li><li>規模：イベントのたびに状態の全体を配るので、少人数の部屋向け</li></ul></div>
+</div>
+
+<h2><span class="no">8</span>部品とファイル（ソース 約1,240行）</h2>
+<table>
+<tr><th style="width:30%">ファイル</th><th style="width:8%">行</th><th>役目</th></tr>
+<tr><td colspan="3"><b>core/</b>（どこでも動く。zod だけに依存）</td></tr>
+<tr><td><code>version.ts</code></td><td>17</td><td>版 "1"、終了コード（4400・4404・4408・4429）</td></tr>
+<tr><td><code>envelope.ts</code></td><td>96</td><td>封筒の形（hello・command・event・welcome・result・protocol_error）</td></tr>
+<tr><td><code>vocabulary.ts</code></td><td>196</td><td><code>defineVocabulary</code>：アプリの命令一覧から、検査用のスキーマと型を作る</td></tr>
+<tr><td><code>idempotency.ts</code></td><td>26</td><td>ResultCache：送り手と commandId ごとに結果を覚える（古いものから捨てる）</td></tr>
+<tr><td><code>sequence.ts</code></td><td>23</td><td>SeqGate：古い・重複した seq を捨てる</td></tr>
+<tr><td colspan="3"><b>client/</b>（ブラウザでも Node でも動く）</td></tr>
+<tr><td><code>camp-client.ts</code></td><td>250</td><td>つなぎ直し、送り直し、順番、合言葉の保持、版違い・部屋なしでは止まる</td></tr>
+<tr><td colspan="3"><b>server/</b>（Node。ws に依存）</td></tr>
+<tr><td><code>transport.ts</code></td><td>192</td><td>WebSocket の受け口：hello の待ち時間、版、形、送りすぎ、生存確認、部屋への振り分け</td></tr>
+<tr><td><code>room.ts</code></td><td>267</td><td>汎用の部屋 CampRoom：1件ずつ処理、seq と配信、席とホスト、観覧、task と epoch、合言葉</td></tr>
+<tr><td><code>server.ts</code></td><td>112</td><td>createCampServer：http・/camp・部屋の管理をまとめて立てる（部屋は最大 maxRooms）</td></tr>
+<tr><td><code>resume-token.ts</code><span class="new">新</span></td><td>18</td><td>合言葉を作る・比べる（自前の部屋でも使える）</td></tr>
+<tr><td><code>room-id.ts</code></td><td>17</td><td>推測されにくい部屋 ID を作る・形を確かめる</td></tr>
+<tr><td><code>upgrade.ts</code></td><td>11</td><td>知らないパスへの接続を HTTP 404 で断る</td></tr>
+</table>
+
+<h2 class="pb"><span class="no">9</span>公開するファイルのすべて</h2>
+<p>公開は2か所。<span class="tag t-pub">公開リポジトリ</span> は <code>github.com/camp-protocol/camp</code>（<code>packages/camp</code> をそのまま切り出す、34ファイル）。<span class="tag t-npm">npm</span> は <code>@camp-protocol/kit@0.1.0</code>（80ファイル、圧縮して約53KB。<code>package.json</code> の <code>files</code> にあるものだけ）。</p>
+<table>
+<tr><th style="width:42%">ファイル</th><th style="width:22%">どこに出るか</th><th>中身</th></tr>
+<tr><td><code>package.json</code></td><td><span class="tag t-both">両方</span></td><td>名前・版・依存（ws・zod）・入口・著者・ライセンス</td></tr>
+<tr><td><code>LICENSE</code></td><td><span class="tag t-both">両方</span></td><td>MIT</td></tr>
+<tr><td><code>README.md</code>・<code>README.ja.md</code></td><td><span class="tag t-both">両方</span></td><td>使い方（英語・日本語）</td></tr>
+<tr><td><code>SPEC.md</code></td><td><span class="tag t-both">両方</span></td><td>仕様書（英語）。準拠の条件10項目</td></tr>
+<tr><td><code>src/</code>（15ファイル）</td><td><span class="tag t-both">両方</span></td><td>上の8章のソース（TypeScript）</td></tr>
+<tr><td><code>dist/</code>（60ファイル）</td><td><span class="tag t-npm">npm だけ</span></td><td>src を JavaScript にしたもの・型定義（.d.ts）・対応表（.map）。公開のときに自動で作る（リポジトリには入れない）</td></tr>
+<tr><td><code>test/boundary.test.ts</code>・<code>test/quick-vote.test.ts</code></td><td><span class="tag t-pub">リポジトリだけ</span></td><td>テスト19件（境界5件＋Quick Vote で準拠の条件など14件）</td></tr>
+<tr><td><code>examples/quick-vote/</code>（4ファイル）</td><td><span class="tag t-pub">リポジトリだけ</span></td><td>IDEA AUDITION と関係のない最小の例（みんなで投票）</td></tr>
+<tr><td><code>assets/</code>（3ファイル）</td><td><span class="tag t-pub">リポジトリだけ</span></td><td>ロゴ（正方形のアイコン512px・横長のロゴ）</td></tr>
+<tr><td><code>scripts/prepack.mjs</code></td><td><span class="tag t-pub">リポジトリだけ</span></td><td>npm ではなく pnpm で公開することを強制（npm だと入口が src を指してしまう）</td></tr>
+<tr><td><code>scripts/check-pack.mjs</code></td><td><span class="tag t-pub">リポジトリだけ</span></td><td>固めたものを空のプロジェクトに入れて、3つの入口が読み込めるか確かめる</td></tr>
+<tr><td><code>.github/workflows/ci.yml</code></td><td><span class="tag t-pub">リポジトリだけ</span></td><td>Node 20・22・24 で、型・テスト・check:pack を回す</td></tr>
+<tr><td><code>tsconfig.json</code>・<code>tsconfig.build.json</code></td><td><span class="tag t-pub">リポジトリだけ</span></td><td>型チェックと、dist を作る設定</td></tr>
+</table>
+
+<h3>npm パッケージの中身（80ファイル）</h3>
+<div class="files">
+<div>package.json</div><div>LICENSE</div><div>README.md</div><div>README.ja.md</div><div>SPEC.md</div>
+<div>src/core/envelope.ts</div><div>src/core/idempotency.ts</div><div>src/core/index.ts</div><div>src/core/sequence.ts</div><div>src/core/version.ts</div><div>src/core/vocabulary.ts</div>
+<div>src/client/camp-client.ts</div><div>src/client/index.ts</div>
+<div>src/server/index.ts</div><div>src/server/resume-token.ts</div><div>src/server/room-id.ts</div><div>src/server/room.ts</div><div>src/server/server.ts</div><div>src/server/transport.ts</div><div>src/server/upgrade.ts</div>
+<div class="d">dist/core/ envelope・idempotency・index・sequence・version・vocabulary（各 .js / .d.ts / .js.map / .d.ts.map）</div>
+<div class="d">dist/client/ camp-client・index（同上）</div>
+<div class="d">dist/server/ index・resume-token・room-id・room・server・transport・upgrade（同上）</div>
+</div>
+
+<div class="warn"><b>公開しないもの</b>：IDEA AUDITION のコード（apps・packages/protocol）、.env、GCP のプロジェクト名やサービスアカウント。切り出しスクリプト（<code>scripts/camp-split.sh</code>）が、<code>idea-audition-run</code>・<code>GOOGLE_CLOUD_PROJECT</code>・<code>.iam.gserviceaccount.com</code> などの文字が入っていたら止まる。境界テストが、CAMP が IDEA AUDITION を import していないことを確かめる。</div>
+
+<h2><span class="no">10</span>公開の手順と、その前に決めること</h2>
+<p><b>2026-11-10 に公開済み</b>：公開リポジトリ camp-protocol/camp（英語1コミット・CI 成功）と npm の <code>@camp-protocol/kit@0.1.0</code>。アプリは npm の版を使っている。</p>
+<ol>
+<li><b>済み</b>：個人のメールは出さない。<code>package.json</code> の著者欄は名前と GitHub の URL だけ。公開用のコミットの作者は GitHub の noreply アドレス。npm のアカウントのメールは、公開のデータ（maintainers）に入る</li>
+<li><b>決める</b>：npm のアカウントの2段階認証。GitHub Actions から出所の証明（provenance）付きで公開するか</li>
+<li>公開前の確認（秘密の情報・アプリの言葉が入っていないか、境界テスト）</li>
+<li><code>scripts/camp-split.sh</code> で英語の1コミットを作り（noreply の作者・Gmail の文字が入っていたら止まる）、公開リポジトリを置き換える（今の日本語の5コミットと古い Actions の記録を消す）</li>
+<li>公開リポジトリの CI（Node 20・22・24）が通る</li>
+<li><code>pnpm publish --access public</code> → <code>npm view @camp-protocol/kit</code> で見える</li>
+<li>アプリの package.json を <code>workspace:*</code> から npm の版に切り替え、本番で確かめる</li>
+</ol>
+<p class="meta">記録：issue #23 のコメント。今のところ、残りの issue（#1〜#42）で CAMP 本体の作りを変える必要は見込んでいない（実測のベンチマークを足すのは、公開後でよい）。</p>
+
+<h2><span class="no">11</span>用語</h2>
+<table>
+<tr><th style="width:22%">言葉</th><th>意味</th></tr>
+<tr><td>部屋（room）</td><td>1つの共有の場。IDEA AUDITION では1回のオーディション</td></tr>
+<tr><td>参加者（participant）</td><td>操作できる人。IDEA AUDITION では審査員（4人まで）。超えた人は観覧</td></tr>
+<tr><td>commandId</td><td>命令ごとの番号。同じ番号は二度実行しない</td></tr>
+<tr><td>seq</td><td>確定した変化の通し番号。全員がこの順番で受け取る</td></tr>
+<tr><td>snapshot</td><td>その時点の状態の全体。event と welcome に入る</td></tr>
+<tr><td>epoch</td><td>部屋の「やり直し」の回数。頼んだときと違えば、AI の結果を捨てる</td></tr>
+<tr><td>合言葉（resumeToken）</td><td>本人にだけ渡す、つなぎ直し用の秘密。参加者 ID と組で使う</td></tr>
+<tr><td>語彙（vocabulary）</td><td>アプリの命令・イベント・断る理由・状態の形の一覧</td></tr>
+</table>
+
+</body>
+</html>

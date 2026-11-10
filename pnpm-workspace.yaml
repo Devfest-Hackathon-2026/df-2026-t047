@@ -1,0 +1,6 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Windows でも package.json の "VAR=value cmd" を動かす（apps/server の dev が CAMP_PORT=8787 を使う）
+shellEmulator: true

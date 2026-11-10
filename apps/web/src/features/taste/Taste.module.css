@@ -1,0 +1,238 @@
+.panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: min(360px, 92vw);
+  max-height: min(70svh, 620px);
+  overflow: auto;
+  z-index: 25;
+  background: #160c26f5;
+  border: 1px solid #8750b0;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px #000a;
+  padding: 12px 14px;
+}
+
+.panel header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.panel header small {
+  color: #a98bc0;
+  font-size: 11px;
+}
+
+.panel header button {
+  margin-left: auto;
+  background: none;
+  border: 0;
+  color: #d9c4ea;
+  cursor: pointer;
+}
+
+.radar {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.grid {
+  fill: none;
+  stroke: #ffffff14;
+}
+
+.spoke {
+  stroke: #ffffff1c;
+}
+
+.axisLabel {
+  fill: #cdb6e2;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.axisLabel[data-split] {
+  fill: #ffd36b;
+}
+
+.judgeShape {
+  fill: var(--judge);
+  fill-opacity: 0.22;
+  stroke: var(--judge);
+  stroke-width: 1.6;
+  transition: all 600ms ease;
+}
+
+.splitMark {
+  fill: none;
+  stroke: #ffd36b;
+  stroke-width: 2;
+}
+
+.empty,
+.hint,
+.split {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #cbb8dc;
+  margin: 8px 0 0;
+}
+
+.split {
+  color: #ffe3a3;
+}
+
+.hint {
+  color: #9f86b4;
+  font-size: 11px;
+}
+
+.legend {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: #e6d8f2;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend li span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--judge);
+}
+
+.legend small {
+  margin-left: auto;
+  color: #9f86b4;
+}
+
+/*
+ * 予選の舞台に常に出す小さい版（TasteCard）。位置と幅は TasteCard が待機室に合わせて入れる。
+ * 予選の舞台は .ia-prelim button でボタンの背景と枠を消しているので、それより強く当てる
+ */
+:global(.ia-prelim) .card {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  gap: 4px;
+  padding: 8px 10px 9px;
+  border-radius: 12px;
+  border: 1px solid #8750b0aa;
+  background: linear-gradient(160deg, #2a1640cc, #140b24e6);
+  box-shadow: 0 0 14px #b250ff22;
+  color: #e6d8f2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: #c785ff;
+}
+
+.card[aria-expanded='true'] {
+  border-color: #ffd36b;
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cardHead b {
+  margin-left: auto;
+  font-size: 9px;
+  color: #2a1640;
+  background: #ffd36b;
+  border-radius: 8px;
+  padding: 1px 6px;
+}
+
+.compact {
+  width: 100%;
+  max-width: none;
+  height: clamp(100px, 19vh, 170px);
+}
+
+.compact .axisLabel {
+  font-size: 17px;
+}
+
+.cardLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  font-size: 10px;
+}
+
+.cardLegend i {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-style: normal;
+}
+
+.cardLegend i::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--judge);
+}
+
+.cardEmpty {
+  font-size: 10px;
+  color: #a98bc0;
+}
+
+/* 狭い・低い画面では舞台に余白がないので出さない（下のバーの 🧭 から見る） */
+@media (max-width: 1249px), (max-height: 660px) {
+  /* 上の :global(.ia-prelim) .card と同じ強さにしないと display: grid に負ける */
+  :global(.ia-prelim) .card {
+    display: none;
+  }
+}
+
+/* 企画書（白い紙）に載せるとき */
+.print {
+  max-width: 220px;
+}
+.print .grid { stroke: #e2d9ec; }
+.print .spoke { stroke: #ece5f3; }
+.print .axisLabel { fill: #4d3f5c; }
+.print .axisLabel[data-split] { fill: #b07800; }
+.print .splitMark { stroke: #d49a00; }
+/* PDF 用：html2canvas は color-mix を描けないので、色と透明度を分けて書く */
+.print .judgeShape { fill: var(--judge); fill-opacity: 0.18; }
+
+/* オフィシャル会議モード（#36）：詳しいパネルは暗いままなので、見出しの文字は明るい色に固定する（ページの文字色が濃くなっても埋もれないように） */
+:global(:root[data-formality='official']) .panel {
+  color: #f6efff;
+}
+
+/* 読み取り中（反応が TASTE_MIN_SIGNALS 回に満たない）：形は薄い点線、一覧の文字は控えめに */
+.judgeShape[data-reading] {
+  fill-opacity: 0.06;
+  stroke-opacity: 0.55;
+  stroke-dasharray: 3 3;
+}
+.legend li[data-reading] {
+  color: #a995bd;
+}
